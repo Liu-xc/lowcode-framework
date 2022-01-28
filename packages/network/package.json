@@ -11,7 +11,8 @@
     "url": "git+https://github.com/Liu-xc/lowcode-framework.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "tsc --project tsconfig.json"
   },
   "bugs": {
     "url": "https://github.com/Liu-xc/lowcode-framework/issues"
