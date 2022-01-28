@@ -1,0 +1,26 @@
+{
+  "name": "app-framework",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Liu-xc <1392166232@qq.com>",
+  "homepage": "https://github.com/Liu-xc/lowcode-framework#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liu-xc/lowcode-framework.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": ""
+  },
+  "bugs": {
+    "url": "https://github.com/Liu-xc/lowcode-framework/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "react": "^17.0.2"
+  }
+}
