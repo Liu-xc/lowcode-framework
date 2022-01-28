@@ -1,5 +1,6 @@
 import React from 'react';
 import Utils from 'utils';
+import { Button } from 'components';
 import logo from './logo.svg';
 import './App.css';
 
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <Button text="click me" />
         <p>
           {Utils('Good')} <code>src/App.tsx</code> and save to reload.
         </p>
