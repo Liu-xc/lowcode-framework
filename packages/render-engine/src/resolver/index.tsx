@@ -1,0 +1,1 @@
+// TODO 提供一个useResolver，包含resolve并且每当原始Schema发生变化都强制重新解析
