@@ -13,5 +13,5 @@
     "moduleResolution": "node",
     "jsx": "react"
   },
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }
