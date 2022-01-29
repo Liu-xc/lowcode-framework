@@ -1,5 +1,0 @@
-{
-  "@lc/utils": "./packages/utils",
-  "@lc/platform": "./packages/lowcode-platform",
-  "@lc/app-framework": "./packages/app-framework"
-}
