@@ -1,14 +1,16 @@
 import React from 'react';
 import Utils from 'utils';
-import { Button } from 'components';
+import { Button, BizComponentMap } from 'components';
 import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <BizComponentMap.Title text="title" />
         <Button text="click me" />
         <p>
           {Utils('Good')} <code>src/App.tsx</code> and save to reload.

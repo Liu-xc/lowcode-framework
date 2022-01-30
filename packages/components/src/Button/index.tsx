@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Button as AdButton } from 'antd';
 
 export interface ButtonProps {
   text: string;
@@ -9,7 +10,8 @@ const Button: FC<ButtonProps> = props => {
     text,
   } = props;
   return (
-    <button>{text}</button>
+    <AdButton type="primary">{text}</AdButton>
+    // <div>{text}</div>
   );
 };
 
