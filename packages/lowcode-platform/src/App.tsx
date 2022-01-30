@@ -2,12 +2,14 @@ import React from 'react';
 import Utils from 'utils';
 import { Button, BizComponentMap } from 'components';
 import logo from './logo.svg';
+import { App as AFApp } from 'app-framework';
 import './App.css';
 import 'antd/dist/antd.css';
 
 function App() {
   return (
     <div className="App">
+      <AFApp />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <BizComponentMap.Title text="title" />

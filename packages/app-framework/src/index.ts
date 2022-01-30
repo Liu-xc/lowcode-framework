@@ -1,5 +1,1 @@
-function hello(): void {
-  console.log('hello world');
-}
-
-export default hello;
+export { default as App } from '@r/App';

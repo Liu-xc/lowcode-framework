@@ -12,14 +12,14 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "tsc --project tsconfig.json"
+    "build": "ttsc --project tsconfig.json"
   },
   "bugs": {
     "url": "https://github.com/Liu-xc/lowcode-framework/issues"
   },
   "devDependencies": {
-    "typescript": "^4.5.5"
-  },
-  "dependencies": {
+    "ttypescript": "^1.5.13",
+    "typescript": "^4.5.5",
+    "typescript-transform-paths": "^3.3.1"
   }
 }
