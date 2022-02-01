@@ -25,7 +25,8 @@
         "afterDeclarations": true
       }
     ],
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "noImplicitThis": true
   },
   "include": ["src"]
 }

@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
 import Router from '@/router';
-import { APPConfigContext } from '@/context';
+import { APPContext } from '@/context';
 import initApp from './init';
 
 const App: FC = () => {
   return (
-    <APPConfigContext.Provider
+    <APPContext.Provider
       value={initApp()}
     >
       <>
         <h1>Header</h1>
         <Router />
       </>
-    </APPConfigContext.Provider>
+    </APPContext.Provider>
   );
 };
 

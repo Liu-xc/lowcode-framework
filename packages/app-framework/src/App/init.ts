@@ -1,40 +1,20 @@
-import appConfig from "@/appConfig";
-import { RouteConfigMap } from "@/router/createRoutes";
-import RenderEngine from 'render-engine';
+import { initAppConfig } from "@/appConfig";
+import { APPContextType } from "@/context";
 
-// TODO init
+let value: null | APPContextType = null;
+
 /**
- * appConfig
- * renderEngine
+ * initApp承担App初始化过程中的一些实例化以及配置
 */
-
-const initCache = {
-  appConfig,
-  renderEngine: null as RenderEngine | null,
-  routeConfigMap: {} as RouteConfigMap,
-};
-
-export default function initApp(configs?: any) {
-  // TODO 目前先直接返回
-  let {
-    renderEngine
-  } = initCache;
-  if (!renderEngine) {
-    renderEngine = new RenderEngine();
-    initCache.renderEngine = renderEngine;
+export default function initApp(configs: any = {}): APPContextType {
+  const { appConfigProps } = configs;
+  if (value) {
+    return value;
   }
-  return {
-    appConfig,
-    renderEngine,
-    routeConfigMap: {
-      index: {
-        path: '/',
-        schemaName: 'index',
-      },
-      home: {
-        path: '/home',
-        schemaName: 'home'
-      }
-    },
-  };
+
+  return (
+    value = {
+      appConfig: initAppConfig(appConfigProps),
+    }
+  );
 }

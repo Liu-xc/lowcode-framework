@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect, RouteProps, RedirectProps } from 'react-router-dom';
 import CacheRoute from 'react-router-cache-route';
-import { APPConfigContextType } from '@/context';
+import getAppConfig from '@/appConfig';
 
 /**
  * TODO
@@ -27,7 +27,8 @@ export interface RouteConfigMap {
   [routeName: string]: RouteConfig;
 }
 
-export function createRoute(routeConfig: RouteConfig, appConfigContext: APPConfigContextType) {
+export function createRoute(routeConfig: RouteConfig) {
+  const appConfig = getAppConfig();
   const {
     path,
     redirect,
@@ -58,10 +59,10 @@ export function createRoute(routeConfig: RouteConfig, appConfigContext: APPConfi
   }
 
   if (schemaName) {
-    const { appConfig, renderEngine } = appConfigContext;
-    const { config } = appConfig;
+    const { batchGetConfig } = appConfig;
+    const [getPageSchema, renderEngine] = batchGetConfig(['getPageSchema', 'renderEngine']);
     try {
-      const schema = config.getPageSchema(schemaName);
+      const schema = getPageSchema(schemaName);
       Component = () => renderEngine.render(schema);
     } catch (error) {
       throw new Error(`获取schema ${schemaName} 失败`);
@@ -71,11 +72,12 @@ export function createRoute(routeConfig: RouteConfig, appConfigContext: APPConfi
   return <RouteComp key={path?.toString()} path={path} component={Component} exact={exact} {...otherProps} />;
 }
 
-export default function createRoutes(appConfigContext: APPConfigContextType) {
-  const { routeConfigMap } = appConfigContext;
+export default function createRoutes() {
+  const appConfig = getAppConfig();
+  const routeConfigMap = appConfig.getConfig('routeConfigMap');
   const routeList = Object.keys(routeConfigMap);
   return routeList.map(name => {
     const routeConfig = routeConfigMap[name];
-    return createRoute(routeConfig, appConfigContext);
+    return createRoute(routeConfig);
   });
 }

@@ -1,15 +1,13 @@
-import React, { FC, useContext } from 'react';
-import createRoutes, { RouteConfigMap } from './createRoutes';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { FC } from 'react';
+import createRoutes from './createRoutes';
+import { BrowserRouter } from 'react-router-dom';
 import { CacheSwitch } from 'react-router-cache-route';
-import { APPConfigContext } from '@/context';
 
 const Router: FC = () => {
-  const appConfig = useContext(APPConfigContext);
   return (
     <BrowserRouter>
       <CacheSwitch>
-        {createRoutes(appConfig)}
+        {createRoutes()}
       </CacheSwitch>
     </BrowserRouter>
   );

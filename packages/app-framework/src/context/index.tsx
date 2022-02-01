@@ -1,19 +1,13 @@
 import { createContext } from 'react';
-import RenderEngine from 'render-engine';
-import appConfig, { AppConfig } from '@/appConfig';
-import { RouteConfigMap } from '@/router/createRoutes';
+import getAppConfig, { AppConfig } from '@/appConfig';
 
 /**
  * APPConfig的context
 */
-export interface APPConfigContextType {
-  renderEngine: RenderEngine;
+export interface APPContextType {
   appConfig: AppConfig;
-  routeConfigMap: RouteConfigMap;
 }
 
-export const APPConfigContext = createContext<APPConfigContextType>({
-  renderEngine: new RenderEngine(),
-  appConfig: appConfig,
-  routeConfigMap: {}
+export const APPContext = createContext<APPContextType>({
+  appConfig: getAppConfig(),
 });
