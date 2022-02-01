@@ -5,7 +5,7 @@
     "rootDir": "./src",                                  /* Specify the root folder within your source files. */
     "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "@r/*": ["./*"],
+      "@/*": ["./*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
@@ -24,7 +24,8 @@
         "transform": "typescript-transform-paths",
         "afterDeclarations": true
       }
-    ]
+    ],
+    "noImplicitAny": true
   },
   "include": ["src"]
 }

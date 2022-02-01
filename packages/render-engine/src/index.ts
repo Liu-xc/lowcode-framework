@@ -1,5 +1,4 @@
-function render(schema: any): void {
-  console.log('render engine');
-}
+import RenderEngine from './render-engine';
 
-export default render;
+export default RenderEngine;
+export * from '@/compiler';

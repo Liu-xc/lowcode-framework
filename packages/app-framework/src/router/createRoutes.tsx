@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect, RouteProps, RedirectProps } from 'react-router-dom';
 import CacheRoute from 'react-router-cache-route';
+import { APPConfigContextType } from '@/context';
 
 /**
  * TODO
@@ -26,7 +27,7 @@ export interface RouteConfigMap {
   [routeName: string]: RouteConfig;
 }
 
-export function createRoute(routeConfig: RouteConfig) {
+export function createRoute(routeConfig: RouteConfig, appConfigContext: APPConfigContextType) {
   const {
     path,
     redirect,
@@ -35,11 +36,11 @@ export function createRoute(routeConfig: RouteConfig) {
     keepAlive = true,
     schemaName,
     component,
-    exact,
+    exact = true,
     ...otherProps
   } = routeConfig;
 
-  const DefaultComp = () => <>default comp</>;
+  const DefaultComp = () => <>default component</>;
 
   let RouteComp = keepAlive ? CacheRoute : Route;
   let Component = schemaName ? DefaultComp : component || DefaultComp;
@@ -57,11 +58,11 @@ export function createRoute(routeConfig: RouteConfig) {
   }
 
   if (schemaName) {
-    const getPageSchema = (name: string) => {console.log(name); return name;};
-    const renderEngine = (schema: string) => <>{schema}</>;
+    const { appConfig, renderEngine } = appConfigContext;
+    const { config } = appConfig;
     try {
-      const schema = getPageSchema(schemaName);
-      Component = () => renderEngine(schema);
+      const schema = config.getPageSchema(schemaName);
+      Component = () => renderEngine.render(schema);
     } catch (error) {
       throw new Error(`获取schema ${schemaName} 失败`);
     }
@@ -70,10 +71,11 @@ export function createRoute(routeConfig: RouteConfig) {
   return <RouteComp key={path?.toString()} path={path} component={Component} exact={exact} {...otherProps} />;
 }
 
-export default function createRoutes(routeConfigMap: RouteConfigMap) {
+export default function createRoutes(appConfigContext: APPConfigContextType) {
+  const { routeConfigMap } = appConfigContext;
   const routeList = Object.keys(routeConfigMap);
   return routeList.map(name => {
     const routeConfig = routeConfigMap[name];
-    return createRoute(routeConfig);
+    return createRoute(routeConfig, appConfigContext);
   });
 }

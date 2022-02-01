@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import { Schema } from '@/types';
+import createComponent from '@/componentCreator';
 
 class RenderEngine {
   constructor() {
@@ -7,8 +7,8 @@ class RenderEngine {
   }
 
   render(schema: Schema) {
-    console.log(schema);
-    return (<>resolved schema</>);
+    // * 假设已经解析完
+    return createComponent(schema);
   }
 }
 
