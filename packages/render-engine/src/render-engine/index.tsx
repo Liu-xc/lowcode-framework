@@ -1,14 +1,15 @@
-import { Schema } from '@/types';
+import { Schema, ComponentsMap } from '@/types';
 import createComponent from '@/componentCreator';
 
 class RenderEngine {
-  constructor() {
-
+  private componentsMap: ComponentsMap;
+  constructor(componentsMap: ComponentsMap) {
+    this.componentsMap = componentsMap;
   }
 
-  render(schema: Schema) {
+  render = (schema: Schema) => {
     // * 假设已经解析完
-    return createComponent(schema);
+    return createComponent(schema, this.componentsMap);
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Utils from 'utils';
-import { Button, BizComponentMap } from 'components';
+import * as componentsMap from 'components';
 import logo from './logo.svg';
 import { App as AFApp } from 'app-framework';
 import './App.css';
@@ -9,11 +9,9 @@ import 'antd/dist/antd.css';
 function App() {
   return (
     <div className="App">
-      <AFApp />
+      <AFApp componentsMap={componentsMap} />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <BizComponentMap.Title text="title" />
-        <Button text="click me" />
         <p>
           {Utils('Good')} <code>src/App.tsx</code> and save to reload.
         </p>

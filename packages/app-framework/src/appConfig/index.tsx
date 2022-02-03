@@ -1,19 +1,25 @@
 import { RouteConfigMap } from "@/router/createRoutes";
 import { Schema } from "@/types";
-import RenderEngine from 'render-engine';
+import RenderEngine, { ComponentsMap } from 'render-engine';
 
 export interface AppConfigMap {
   [k: string]: any;
   getPageSchema: (schemaName: string, useLocal?: boolean) => Schema;
   renderEngine: RenderEngine;
   routeConfigMap: RouteConfigMap;
+  componentsMap: ComponentsMap;
 }
 
 const MockDefault = {
-  renderEngine: new RenderEngine(),
+  renderEngine: new RenderEngine({}),
   getPageSchema: (schemaName: string) => ({
     ComponentType: 'Group',
-    Children: [schemaName]
+    Children: [{
+      ComponentType: 'Title',
+      Props: {
+        text: 'Hello Component!'
+      }
+    }]
   }),
   routeConfigMap: {
     index: {
@@ -24,7 +30,8 @@ const MockDefault = {
       path: '/home',
       schemaName: 'home',
     }
-  }
+  },
+  componentsMap: {}
 }
 export class AppConfig {
   config: AppConfigMap;
