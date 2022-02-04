@@ -65,6 +65,7 @@ export function createRoute(routeConfig: RouteConfig) {
       const schema = getPageSchema(schemaName);
       Component = () => renderEngine.render(schema);
     } catch (error) {
+      console.error(error);
       throw new Error(`获取schema ${schemaName} 失败`);
     }
   }

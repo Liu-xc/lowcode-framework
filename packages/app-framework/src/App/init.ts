@@ -12,10 +12,13 @@ export default function initApp(configs: any = {}): APPContextType {
     return value;
   }
 
-  const { componentsMap } = configs;
-  const appConfig = initAppConfig(configs);
+  const configMap = { ...configs };
+
+  const { componentsMap } = configMap;
+  const appConfig = initAppConfig(configMap);
   const renderEngine = new RenderEngine(componentsMap);
-  appConfig.setConfig('renderEngine', renderEngine);
+  configMap.renderEngine = renderEngine;
+  Object.keys(configMap).forEach(k => appConfig.setConfig(k, configMap[k]));
 
   return (
     value = {

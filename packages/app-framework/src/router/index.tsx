@@ -15,3 +15,4 @@ const Router: FC = () => {
 
 export default Router;
 
+export * from './createRoutes';

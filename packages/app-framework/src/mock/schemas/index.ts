@@ -9,8 +9,8 @@ const schema = {
         $text$: '`${name} is ${age}`'
       },
       MockContext: {
-        name: 'yanglulu',
-        age: 12
+        name: 'bob',
+        age: 14
       }
     }
   ],

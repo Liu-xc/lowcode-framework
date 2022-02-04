@@ -1,4 +1,4 @@
-import { Schema } from 'render-engine';
+import { Schema } from 'app-framework';
 
 const schema = {
   ComponentType: 'Group',
@@ -10,7 +10,7 @@ const schema = {
       },
       MockContext: {
         name: 'alice',
-        age: 13
+        age: 1
       }
     }
   ]

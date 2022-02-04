@@ -9,13 +9,14 @@ const emptySchema: Schema = {
 
 // TODO 什么时候创建State
 
+let context = {};
+
 export default function useResolver(schema: Schema): Schema {
   const resolvedSchema = cloneDeep(schema);
   // TODO context需要包含哪些东西，如何构造一个context
-  const context = {
-    name: 'yanglulu',
-    age: 12
-  };
+  if (schema.MockContext) {
+    context = schema.MockContext;
+  }
 
   const originKeys = Object.keys(schema);
 

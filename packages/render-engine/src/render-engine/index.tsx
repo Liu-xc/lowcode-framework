@@ -13,7 +13,7 @@ class RenderEngine {
     // * 假设已经解析完
     const resolvedSchema = useResolver(schema);
     console.log(resolvedSchema);
-
+    // ? 是不是应该在这里初始化一个state实例
     return createComponent(resolvedSchema, this.componentsMap);
   }
 }

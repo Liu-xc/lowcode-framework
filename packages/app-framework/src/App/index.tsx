@@ -2,17 +2,12 @@ import React, { FC } from 'react';
 import Router from '@/router';
 import { APPContext } from '@/context';
 import initApp from './init';
-import { ComponentsMap } from 'render-engine';
+import { AppConfigMap } from '@/appConfig';
 
-export interface AppProps {
-  componentsMap: ComponentsMap;
-}
-
-const App: FC<AppProps> = props => {
-  const { componentsMap } = props;
+const App: FC<Partial<AppConfigMap>> = props => {
   return (
     <APPContext.Provider
-      value={initApp({ componentsMap })}
+      value={initApp(props)}
     >
       <>
         <h1>Header</h1>

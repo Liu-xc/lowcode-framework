@@ -1,4 +1,4 @@
-import { Schema } from 'render-engine';
+import { Schema } from 'app-framework';
 
 const schema = {
   ComponentType: 'Group',
@@ -9,11 +9,11 @@ const schema = {
         $text$: '`${name} is ${age}`'
       },
       MockContext: {
-        name: 'alice',
-        age: 13
+        name: 'yanglulu',
+        age: 1
       }
     }
-  ]
+  ],
 } as Schema;
 
 export default schema;
