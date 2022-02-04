@@ -37,12 +37,13 @@ export function isComputedKey(key: string) {
   return reg.test(key);
 }
 
-export function resolveComputedKey(key: string) {
-  if (isComputedKey(key)) {
+export function resolveKey(key: string): string {
+  if (isComputedKey(key) || isComponentKey(key)) {
     return key.slice(1, -1);
   }
-  throw new Error(`${key}不是计算属性key`);
+  return key;
 }
+
 
 // let compKey = '#component#';
 // console.log('isComponentKey', isComponentKey(compKey));

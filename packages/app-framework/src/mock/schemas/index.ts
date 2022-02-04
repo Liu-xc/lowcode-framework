@@ -6,7 +6,11 @@ const schema = {
     {
       ComponentType: 'Title',
       Props: {
-        text: 'IndexPage'
+        $text$: '`${name} is ${age}`'
+      },
+      MockContext: {
+        name: 'yanglulu',
+        age: 12
       }
     }
   ],

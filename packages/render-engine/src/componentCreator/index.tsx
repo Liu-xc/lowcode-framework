@@ -11,7 +11,7 @@ export default function createComponent(resolvedSchema: Schema, componentsMap: C
   } = resolvedSchema;
   let Component: React.ComponentType<any>;
 
-  if (ComponentType === 'Group') {
+  if (ComponentType === 'Group' || !ComponentType) {
     Component = React.Fragment;
   } else {
     Component = componentsMap[ComponentType];

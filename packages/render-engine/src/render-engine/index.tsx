@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import { Schema, ComponentsMap } from '@/types';
 import createComponent from '@/componentCreator';
+import useResolver from '@/resolver/useResolver';
 
 class RenderEngine {
   private componentsMap: ComponentsMap;
@@ -9,7 +11,10 @@ class RenderEngine {
 
   render = (schema: Schema) => {
     // * 假设已经解析完
-    return createComponent(schema, this.componentsMap);
+    const resolvedSchema = useResolver(schema);
+    console.log(resolvedSchema);
+
+    return createComponent(resolvedSchema, this.componentsMap);
   }
 }
 
