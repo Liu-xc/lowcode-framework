@@ -23,16 +23,20 @@ export default function createComponent(resolvedSchema: Schema, componentsMap: C
 
   const { Props = {} } = resolvedSchema;
 
+  const renderChild = (child: Schema | string | number) => {
+    const childType = typeof child;
+    if (childType === 'number' || childType === 'string') {
+      return child;
+    } else if (childType === 'object') {
+      return createComponent(child as Schema, componentsMap);
+    }
+  }
+
   return (
     <Component {...Props} key={uuidV4()}>
-      {Children.map((child: Schema | string | number) => {
-        const childType = typeof child;
-        if (childType === 'number' || childType === 'string') {
-          return child;
-        } else if (childType === 'object') {
-          return createComponent(child as Schema, componentsMap);
-        }
-      })}
+      {Array.isArray(Children) ?
+        Children.map(child => renderChild(child)) :
+        renderChild(Children)}
     </Component>
   );
 }
