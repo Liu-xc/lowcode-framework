@@ -5,4 +5,4 @@ export * from '@/compiler';
 export type {
   ComponentsMap,
   Schema
-} from '@/types.d';
+} from '@/types';

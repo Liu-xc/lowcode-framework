@@ -1,6 +1,6 @@
 import { RouteConfigMap } from "@/router/createRoutes";
-import { Schema } from "@/types";
-import RenderEngine, { ComponentsMap } from 'render-engine';
+import RenderEngine, { ComponentsMap, Schema } from 'render-engine';
+import MockDefault from '@/mock/defaultAppConfig';
 
 export interface AppConfigMap {
   [k: string]: any;
@@ -10,29 +10,6 @@ export interface AppConfigMap {
   componentsMap: ComponentsMap;
 }
 
-const MockDefault = {
-  renderEngine: new RenderEngine({}),
-  getPageSchema: (schemaName: string) => ({
-    ComponentType: 'Group',
-    Children: [{
-      ComponentType: 'Title',
-      Props: {
-        text: 'Hello Component!'
-      }
-    }]
-  }),
-  routeConfigMap: {
-    index: {
-      path: '/',
-      schemaName: 'index',
-    },
-    home: {
-      path: '/home',
-      schemaName: 'home',
-    }
-  },
-  componentsMap: {}
-}
 export class AppConfig {
   config: AppConfigMap;
   constructor(configs?: AppConfigMap) {
