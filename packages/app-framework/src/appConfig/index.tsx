@@ -1,6 +1,5 @@
 import { RouteConfigMap } from "@/router/createRoutes";
 import RenderEngine, { ComponentsMap, Schema } from 'render-engine';
-import MockDefault from '@/mock/defaultAppConfig';
 
 export interface AppConfigMap {
   [k: string]: any;
@@ -13,7 +12,7 @@ export interface AppConfigMap {
 export class AppConfig {
   config: AppConfigMap;
   constructor(configs?: AppConfigMap) {
-    this.config = Object.assign(MockDefault, configs || {});
+    this.config = Object.assign({}, configs || {}) as AppConfigMap;
   }
 
   setConfig = (key: string, value: any) => {

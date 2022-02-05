@@ -1,5 +1,3 @@
-function network(port: number): void {
-  console.log('network');
-}
-
-export default network;
+export * from '@/instance';
+export * from '@/createApiMethod';
+// export * from '@/types';

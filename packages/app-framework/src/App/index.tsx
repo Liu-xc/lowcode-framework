@@ -10,7 +10,6 @@ const App: FC<Partial<AppConfigMap>> = props => {
       value={initApp(props)}
     >
       <>
-        <h1>Header</h1>
         <Router />
       </>
     </APPContext.Provider>

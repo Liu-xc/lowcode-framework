@@ -12,6 +12,7 @@ const emptySchema: Schema = {
 let context = {};
 
 export default function useResolver(schema: Schema): Schema {
+  // ? 什么时候更新resolvedSchema，尤其是和network结合
   const resolvedSchema = cloneDeep(schema);
   // TODO context需要包含哪些东西，如何构造一个context
   if (schema.MockContext) {

@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import getAppConfig, { AppConfig } from '@/appConfig';
-import RenderEngine from 'render-engine';
 
 /**
  * APPConfig的context
