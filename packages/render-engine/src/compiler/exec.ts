@@ -1,7 +1,7 @@
 import useCodeBox from "./useCodeBox";
 // TODO 接收表达式并且控制其编译执行，返回表达式的值
 
-export function evaluate(context: any, expression: string) {
+export function execute(context: any, expression: string) {
   const func = useCodeBox(context, expression);
   console.log(func.toString(), context);
   try {

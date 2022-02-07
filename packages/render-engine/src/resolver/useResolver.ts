@@ -1,5 +1,5 @@
 import { Schema } from "@/types"
-import { evaluate, isComponentKey, isComputedKey, resolveKey } from '@/compiler';
+import { execute, isComponentKey, isComputedKey, resolveKey } from '@/compiler';
 import cloneDeep from 'lodash/cloneDeep';
 // TODO 解析特殊key，编译并执行表达式求值，递归解析签套Schema语法（Children|#component#等）
 
@@ -22,7 +22,7 @@ export default function useResolver(schema: Schema): Schema {
   const originKeys = Object.keys(schema);
 
   const { $_IF_$, _IF_ } = schema;
-  const show = $_IF_$ ? evaluate(context, $_IF_$) : true;
+  const show = $_IF_$ ? execute(context, $_IF_$) : true;
   schema._IF_ = show || _IF_;
   if (!schema._IF_) {
     return { ...emptySchema };
@@ -37,7 +37,7 @@ export default function useResolver(schema: Schema): Schema {
     const resolvedKey = resolveKey(k);
     const val = schema[k];
     if (isExpression) {
-      resolvedSchema[resolvedKey] = evaluate(context, val);
+      resolvedSchema[resolvedKey] = execute(context, val);
     } else if (isComponent) {
       resolvedSchema[resolvedKey] = useResolver(val);
     } else if (Array.isArray(val)) {
