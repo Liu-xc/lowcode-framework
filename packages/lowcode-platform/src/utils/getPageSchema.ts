@@ -2,10 +2,8 @@ import { Schema } from 'app-framework';
 
 const schemas = require.context('../schemas', true, (/(?<!\.d)\.(ts|js)$/));
 
-export default function getPageSchema(schemaName: string, useLocal: boolean = true): Schema {
-  // if (useLocal) {
-
-  // }
+export default function getPageSchema(schemaName: string, useLocal = true): Schema {
+  console.log(useLocal);
   // * 先直接用本地schema来mock
   try {
     return schemas(`./${schemaName}.ts`).default as Schema;

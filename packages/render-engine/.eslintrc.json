@@ -24,6 +24,10 @@
     ],
     "rules": {
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn"
+        "react-hooks/exhaustive-deps": "warn",
+        "react/function-component-definition": {
+            "namedComponents": ["function-declaration", "arrow-function"],
+            "unnamedComponents": "arrow-function"
+        }
     }
 }

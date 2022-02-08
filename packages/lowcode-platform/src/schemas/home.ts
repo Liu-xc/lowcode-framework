@@ -2,16 +2,12 @@ import { Schema } from 'app-framework';
 
 const schema = {
   ComponentType: 'Group',
-  Children: [
+  children: [
     {
       ComponentType: 'Title',
       Props: {
-        $text$: '`${name} is ${age}`'
+        $text$: '(()=>{sv.age=12;sv.name="alice"; return `${sv.name} is ${sv.age}`})()'
       },
-      MockContext: {
-        name: 'alice',
-        age: 1
-      }
     }
   ]
 } as Schema;

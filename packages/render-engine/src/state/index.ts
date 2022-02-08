@@ -62,6 +62,20 @@ export default class State {
     return this.context.currentPage as StatePage;
   }
 
+  destroyPage = (page: StatePage) => {
+    // 删了page后就不会再触发依赖更新的回调了
+    if (!this.context.pageList) {
+      throw new Error('only global state can destroy page');
+    }
+    const pageIndex = this.context.pageList.indexOf(page);
+    if (pageIndex < 0) {
+      console.log('要删除的page不存在');
+      return false;
+    }
+    this.context.pageList.splice(pageIndex, 1);
+    return true;
+  }
+
   isState = (value: any): boolean => {
     if (typeof value === 'object' && value && value[stateSymbol]) {
       return true;
@@ -125,6 +139,14 @@ export default class State {
 
     return true;
   }
+
+  private getDerivativeState = (context: StateContext) => new State(context, this.value);
+
+  getProxy = (context: Omit<StateContext, 'listenerMap'>) => this.getDerivativeState({
+    ...this.context,
+    listenerMap: this.listenerMap,
+    ...context
+  }).valueProxy;
 
 }
 

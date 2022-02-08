@@ -1,7 +1,7 @@
 /**
  * 关键词
  * - ComponentType
- * - Children
+ * - children
  * - Props
  * - Query
  * - Adaptor
@@ -18,7 +18,7 @@
 
 export enum SchemaKeywords {
   ComponentType = 'ComponentType',
-  Children = 'Children',
+  children = 'children',
   Props = 'Props',
   Query = 'Query',
   Adaptor = 'Adaptor',
