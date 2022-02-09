@@ -1,10 +1,11 @@
-import React, { Component, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Schema, ComponentsMap } from '@/types';
 import componentCreator from '@/componentCreator';
 import useResolver from '@/resolver';
 import State from '@/state';
-import PluginManager from '@/pluginManager';
+import PluginManager, { ResolvePlugin } from '@/pluginManager';
 import { v4 as uuidV4 } from 'uuid';
+import testPlugin from '@/pluginManager/test';
 
 // ? globalState在什么时候创建，实例化renderEngine时吗
 
@@ -20,6 +21,14 @@ class RenderEngine {
       pageList: [],
     });
     this.pluginManager = new PluginManager();
+
+    // TODO 注册默认插件
+    // * 后面这里应该做成类似schema获取的配置加指定的逻辑
+    this.pluginManager.register(testPlugin);
+  }
+
+  registerPlugin = (plugin: ResolvePlugin) => {
+    this.pluginManager.register(plugin);
   }
 
   render = (schema: SchemaOrSchemaList): React.ReactElement => {
@@ -52,14 +61,12 @@ class RenderEngine {
   }
 
   createNode = (schema: Schema, state: State): React.FunctionComponent => {
-    // TODO 返回一个组件
     const {
       componentsMap,
       globalState,
       createNode
     } = this;
     const Node = () => {
-      // debugger;
       const context = useMemo(() => ({ globalState, state, createNode }), []);
       const [Component, setComponent] = useState<React.ComponentType<any>>();
       const pureSchema = useMemo(() => {
@@ -75,25 +82,24 @@ class RenderEngine {
         }
         return createNode(child as Schema, state);
       }).map(ChildNode => <ChildNode key={uuidV4()} />);
-      // TODO
+
       useEffect(() => {
-        // console.log('resolvedSchema', resolvedSchema, childrenNodes);
         if (!resolvedSchema) {
           return;
         }
-        setComponent(() => componentCreator(resolvedSchema, componentsMap))
+        const hocList = this.pluginManager.getHocList(resolvedSchema);
+        setComponent(() => componentCreator(resolvedSchema, componentsMap, hocList, context))
       }, [resolvedSchema]);
 
+      const resolveContext = useMemo(() => ({ ...context, resolvedSchema }), [context, resolvedSchema]);
+
       if (!Component) {
-        console.log('空');
         return <></>;
       }
       if (!childrenNodes.length) {
-        console.log('无子元素');
-        return <Component />;
+        return <Component resolveContext={resolveContext} />;
       }
-      console.log('没展示出来');
-      return <Component children={childrenNodes} />;
+      return <Component children={childrenNodes} resolveContext={resolveContext} />;
     };
     return Node;
   }

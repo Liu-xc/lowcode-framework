@@ -1,4 +1,3 @@
-// TODO 提供一个useResolver，包含resolve并且每当原始Schema发生变化都强制重新解析
 import { useEffect, useState } from 'react';
 import RenderEngine from "@/render-engine";
 import State, { StateValue } from "@/state";
@@ -6,11 +5,13 @@ import { Schema } from "@/types";
 import resolve from './resolve';
 
 export interface ResolveContext {
+  [k: string]: any;
   state: State;
   globalState: State;
   createNode: typeof RenderEngine.prototype.createNode;
   sv?: StateValue;
   gsv?: StateValue;
+  schema?: Schema;
 }
 
 export default function useResolver(schema: Schema, resolveContext: ResolveContext) {

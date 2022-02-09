@@ -1,37 +1,33 @@
 // TODO 从ComponentsMap中获取对应的组件，并且通过PluginManager获取HOCList包裹目标组件
 
-import React, { FC } from 'react';
+import React from 'react';
 import { ComponentsMap, Schema } from "@/types";
-import { v4 as uuidV4 } from 'uuid';
+import { PluginHOC } from '@/pluginManager';
+import { ResolveContext } from '@/resolver';
 
-export default function createComponent(resolvedSchema: Schema, componentsMap: ComponentsMap) {
+export default function createComponent(resolvedSchema: Schema, componentsMap: ComponentsMap, hocList: PluginHOC[], resolveContext: ResolveContext) {
   const {
     ComponentType,
   } = resolvedSchema;
   let Component: React.ComponentType<any>;
+
+  resolveContext = { ...resolveContext, resolvedSchema };
 
   if (ComponentType === 'Group' || !ComponentType) {
     Component = React.Fragment;
   } else {
     Component = (props = {}) => {
       const CompType = componentsMap[ComponentType];
-      console.log(resolvedSchema);
-      return <CompType {...resolvedSchema.Props}>{props.children}</CompType>
+      if (!CompType) {
+        throw new Error(`组件${ComponentType}不存在`);
+      }
+      
+      return <CompType {...(resolvedSchema.Props || {})}>{props.children}</CompType>;
     };
   }
 
-  if (!Component) {
-    throw new Error(`组件${ComponentType}不存在`);
-  }
+  let WrappedComponent: React.ComponentType<any> = Component;
+  hocList.slice().reverse().forEach(hoc => WrappedComponent = hoc(WrappedComponent, resolveContext));
 
-  // const renderChild = (child: Schema | string | number) => {
-  //   const childType = typeof child;
-  //   if (childType === 'number' || childType === 'string') {
-  //     return child;
-  //   } else if (childType === 'object') {
-  //     return createComponent(child as Schema, componentsMap);
-  //   }
-  // }
-
-  return Component;
+  return WrappedComponent;
 }

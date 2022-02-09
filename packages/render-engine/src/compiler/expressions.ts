@@ -43,10 +43,3 @@ export function resolveKey(key: string): string {
   }
   return key;
 }
-
-
-// let compKey = '#component#';
-// console.log('isComponentKey', isComponentKey(compKey));
-
-// let computedKey = '$computed$';
-// console.log('isComputedKey', isComputedKey(computedKey), resolveComputedKey(computedKey));
