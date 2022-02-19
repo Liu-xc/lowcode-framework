@@ -1,8 +1,9 @@
 import RenderEngine from './render-engine';
 
 export default RenderEngine;
-export type { ResolvePlugin } from '@/pluginManager';
 export * from '@/compiler';
+export type { ResolvePlugin, PluginHOC } from '@/pluginManager';
+export type { ResolveContext } from '@/resolver';
 export type {
   ComponentsMap,
   Schema

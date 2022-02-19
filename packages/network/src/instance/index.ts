@@ -7,7 +7,7 @@ const MockData = {
   age: 12
 };
 
-export default async function request(configs: any) {
+export async function request(configs: any) {
   console.log(configs);
   return new Promise((resolve) => {
     setTimeout(() => {

@@ -1,9 +1,11 @@
-import request from '@/instance';
+import { request } from '@/instance';
 import { AxiosRequestConfig } from 'axios';
 
 // TODO 处理response的数据结构
 
-export default function createApiMethod(apiConfig: AxiosRequestConfig) {
+export type QueryConfig = AxiosRequestConfig;
+
+export function createApiMethod(apiConfig: AxiosRequestConfig) {
   // TODO
   /**
    * 接收query对象

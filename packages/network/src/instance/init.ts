@@ -12,7 +12,7 @@ const cache = {
 
 const defaultConfig = {};
 
-export default function initNetwork(configs: any) {
+export function initNetwork(configs: any) {
   if (cache.instance) {
     return cache.instance;
   }
