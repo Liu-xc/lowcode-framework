@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import useObtainData from '../useObtainData';
-import { QueryConfig } from 'network';
+import { RequestConfig } from 'network';
 import { ResolveContext } from 'render-engine';
 
 export interface WithQueryProps {
@@ -8,7 +8,7 @@ export interface WithQueryProps {
   error: Error;
   retry: () => void;
   queryAdaptor: (res: any) => any;
-  Query: QueryConfig;
+  Query: RequestConfig;
 }
 
 export interface withQueryParams {

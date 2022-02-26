@@ -1,18 +1,12 @@
-// TODO
-/**
- * 接受参数，实例化axios
- * ? axios的参数签名
-*/
-
-import axios, { Axios } from 'axios';
+import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
 
 const cache = {
-  instance: null as Axios | null
+  instance: null as AxiosInstance | null
 }
 
 const defaultConfig = {};
 
-export function initNetwork(configs: any) {
+export function initNetwork(configs: AxiosRequestConfig) {
   if (cache.instance) {
     return cache.instance;
   }
@@ -24,5 +18,10 @@ export function getAxiosInstance() {
   if (!cache.instance) {
     initNetwork(defaultConfig);
   }
-  return cache.instance;
+  return cache.instance as AxiosInstance;
 }
+
+export type {
+  AxiosRequestConfig as RequestConfig,
+  AxiosInstance as RequestInstance,
+};

@@ -1,6 +1,6 @@
 import { } from '@/types';
 import { useEffect, useState, useMemo } from 'react';
-import { QueryConfig, createApiMethod, RequestResponse } from 'network';
+import { RequestConfig, createApiMethod, RequestResponse } from 'network';
 import useForceUpdate from '@/utils/useForceUpdate'
 
 export interface ObtainDataRes {
@@ -15,7 +15,7 @@ export interface ObtainDataOptions {
   queryAdaptor?: (res: any) => any;
 }
 
-export default function useObtainData(query: QueryConfig, options: ObtainDataOptions = {}): ObtainDataRes {
+export default function useObtainData(query: RequestConfig, options: ObtainDataOptions = {}): ObtainDataRes {
   const [res, setRes] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error>();

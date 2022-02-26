@@ -1,8 +1,13 @@
-export interface RequestResponse {
-  data: any,
-  status: number,
-  statusText: string,
-  headers: Record<string, string>,
-  config: Record<string, any>,
-  request: Record<string, any>
-}
+import { AxiosResponse } from 'axios';
+
+export type RequestResponse = AxiosResponse;
+// {
+//   data: { },
+//   status: 200,
+//   statusText: 'OK',
+//   headers: { },
+//   config: { },
+//   request: { }
+// }
+
+export type { RequestConfig } from '@/instance';

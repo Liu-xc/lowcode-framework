@@ -1,19 +1,9 @@
 import { request } from '@/instance';
-import { AxiosRequestConfig } from 'axios';
+import { RequestConfig } from '@/types';
 
-// TODO 处理response的数据结构
-
-export type QueryConfig = AxiosRequestConfig;
-
-export function createApiMethod(apiConfig: AxiosRequestConfig) {
-  // TODO
-  /**
-   * 接收query对象
-   * 对GET和POST区别data的使用
-   * 应该返回一个方法，可以传入参数来发起请求
-  */
-
-  return async (requestConfig: any) => {
+// 柯里函数，createAPIMethod创建一个可复用的请求函数，用于复用部分参数
+export function createApiMethod(apiConfig: RequestConfig) {
+  return (requestConfig: any) => {
     return request(Object.assign({}, apiConfig, requestConfig));
   }
 }
