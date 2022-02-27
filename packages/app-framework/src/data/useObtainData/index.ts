@@ -1,8 +1,7 @@
 import { } from '@/types';
 import { useEffect, useState, useMemo } from 'react';
 import { RequestConfig, createApiMethod, RequestResponse } from 'network';
-import useForceUpdate from '@/utils/useForceUpdate'
-
+import useForceUpdate from '@/utils/useForceUpdate';
 export interface ObtainDataRes {
   loading: boolean;
   data: any;

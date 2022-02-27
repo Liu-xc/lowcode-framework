@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Liu-xc <1392166232@qq.com>",
+  "homepage": "https://github.com/Liu-xc/lowcode-framework#readme",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liu-xc/lowcode-framework.git"
+  },
+  "scripts": {
+    "start:dev": "ts-node-dev --compiler ttypescript ./src/index.ts",
+    "start:mon": "nodemon --exec ts-node-dev --compiler ttypescript ./src/index.ts"
+  },
+  "bugs": {
+    "url": "https://github.com/Liu-xc/lowcode-framework/issues"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "^10.1.1",
+    "axios": "^0.26.0",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa__cors": "^3.1.1",
+    "@types/koa__router": "^8.0.11",
+    "ts-node-dev": "^1.1.8",
+    "ttypescript": "^1.5.13",
+    "typescript": "^4.5.5",
+    "typescript-transform-paths": "^3.3.1"
+  }
+}
