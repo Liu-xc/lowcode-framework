@@ -49,6 +49,8 @@ export default class State {
     });
   }
 
+  getValueProxy = (): StateValue => this.valueProxy;
+
   createPage = (): StatePage => {
     if (!this.context.pageList) {
       throw new Error('only global state can create page');
@@ -134,7 +136,7 @@ export default class State {
     for (const page of pages) {
       const pageListenerMap = this.listenerMap.get(page);
       const listeners = pageListenerMap ? pageListenerMap[key] : [];
-      listeners.forEach(listener => listener());
+      (listeners || []).forEach(listener => listener());
     }
 
     return true;
@@ -144,8 +146,8 @@ export default class State {
 
   getProxy = (context: Omit<StateContext, 'listenerMap'>) => this.getDerivativeState({
     ...this.context,
+    ...context,
     listenerMap: this.listenerMap,
-    ...context
   }).valueProxy;
 
 }

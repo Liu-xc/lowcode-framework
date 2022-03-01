@@ -34,7 +34,6 @@ export function execute(context: ResolveContext, expression: string, updateResul
 
   const func = boxCode(executeContext, expression);
 
-  console.log(func.toString(), context);
   try {
     return func(executeContext);
   } catch (error) {

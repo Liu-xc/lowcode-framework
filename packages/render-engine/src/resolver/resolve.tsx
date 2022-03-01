@@ -27,10 +27,12 @@ export default function resolve(
   const show = $_IF_$ ? execute(schemaContext, $_IF_$, () => triggerUpdate()) : true;
   schema._IF_ = show || _IF_;
   if (!schema._IF_) {
+    // ? 为什么要将Schema设置为空
     setResolvedSchema(cloneDeep(emptySchema));
     return;
   }
 
+  // ? 为什么要删除
   Reflect.deleteProperty(schema, '$_IF_$');
 
   originKeys.forEach(k => {
@@ -38,6 +40,8 @@ export default function resolve(
     const isComponent = isComponentKey(k);
     const resolvedKey = resolveKey(k);
     const val = schema[k];
+    // ? 是不是应该在每中情况的解析结束时都调用一次triggerUpdate
+    // * 应该不用,setResolvedSchema会触发更新，trigger是用来响应状态变化的
     if (isExpression) {
       resolvedSchema[resolvedKey] = execute(schemaContext, val, (newResult: any) => {
         resolvedSchema[resolvedKey] = newResult;
@@ -54,9 +58,11 @@ export default function resolve(
       };
     } else if (Array.isArray(val)) {
       resolvedSchema[resolvedKey] = val.map((v, i) => {
+        // * 是schema
         if (!Array.isArray(v) && typeof v === 'object') {
           resolve(v, schemaContext, (updated: Schema) => val[i] = updated, triggerUpdate);
         } else {
+          // * 是普通值
           val[i] = v;
         }
       })

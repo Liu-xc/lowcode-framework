@@ -22,7 +22,7 @@ export default function createComponent(resolvedSchema: Schema, componentsMap: C
         throw new Error(`组件${ComponentType}不存在`);
       }
       
-      return <CompType {...(resolvedSchema.Props || {})}>{props.children}</CompType>;
+      return <CompType {...(resolvedSchema.Props || {})} {...props} />;
     };
   }
 

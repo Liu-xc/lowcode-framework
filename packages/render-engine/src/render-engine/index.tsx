@@ -24,7 +24,7 @@ class RenderEngine {
 
     // TODO 注册默认插件
     // * 后面这里应该做成类似schema获取的配置加指定的逻辑
-    this.pluginManager.register(testPlugin);
+    // this.pluginManager.register(testPlugin);
   }
 
   registerPlugin = (plugin: ResolvePlugin) => {
@@ -69,13 +69,8 @@ class RenderEngine {
     const Node = () => {
       const context = useMemo(() => ({ globalState, state, createNode }), []);
       const [Component, setComponent] = useState<React.ComponentType<any>>();
-      const pureSchema = useMemo(() => {
-        const schemaCopy = { ...schema };
-        Reflect.deleteProperty(schemaCopy, 'children');
-        return schemaCopy;
-      }, []);
+      const { children, ...pureSchema } = schema;
       const resolvedSchema = useResolver(pureSchema, context);
-      const { children } = schema;
       const childrenNodes = (Array.isArray(children) ? children : [children]).map(child => {
         if (typeof child !== 'object') {
           return () => <>{child}</>;
