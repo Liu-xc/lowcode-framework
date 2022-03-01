@@ -121,6 +121,8 @@ export default class State {
      * 触发回调
     */
 
+    console.log(target, key, newValue);
+
     const oldValue = target[key];
     if (oldValue === newValue) {
       return true;

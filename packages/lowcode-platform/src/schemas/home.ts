@@ -11,7 +11,12 @@ const schema = {
     },
     {
       ComponentType: 'BizCard',
-      $children$: 'sv.bizCard',
+      children: {
+        ComponentType: 'Title',
+        Props: {
+          $text$: 'sv.bizCard'
+        }
+      },
       Query: {
         url: 'http://localhost:8080/data/carddata',
       },

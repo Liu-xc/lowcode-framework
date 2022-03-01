@@ -69,7 +69,12 @@ class RenderEngine {
     const Node = () => {
       const context = useMemo(() => ({ globalState, state, createNode }), []);
       const [Component, setComponent] = useState<React.ComponentType<any>>();
-      const { children, ...pureSchema } = schema;
+      const pureSchema = useMemo(() => {
+        const schemaCopy = { ...schema };
+        Reflect.deleteProperty(schemaCopy, 'children');
+        return schemaCopy;
+      }, []);
+      const children = useMemo(() => schema.children, []);
       const resolvedSchema = useResolver(pureSchema, context);
       const childrenNodes = (Array.isArray(children) ? children : [children]).map(child => {
         if (typeof child !== 'object') {
