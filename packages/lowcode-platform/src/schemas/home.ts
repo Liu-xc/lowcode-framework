@@ -6,7 +6,19 @@ const schema = {
     {
       ComponentType: 'Title',
       Props: {
-        $text$: '(()=>{sv.age=12;sv.name="alice"; return `${sv.name} is ${sv.age}`})()'
+        $text$: '(()=>{if (!sv.name){sv.age=12;sv.name="alice"}; return `${sv.name} is ${sv.age}`})()'
+      },
+    },
+    {
+      ComponentType: 'BizCard',
+      $children$: 'sv.bizCard',
+      Query: {
+        url: 'http://localhost:8080/data/carddata',
+      },
+      Props: {
+        withQueryParams: {
+          stateKey: 'bizCard',
+        }
       },
     }
   ]

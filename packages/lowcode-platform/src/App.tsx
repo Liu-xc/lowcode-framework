@@ -19,7 +19,12 @@ import 'antd/dist/antd.css';
 function App() {
   return (
     <div className="App">
-      <AFApp componentsMap={componentsMap} getPageSchema={getPageSchema} routeConfigMap={routeConfigMap} />
+      <AFApp
+        componentsMap={componentsMap}
+        getPageSchema={getPageSchema}
+        routeConfigMap={routeConfigMap}
+        networkConfig={{}}
+      />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
