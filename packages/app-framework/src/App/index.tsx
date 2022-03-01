@@ -4,7 +4,7 @@ import { APPContext } from '@/context';
 import initApp from './init';
 import { AppConfigMap } from '@/appConfig';
 
-const App: FC<Partial<AppConfigMap>> = props => {
+const App: FC<Omit<AppConfigMap, 'renderEngine'>> = props => {
   return (
     <APPContext.Provider
       value={initApp(props)}

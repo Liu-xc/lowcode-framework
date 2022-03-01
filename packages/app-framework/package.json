@@ -17,6 +17,7 @@
 		"build": "ttsc --project tsconfig.json"
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.14.179",
 		"@types/node": "^17.0.13",
 		"@types/react": "^17.0.38",
 		"@types/react-router-dom": "5.3.0",
@@ -31,6 +32,7 @@
 		"typescript-transform-paths": "^3.3.1"
 	},
 	"dependencies": {
+		"lodash": "^4.17.21",
 		"network": "^0.0.0",
 		"react-dom": "17.0.2",
 		"react-router-cache-route": "^1.12.1",

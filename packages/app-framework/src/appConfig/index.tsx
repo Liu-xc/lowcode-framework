@@ -1,5 +1,6 @@
 import { RouteConfigMap } from "@/router/createRoutes";
 import RenderEngine, { ComponentsMap, Schema } from 'render-engine';
+import { RequestConfig } from 'network';
 
 export interface AppConfigMap {
   [k: string]: any;
@@ -7,6 +8,7 @@ export interface AppConfigMap {
   renderEngine: RenderEngine;
   routeConfigMap: RouteConfigMap;
   componentsMap: ComponentsMap;
+  networkConfig: RequestConfig;
 }
 
 export class AppConfig {

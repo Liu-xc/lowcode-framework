@@ -5,7 +5,7 @@ const queryPlugin: ResolvePlugin = {
   HOC: (Component, resolveContext) => {
     const WrappedComponent: React.ComponentType<any> = props => {
       const querySchema = resolveContext.resolvedSchema.Query;
-      return <Component Query={querySchema} {...props} />;
+      return <Component Query={querySchema} resolveContext={resolveContext} {...props} />;
     }
     return WrappedComponent;
   },
