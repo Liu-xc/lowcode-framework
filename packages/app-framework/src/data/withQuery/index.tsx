@@ -35,7 +35,6 @@ const withQuery = (Component: React.ComponentType<any>): React.FC<any> => props 
   useEffect(() => {
     const { state } = resolveContext as ResolveContext;
     const { stateKey } = withQueryParams;
-    console.log('woodblock data', data);
     state && stateKey && set(state.getValueProxy(), stateKey, data);
   }, [data, resolveContext, withQueryParams]);
 

@@ -18,7 +18,8 @@ const schema = {
         }
       },
       Query: {
-        url: 'http://localhost:8080/data/carddata',
+        url: '/data/carddata',
+        method: 'get',
       },
       Props: {
         withQueryParams: {

@@ -20,7 +20,7 @@ export default function useResolver(schema: Schema, resolveContext: ResolveConte
   const [resolvedSchema, setResolvedSchema] = useState<Schema>();
 
   useEffect(() => {
-    resolve(schema, resolveContext, (val: any) => { console.log('schema:', val); setResolvedSchema(val);}, triggerUpdate);
+    resolve(schema, resolveContext, setResolvedSchema, triggerUpdate);
   }, [schema, resolveContext]);
 
   return resolvedSchema;

@@ -23,7 +23,9 @@ function App() {
         componentsMap={componentsMap}
         getPageSchema={getPageSchema}
         routeConfigMap={routeConfigMap}
-        networkConfig={{}}
+        networkConfig={{
+          baseURL: 'http://127.0.0.1:8080',
+        }}
       />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
