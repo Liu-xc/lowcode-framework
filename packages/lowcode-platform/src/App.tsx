@@ -6,6 +6,8 @@ import routeConfigMap from './router';
 import MyFirstGrid from './pages/DragPage';
 import './App.css';
 import 'antd/dist/antd.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 
 function App() {
