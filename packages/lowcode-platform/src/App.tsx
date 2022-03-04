@@ -21,6 +21,7 @@ function App() {
           baseURL: 'http://127.0.0.1:8080',
         }}
       />
+      <div draggable>draggable</div>
       <MyFirstGrid />
     </div>
   );
