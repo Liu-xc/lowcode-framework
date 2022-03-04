@@ -3,7 +3,8 @@ import * as componentsMap from 'components';
 import { App as AFApp } from 'app-framework';
 import getPageSchema from './utils/getPageSchema';
 import routeConfigMap from './router';
-import MyFirstGrid from './pages/DragPage';
+import LayoutContainer from './components/LayoutContainer';
+import Test from './components/TestComp';
 import './App.css';
 import 'antd/dist/antd.css';
 import 'react-grid-layout/css/styles.css';
@@ -22,7 +23,30 @@ function App() {
         }}
       />
       <div draggable>draggable</div>
-      <MyFirstGrid />
+      {/* <MyFirstGrid /> */}
+      <div
+        style={{
+          width: '800px'
+        }}
+      >
+        <LayoutContainer
+        isDraggable={true}
+        rowHeight={50}
+        style={{
+          backgroundColor: 'yellow'
+        }}
+        cols={12}
+      />
+      </div>
+      <Test
+        layoutConfigs={{
+          style: {
+            backgroundColor: 'pink'
+          }
+        }}
+      >
+        hello world
+      </Test>
     </div>
   );
 }
