@@ -5,6 +5,7 @@ import getPageSchema from './utils/getPageSchema';
 import routeConfigMap from './router';
 import LayoutContainer from './components/LayoutContainer';
 import Test from './components/TestComp';
+import TestDragItem from './components/TestDragItem';
 import './App.css';
 import 'antd/dist/antd.css';
 import 'react-grid-layout/css/styles.css';
@@ -47,6 +48,7 @@ function App() {
       >
         hello world
       </Test>
+      <TestDragItem>Drag Me</TestDragItem>
     </div>
   );
 }
