@@ -1,4 +1,5 @@
-import { Input } from 'antd';
+import React from 'react';
+import { Input, InputProps } from 'antd';
 import withDragItem from '../../hoc/withDragItem';
 import { ComponentMeta } from '../../types';
 import { createOptions } from './commonConfigs';
@@ -43,6 +44,14 @@ export const InputMeta: ComponentMeta = {
   }
 };
 
-const DraggableInput = withDragItem(Input, InputMeta);
+const TheInput: React.FC<any> = props => {
+  const { type, ...otherProps } = props;
+  if (type === 'textarea') {
+    return <Input.TextArea {...otherProps} />;
+  }
+  return <Input {...props} />;
+}
+
+const DraggableInput = withDragItem(TheInput, InputMeta);
 
 export default DraggableInput;

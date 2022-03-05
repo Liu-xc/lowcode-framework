@@ -31,14 +31,14 @@ export interface ConfigFormProps {
 
 const ConfigPanelForm: React.FC = () => {
   const focusItemId = useSelector((state: RootState) => state.drag.focusItemId);
-  const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]);
+  const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]) || {};
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   const {
     id,
     ComponentType,
-    configForm,
+    configForm = {},
     configProps = {}
   } = configs;
   const {
@@ -96,23 +96,27 @@ const ConfigPanelForm: React.FC = () => {
     );
   }, [getFieldItem]);
 
-  if (!focusItemId || !configs) {
-    return null;
-  }
-
   return (
-    <Form
-      {...formProps}
-      layout="vertical"
-      onValuesChange={onValueChange}
-      form={form}
-      initialValues={{...initialValues, ...configProps}}
-    >
-      <h2>{ComponentType}: {id}</h2>
+    <>
       {
-        fields.map((field: any) => renderField(field))
+        focusItemId ?
+          (
+            <Form
+              {...formProps}
+              layout="vertical"
+              onValuesChange={onValueChange}
+              form={form}
+              initialValues={{...initialValues, ...configProps}}
+            >
+              <h2>{ComponentType}: {id}</h2>
+              {
+                fields.map((field: any) => renderField(field))
+              }
+            </Form>
+          ) :
+          <Form form={form} />
       }
-    </Form>
+    </>
   );
 }
 

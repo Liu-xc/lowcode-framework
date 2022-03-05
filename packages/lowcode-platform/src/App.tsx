@@ -51,7 +51,6 @@ function App() {
           </Sider>
           <Content>
             <div>
-              <Input type="password" />
               <div draggable>{curFocusId}</div>
                 {/* <MyFirstGrid /> */}
                 <div
