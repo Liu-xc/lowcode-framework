@@ -5,8 +5,6 @@ import useResolver from '@/resolver';
 import State from '@/state';
 import PluginManager, { ResolvePlugin } from '@/pluginManager';
 import { v4 as uuidV4 } from 'uuid';
-import testPlugin from '@/pluginManager/test';
-
 // ? globalState在什么时候创建，实例化renderEngine时吗
 
 type SchemaOrSchemaList = Schema | Schema[];
@@ -81,7 +79,7 @@ class RenderEngine {
           return () => <>{child}</>;
         }
         return createNode(child as Schema, state);
-      }).map(ChildNode => <ChildNode key={uuidV4()} />);
+      }).filter(Boolean).map(ChildNode => <ChildNode key={uuidV4()} />);
 
       useEffect(() => {
         if (!resolvedSchema) {
@@ -94,8 +92,20 @@ class RenderEngine {
       const resolveContext = useMemo(() => ({ ...context, resolvedSchema }), [context, resolvedSchema]);
 
       if (!Component) {
-        return <></>;
+        return null;
       }
+
+      if (Component === React.Fragment) {
+        if (!childrenNodes.length) {
+          return null;
+        }
+        return (
+          <>
+            {childrenNodes}
+          </>
+        );
+      }
+
       if (!childrenNodes.length) {
         return <Component resolveContext={resolveContext} />;
       }
