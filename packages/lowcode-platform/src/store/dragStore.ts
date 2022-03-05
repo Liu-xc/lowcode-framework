@@ -1,16 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import { v4 as uuidV4 } from 'uuid';
+import { ConfigFormProps } from '../types';
 export interface DragState {
   [k: string]: any;
   focusItem: {
     [k: string]: any;
     id: string;
+  },
+  newItem: {
+    [k: string]: any;
+    id: string;
+    ComponentType: string;
+    configForm: ConfigFormProps;
   }
 }
 
 const initialState: DragState = {
   focusItem: {
     id: ''
+  },
+  newItem: {
+    id: '',
+    ComponentType: '',
+    configForm: {
+      fields: []
+    }
   }
 };
 
@@ -19,8 +33,14 @@ export const dragSlice = createSlice({
   name: 'drag',
   initialState,
   reducers: {
-    setDraggingItem: (state, { payload }) => {
-      console.log(state, payload.id);
+    setNewItem: (state, { payload = {} }) => {
+      // TODO 这里应该去给组件设置一个id
+      // * 需要看是新建还是啥
+      const id = uuidV4();
+      state.newItem = {
+        id,
+        ...payload
+      }
     },
     setFocusItem: (state, { payload }) => {
       console.log('setFocusItem', payload);
@@ -30,5 +50,5 @@ export const dragSlice = createSlice({
 });
 
 
-export const { setDraggingItem, setFocusItem } = dragSlice.actions;
+export const { setNewItem, setFocusItem } = dragSlice.actions;
 export default dragSlice.reducer;

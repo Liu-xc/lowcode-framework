@@ -80,18 +80,7 @@ function App() {
             </div>
           </Content>
           <Sider theme='light' width={400}>
-            <ConfigPanelForm formProps={{}} fields={[
-              {
-                type: 'Input',
-                props: {
-                  type: 'Number',
-                  placeholder: '输入数字'
-                },
-                fieldProps: {
-                  label: '宽度'
-                }
-              }
-            ]} />
+            <ConfigPanelForm />
           </Sider>
         </Layout>
       </Layout>

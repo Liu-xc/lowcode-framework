@@ -5,9 +5,15 @@ const Test = (props: any) => (<div>{props.children}</div>);
 
 export default withDragItem(Test, {
   ComponentType: 'Test',
-  settings: {
-    label: {
-      type: 'input'
-    }
+  configForm: {
+    fields: [
+      {
+        type: 'Input',
+        props: {},
+        fieldProps: {
+          label: 'hello'
+        }
+      },
+    ]
   }
 });

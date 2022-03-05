@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch } from 'antd';
 import { v4 as uuidV4 } from 'uuid';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 /**
  * field types
@@ -18,46 +20,41 @@ type FieldType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Slider';
 type Field = {
   type: FieldType;
   props: any;
-  fieldProps?: FormItemProps;
+  fieldProps: FormItemProps;
 };
 
 export interface ConfigFormProps {
   fields: Field[],
-  formProps: FormProps;
+  formProps?: FormProps;
 }
 
-const ConfigPanelForm: React.FC<ConfigFormProps> = props => {
+const ConfigPanelForm: React.FC = () => {
+  const configs = useSelector((state: RootState) => state.drag.newItem);
   // TODO 这里应该不需要从外部传参
+  const {
+    id,
+    ComponentType,
+    configForm
+  } = configs;
   const {
     fields,
     formProps
-  } = props;
+  } = configForm;
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}) => {
     switch (type) {
       case 'Input':
-        return <Input {...props} />
+        return <Input key={uuidV4()} {...props} />
       case 'Radio':
-        return <Radio {...props} />
+        return <Radio key={uuidV4()} {...props} />
       case 'Select':
-        {
-          const {
-            selectProps = {},
-            options = []
-          } = props as any;
-          const { Option } = Select;
-          return (
-            <Select {...selectProps}>
-              {
-                options.map((opt: any) => <Option key={opt.label} {...opt} />)
-              }
-            </Select>
-          );
-        }
+        return (
+          <Select key={uuidV4()} {...props} />
+        );
       case 'Slider':
-        return <Slider {...props} />;
+        return <Slider key={uuidV4()} {...props} />;
       case 'Switch':
-        return <Switch {...props} />
+        return <Switch key={uuidV4()} {...props} />
       default:
         return <></>;
     }
@@ -79,9 +76,9 @@ const ConfigPanelForm: React.FC<ConfigFormProps> = props => {
 
   return (
     <Form {...formProps}>
-      <h2>表单</h2>
+      <h2>{ComponentType}: {id}</h2>
       {
-        fields.map(field => renderField(field))
+        fields.map((field: any) => renderField(field))
       }
     </Form>
   );
