@@ -6,7 +6,7 @@ const schema = {
     {
       ComponentType: 'Title',
       Props: {
-        text: 'yanglulu is 1'
+        text: 'Lowcode Platform'
       },
     }
   ],

@@ -9,6 +9,7 @@ import TestDragItem from './components/TestDragItem';
 import ComponentMenu from './components/ComponentMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from './store';
+import ConfigPanelForm from './components/ConfigPanelForm';
 import {
   Layout
 } from 'antd';
@@ -79,9 +80,18 @@ function App() {
             </div>
           </Content>
           <Sider theme='light' width={400}>
-            <div>
-              form
-            </div>
+            <ConfigPanelForm formProps={{}} fields={[
+              {
+                type: 'Input',
+                props: {
+                  type: 'Number',
+                  placeholder: '输入数字'
+                },
+                fieldProps: {
+                  label: '宽度'
+                }
+              }
+            ]} />
           </Sider>
         </Layout>
       </Layout>
