@@ -77,8 +77,8 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
 
   const renderItem = useCallback((i) => {
     const Comp = components[i];
-    return <Comp />;
-  }, [components]);
+    return <Comp id={layout[i].i} />;
+  }, [components, layout]);
 
   const onClickItem = useCallback((id: string) => {
     // TODO 在状态中心应该记录所有的组件id以及组件的meta信息

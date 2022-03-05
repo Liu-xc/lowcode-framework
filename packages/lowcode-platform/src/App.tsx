@@ -11,7 +11,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store';
 import ConfigPanelForm from './components/ConfigPanelForm';
 import {
-  Layout
+  Layout,
+  Input
 } from 'antd';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -30,7 +31,6 @@ function App() {
 
   return (
     <div className="App">
-      
       <Layout>
         <Header style={{ backgroundColor: 'pink' }}>
           <AFApp
@@ -51,6 +51,7 @@ function App() {
           </Sider>
           <Content>
             <div>
+              <Input type="password" />
               <div draggable>{curFocusId}</div>
                 {/* <MyFirstGrid /> */}
                 <div

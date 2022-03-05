@@ -7,6 +7,7 @@ export interface LayoutState {
     [id: string]: {
       [k: string]: any;
       meta: ComponentMeta;
+      configProps?: any;
     };
   }
 }
@@ -27,10 +28,17 @@ export const layoutSlice = createSlice({
     addComp: (state, { payload }) => {
       const { id } = payload;
       state.compInfo[id] = payload;
+    },
+    updateConfigProps: (state, { payload }) => {
+      const {
+        id,
+        value
+      } = payload;
+      state.compInfo[id].configProps = value;
     }
   }
 });
 
 
-export const { setLayout, addComp } = layoutSlice.actions;
+export const { setLayout, addComp, updateConfigProps } = layoutSlice.actions;
 export default layoutSlice.reducer;

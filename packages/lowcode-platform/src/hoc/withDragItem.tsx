@@ -1,8 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ComponentMeta } from '../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 // eslint-disable-next-line react/display-name
 const withDragItem = (Component: React.ComponentType<any>, meta: ComponentMeta) => (props: any) => {
+  const { id } = props;
+  const configProps = useSelector((state: RootState) => state.layout.compInfo[id]?.configProps || {});
   const onDragStart = useCallback((e: any) => {
     // TODO 这里去向redux设置当前的ComponentMeta
     console.log('onDragStart');
@@ -16,9 +20,13 @@ const withDragItem = (Component: React.ComponentType<any>, meta: ComponentMeta) 
     console.log(e);
   }, []);
 
+  useEffect(() => {
+    console.log('configProps', configProps, id)
+  }, [configProps, id]);
+
   return (
     <div draggable={true} onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <Component {...props}/>
+      <Component {...props} {...configProps}/>
     </div>
   );
 }

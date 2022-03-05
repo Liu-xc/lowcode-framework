@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch } from 'antd';
 import { v4 as uuidV4 } from 'uuid';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, updateConfigProps } from '../../store';
+import { debounce } from 'lodash';
 
 /**
  * field types
@@ -31,6 +32,15 @@ export interface ConfigFormProps {
 const ConfigPanelForm: React.FC = () => {
   const focusItemId = useSelector((state: RootState) => state.drag.focusItemId);
   const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]);
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+
+  const onValueChange = debounce(useCallback((value: any) => {
+    dispatch(updateConfigProps({
+      id: focusItemId,
+      value: form.getFieldsValue(true)
+    }));
+  }, [dispatch, focusItemId, form]), 500);
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}) => {
     switch (type) {
@@ -83,6 +93,8 @@ const ConfigPanelForm: React.FC = () => {
     <Form
       {...formProps}
       layout="vertical"
+      onValuesChange={onValueChange}
+      form={form}
     >
       <h2>{ComponentType}: {id}</h2>
       {

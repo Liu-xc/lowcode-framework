@@ -11,11 +11,11 @@ export const InputMeta: ComponentMeta = {
       {
         type: 'Select',
         props: {
-          options: createOptions(['Number', 'Password', 'TextArea', 'Text']),
+          options: createOptions(['number', 'password', 'textarea', 'text']),
         },
         fieldProps: {
           label: '输入框类型',
-          name: 'inputType'
+          name: 'type'
         }
       },
       {
@@ -32,8 +32,8 @@ export const InputMeta: ComponentMeta = {
     ],
     formProps: {
       initialValues: {
-        inputType: '',
-        placeholder: 'this is input'
+        type: '',
+        placeholder: ''
       }
     }
   },
