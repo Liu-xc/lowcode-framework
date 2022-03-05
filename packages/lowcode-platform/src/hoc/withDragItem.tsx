@@ -20,10 +20,6 @@ const withDragItem = (Component: React.ComponentType<any>, meta: ComponentMeta) 
     console.log(e);
   }, []);
 
-  useEffect(() => {
-    console.log('configProps', configProps, id)
-  }, [configProps, id]);
-
   return (
     <div draggable={true} onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <Component {...props} {...configProps}/>

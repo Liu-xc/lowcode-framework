@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch } from 'antd';
 import { v4 as uuidV4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, updateConfigProps } from '../../store';
-import { debounce } from 'lodash';
+import { debounce, cloneDeep } from 'lodash';
 
 /**
  * field types
@@ -34,6 +34,27 @@ const ConfigPanelForm: React.FC = () => {
   const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+
+  const {
+    id,
+    ComponentType,
+    configForm,
+    configProps = {}
+  } = configs;
+  const {
+    fields,
+    formProps,
+    initialValues = {}
+  } = configForm;
+
+  const formValues = useMemo(() => ({ ...configProps, ...initialValues }), [configProps, initialValues]);
+
+  useEffect(() => {
+    // TODO 这里要重新设置formValues
+    form.resetFields();
+    form.setFieldsValue(cloneDeep(formValues));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusItemId, form]);
 
   const onValueChange = debounce(useCallback((value: any) => {
     dispatch(updateConfigProps({
@@ -79,22 +100,13 @@ const ConfigPanelForm: React.FC = () => {
     return null;
   }
 
-  const {
-    id,
-    ComponentType,
-    configForm
-  } = configs;
-  const {
-    fields,
-    formProps
-  } = configForm;
-
   return (
     <Form
       {...formProps}
       layout="vertical"
       onValuesChange={onValueChange}
       form={form}
+      initialValues={{...initialValues, ...configProps}}
     >
       <h2>{ComponentType}: {id}</h2>
       {
