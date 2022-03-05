@@ -1,7 +1,6 @@
-import React from 'react';
-import { Input, InputProps } from 'antd';
+import { Input } from 'antd';
 import withDragItem from '../../hoc/withDragItem';
-import { ComponentMeta, ConfigFormProps } from '../../types';
+import { ComponentMeta } from '../../types';
 import { createOptions } from './commonConfigs';
 
 
@@ -38,6 +37,10 @@ export const InputMeta: ComponentMeta = {
       }
     }
   },
+  droppingItem: {
+    w: 5,
+    h: 3
+  }
 };
 
 const DraggableInput = withDragItem(Input, InputMeta);

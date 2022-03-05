@@ -1,11 +1,20 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import GridLayout, { ReactGridLayoutProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
-import { useDispatch } from 'react-redux';
-import { setFocusItem } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, setFocusItem, addComp } from '../../store';
+import { v4 as uuidV4 } from 'uuid';
+import { DraggableInput } from '../dragComps';
+
+const ComponentsMap: Record<string, React.ComponentType<any>> = {
+  Input: DraggableInput
+}
 
 const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
-  const [layout, setLayout] = useState<Layout[]>([{ i: "a", x: 0, y: 0, w: 1, h: 2, static: true },]);
+  const [layout, setLayout] = useState<Layout[]>([]);
+  const [components, setComponents] = useState<React.ComponentType<any>[]>([]);
   const dispatch = useDispatch();
+  const newItem = useSelector((state: RootState) => state.drag.newItem);
+  const droppingItemLayout = useRef({ i: uuidV4(), w: 2, h: 2 });
   
   // DragEvents ---------
   const onDragStart = useCallback<ItemCallback>(
@@ -35,7 +44,7 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
   ) => {
     console.log('onDragStop');
     // console.log(l, layout, newItem);
-  }, [layout]);
+  }, []);
   
   // DropEvents --------
   const onDrop = useCallback((
@@ -46,12 +55,30 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
     // console.log(l, layout, item);
     // * 由于这里测试用的dragItem的i是固定的，为了演示效果，这里在向layout添加项的时候将i更换为时间戳
     // * 实际上应该直接将l赋值给layout
+    const {
+      id,
+      ComponentType,
+      droppingItem = {},
+      props = {}
+    } = newItem;
+    droppingItemLayout.current = {
+      ...droppingItemLayout.current,
+      ...droppingItem
+    };
     setLayout(prev => {
-      const res = [...prev, { ...item, i: Date.now().toString() }];
-      console.log(res);
+      const res = [...prev, { ...item, i: id }];
+      console.log(res, newItem);
       return res;
     });
-  }, [layout]);
+    setComponents(prev => [...prev, ComponentsMap[ComponentType] || React.Fragment])
+    dispatch(addComp(newItem));
+    dispatch(setFocusItem({ id }));
+  }, [newItem, dispatch]);
+
+  const renderItem = useCallback((i) => {
+    const Comp = components[i];
+    return <Comp />;
+  }, [components]);
 
   const onClickItem = useCallback((id: string) => {
     // TODO 在状态中心应该记录所有的组件id以及组件的meta信息
@@ -67,7 +94,7 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
   return (
     <GridLayout
       isDroppable={true}
-      rowHeight={50}
+      rowHeight={10}
       cols={24}
       {...props}
       layout={layout}
@@ -75,14 +102,15 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
       onDrag={onDrag}
       onDragStop={onDragStop}
       onDrop={onDrop}
+      droppingItem={droppingItemLayout.current}
     >
       {
-        layout.map(l => (
+        layout.map((l, i) => (
           <div
             key={l.i}
             onClick={() => onClickItem(l.i)}
           >
-            {l.i}
+            {renderItem(i)}
           </div>
         ))
       }

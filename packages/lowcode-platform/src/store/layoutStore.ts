@@ -23,10 +23,14 @@ export const layoutSlice = createSlice({
   reducers: {
     setLayout: (state) => {
       console.log(state);
+    },
+    addComp: (state, { payload }) => {
+      const { id } = payload;
+      state.compInfo[id] = payload;
     }
   }
 });
 
 
-export const { setLayout } = layoutSlice.actions;
+export const { setLayout, addComp } = layoutSlice.actions;
 export default layoutSlice.reducer;

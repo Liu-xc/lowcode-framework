@@ -4,7 +4,11 @@ import { ConfigFormProps } from '../components/ConfigPanelForm';
 export interface ComponentMeta {
   ComponentType: string;
   configForm: ConfigFormProps;
-  defaultDroppingItem?: Layout;
+  droppingItem?: {
+    w: number;
+    h: number;
+  };
+  id?: string;
 }
 
 export type {

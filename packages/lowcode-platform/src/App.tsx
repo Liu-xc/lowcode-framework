@@ -26,7 +26,7 @@ const {
 } = Layout;
 
 function App() {
-  const curFocus = useSelector((state: RootState) => state.drag.focusItem);
+  const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);
 
   return (
     <div className="App">
@@ -51,7 +51,7 @@ function App() {
           </Sider>
           <Content>
             <div>
-              <div draggable>{curFocus.id}</div>
+              <div draggable>{curFocusId}</div>
                 {/* <MyFirstGrid /> */}
                 <div
                   style={{
@@ -60,11 +60,9 @@ function App() {
                 >
                   <LayoutContainer
                   isDraggable={true}
-                  rowHeight={50}
                   style={{
                     backgroundColor: 'yellow'
                   }}
-                  cols={12}
                 />
                 </div>
                 <Test

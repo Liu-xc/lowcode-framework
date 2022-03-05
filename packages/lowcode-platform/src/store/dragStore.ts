@@ -3,22 +3,23 @@ import { v4 as uuidV4 } from 'uuid';
 import { ConfigFormProps } from '../types';
 export interface DragState {
   [k: string]: any;
-  focusItem: {
-    [k: string]: any;
-    id: string;
-  },
+  focusItemId: string;
   newItem: {
     [k: string]: any;
     id: string;
     ComponentType: string;
     configForm: ConfigFormProps;
+    props?: any;
+    droppingItem?: {
+      i: string;
+      w: number;
+      h: number;
+    }
   }
 }
 
 const initialState: DragState = {
-  focusItem: {
-    id: ''
-  },
+  focusItemId: '',
   newItem: {
     id: '',
     ComponentType: '',
@@ -44,7 +45,7 @@ export const dragSlice = createSlice({
     },
     setFocusItem: (state, { payload }) => {
       console.log('setFocusItem', payload);
-      state.focusItem.id = payload.id;
+      state.focusItemId = payload.id;
     }
   }
 });

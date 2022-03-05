@@ -29,17 +29,8 @@ export interface ConfigFormProps {
 }
 
 const ConfigPanelForm: React.FC = () => {
-  const configs = useSelector((state: RootState) => state.drag.newItem);
-  // TODO 这里应该不需要从外部传参
-  const {
-    id,
-    ComponentType,
-    configForm
-  } = configs;
-  const {
-    fields,
-    formProps
-  } = configForm;
+  const focusItemId = useSelector((state: RootState) => state.drag.focusItemId);
+  const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]);
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}) => {
     switch (type) {
@@ -74,8 +65,25 @@ const ConfigPanelForm: React.FC = () => {
     );
   }, [getFieldItem]);
 
+  if (!focusItemId || !configs) {
+    return null;
+  }
+
+  const {
+    id,
+    ComponentType,
+    configForm
+  } = configs;
+  const {
+    fields,
+    formProps
+  } = configForm;
+
   return (
-    <Form {...formProps}>
+    <Form
+      {...formProps}
+      layout="vertical"
+    >
       <h2>{ComponentType}: {id}</h2>
       {
         fields.map((field: any) => renderField(field))
