@@ -8,6 +8,8 @@ export interface LayoutState {
       [k: string]: any;
       meta: ComponentMeta;
       configProps?: any;
+      childrenList?: string[];
+      parentId?: string;
     };
   }
 }
@@ -35,10 +37,52 @@ export const layoutSlice = createSlice({
         value
       } = payload;
       state.compInfo[id].configProps = value;
+    },
+    addChild: (state, { payload }) => {
+      const { parentId, childId } = payload;
+      if (!parentId || !childId) {
+        return;
+      }
+      const {
+        childrenList = []
+      } = state.compInfo[parentId];
+      if (!childrenList.includes(childId)) {
+        childrenList.push(childId);
+        state.compInfo[parentId].childrenList = childrenList;
+        state.compInfo[childId].parentId = parentId;
+      }
+    },
+    removeChild: (state, { payload }) => {
+      const { parentId, childId } = payload;
+      if (!parentId || !childId) {
+        return;
+      }
+      const {
+        childrenList = []
+      } = state.compInfo[parentId];
+      if (childrenList.includes(childId)) {
+        const index = childrenList.indexOf(childId);
+        childrenList.splice(index, 1);
+        state.compInfo[parentId].childrenList = childrenList;
+      }
+    },
+    removeComp: (state, { payload }) => {
+      const { id } = payload;
+      if (!id) {
+        return;
+      }
+      Reflect.deleteProperty(state.compInfo, id);
     }
   }
 });
 
 
-export const { setLayout, addComp, updateConfigProps } = layoutSlice.actions;
+export const {
+  setLayout,
+  addComp,
+  updateConfigProps,
+  addChild,
+  removeChild,
+  removeComp
+} = layoutSlice.actions;
 export default layoutSlice.reducer;

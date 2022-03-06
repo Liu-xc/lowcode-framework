@@ -1,0 +1,12 @@
+.dragDiv {
+  position: relative;
+  border: 1px green dashed;
+  padding: 10px;
+  overflow: hidden;
+  .removeIcon {
+    position: absolute;
+    top: 4px;
+    right: -20px;
+    cursor: pointer;
+  }
+}

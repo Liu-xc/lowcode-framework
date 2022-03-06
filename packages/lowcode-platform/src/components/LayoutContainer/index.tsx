@@ -1,13 +1,22 @@
 import React, { useCallback, useState, useRef, useContext } from 'react';
 import GridLayout, { ReactGridLayoutProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setFocusItem, addComp } from '../../store';
+import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
 import { ComponentsMapContext } from '../dragComps';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import './index.scss';
+
+export interface LayoutContainerProps extends ReactGridLayoutProps {
+  containerCompId: string;
+}
 
 const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
 
-const LayoutContainer: React.FC<ReactGridLayoutProps & { ComponentsMap: Record<string, React.ComponentType<any>> }> = props => {
+const LayoutContainer: React.FC<LayoutContainerProps> = props => {
+  const {
+    containerCompId: parentId
+  } = props;
   const ComponentsMap = useContext(ComponentsMapContext);
   const [layout, setLayout] = useState<Layout[]>([]);
   const [components, setComponents] = useState<React.ComponentType<any>[]>([]);
@@ -74,7 +83,7 @@ const LayoutContainer: React.FC<ReactGridLayoutProps & { ComponentsMap: Record<s
       droppingItem = {},
       props = {}
     } = newItem;
-    const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id }];
+    const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id, resizeHandles: ["s", "w", "e", "n", "se"] }];
     setLayout(newLayout);
     droppingItemLayout.current = getDefaultDropItem();
     setComponents(prev => [...prev, ComponentsMap[ComponentType] || React.Fragment])
@@ -98,6 +107,23 @@ const LayoutContainer: React.FC<ReactGridLayoutProps & { ComponentsMap: Record<s
     dispatch(setFocusItem({ id }));
     e.stopPropagation();
   }, [dispatch]);
+
+  const deleteItem = useCallback((id: string, e: any) => {
+    e.stopPropagation();
+    const index = layout.findIndex(l => l.i === id);
+    if (index < 0) {
+      return;
+    }
+    const newLayout = [...layout];
+    newLayout.splice(index, 1);
+    setLayout([...newLayout]);
+    dispatch(removeChild({
+      parentId,
+      childId: id
+    }));
+    dispatch(removeComp({ id }));
+    dispatch(setFocusItem({ id: undefined }))
+  }, [dispatch, parentId, layout]);
   
   return (
     <GridLayout
@@ -119,7 +145,9 @@ const LayoutContainer: React.FC<ReactGridLayoutProps & { ComponentsMap: Record<s
           <div
             key={l.i}
             onClick={(e) => onClickItem(l.i, e)}
+            className="dragDiv"
           >
+            <CloseCircleOutlined onClick={(e) => deleteItem(l.i, e)} className='removeIcon' title='删除' />
             {renderItem(i)}
           </div>
         ))

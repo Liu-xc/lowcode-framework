@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import LayoutContainer from '../components/LayoutContainer';
-import { ComponentsMap } from '../components/dragComps';
 
 // eslint-disable-next-line react/display-name
 const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any) => {
@@ -8,13 +7,13 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
     children,
     layoutConfigs,
     style = {},
+    id,
     ...compProps
   } = props;
 
   const layoutStyle: React.CSSProperties = useMemo(() => (
     {
       minHeight: '200px',
-      border: '1px dashed blue'
     }
   ), []);
 
@@ -23,9 +22,10 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
   return (
     <Component
       {...compProps}
+      id={id}
     >
       {children}
-      <LayoutContainer isBounded={true} {...layoutConfigs} style={computedStyle}/>
+      <LayoutContainer containerCompId={id} isBounded={true} {...layoutConfigs} style={computedStyle}/>
     </Component>
   );
 };

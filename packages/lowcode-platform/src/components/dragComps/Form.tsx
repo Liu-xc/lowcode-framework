@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Form, FormProps } from 'antd';
 import { ComponentMeta } from '../../types';
 import withLayoutContainer from '../../hoc/withLayoutContainer';
@@ -39,12 +39,20 @@ export const FormMeta: ComponentMeta = {
 
 const TheForm: React.FC<FormProps> = (props) => {
   const { style = {}, className } = props;
+  const [form] = Form.useForm();
   const formStyle: React.CSSProperties = useMemo(() => ({
     height: '100%'
   }), []);
   const computedStyle = useMemo(() => ({ ...formStyle, ...style }), [style, formStyle]);
+  const onSubmit = useCallback(() => {
+    console.log(form.getFieldsValue(true));
+  }, [form]);
+
   return (
-    <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} />
+    <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form}>
+      <button onClick={onSubmit}>submit</button>
+      {props.children}
+    </Form>
   );
 }
 

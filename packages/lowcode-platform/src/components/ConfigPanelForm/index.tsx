@@ -108,13 +108,17 @@ const ConfigPanelForm: React.FC = () => {
               form={form}
               initialValues={{...initialValues, ...configProps}}
             >
-              <h2>{ComponentType}: {id}</h2>
+              <h2>{ComponentType}</h2>
               {
                 fields.map((field: any) => renderField(field))
               }
             </Form>
           ) :
-          <Form form={form} />
+          (
+            <Form form={form}>
+              <div>请选择元素进行编辑</div>
+            </Form>
+          )
       }
     </>
   );
