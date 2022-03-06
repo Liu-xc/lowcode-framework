@@ -40,7 +40,7 @@ export const InputMeta: ComponentMeta = {
   },
   droppingItem: {
     w: 5,
-    h: 3
+    h: 4
   }
 };
 

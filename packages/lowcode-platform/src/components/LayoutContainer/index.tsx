@@ -1,18 +1,20 @@
 import React, { useCallback, useState, useRef, useContext } from 'react';
-import GridLayout, { ReactGridLayoutProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
+import GridLayout, { Responsive, ResponsiveProps, ReactGridLayoutProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
 import { ComponentsMapContext } from '../dragComps';
 import { CloseCircleOutlined } from '@ant-design/icons';
+import cls from 'classnames';
 import './index.scss';
 
-export interface LayoutContainerProps extends ReactGridLayoutProps {
+export interface LayoutContainerProps extends ResponsiveProps {
   containerCompId: string;
 }
 
 const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
 const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const {
     containerCompId: parentId
@@ -22,6 +24,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const [components, setComponents] = useState<React.ComponentType<any>[]>([]);
   const dispatch = useDispatch();
   const newItem = useSelector((state: RootState) => state.drag.newItem);
+  const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);
   const droppingItemLayout = useRef(getDefaultDropItem());
   
   // DragEvents ---------
@@ -89,7 +92,8 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     setComponents(prev => [...prev, ComponentsMap[ComponentType] || React.Fragment])
     dispatch(addComp(newItem));
     dispatch(setFocusItem({ id }));
-  }, [newItem, dispatch, ComponentsMap]);
+    dispatch(addChild({ parentId, childId: id }));
+  }, [newItem, dispatch, ComponentsMap, parentId]);
 
   const renderItem = useCallback((i) => {
     const Comp = components[i];
@@ -126,13 +130,17 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   }, [dispatch, parentId, layout]);
   
   return (
-    <GridLayout
+    <ResponsiveGridLayout
       isDroppable={true}
       rowHeight={10}
-      cols={24}
       allowOverlap={false}
+      cols={{ lg: 24, md: 16, sm: 12, xs: 10, xxs: 8 }}
       {...props}
-      layout={layout}
+      layouts={{
+        lg: layout,
+        md: layout,
+        sm: layout,
+      }}
       onDragStart={onDragStart}
       onDrag={onDrag}
       onDragStop={onDragStop}
@@ -145,15 +153,15 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
           <div
             key={l.i}
             onClick={(e) => onClickItem(l.i, e)}
-            className="dragDiv"
+            className={cls("dragDiv", curFocusId === l.i && "focusItem")}
           >
             <CloseCircleOutlined onClick={(e) => deleteItem(l.i, e)} className='removeIcon' title='删除' />
             {renderItem(i)}
           </div>
         ))
       }
-    </GridLayout>
+    </ResponsiveGridLayout>
   );
 }
 
-export default WidthProvider(LayoutContainer);
+export default LayoutContainer;

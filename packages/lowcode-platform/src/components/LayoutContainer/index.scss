@@ -1,12 +1,18 @@
 .dragDiv {
   position: relative;
   border: 1px green dashed;
-  padding: 10px;
+  padding: 16px;
+  padding-right: 24px;
   overflow: hidden;
+
   .removeIcon {
     position: absolute;
     top: 4px;
-    right: -20px;
+    right: 4px;
     cursor: pointer;
   }
 }
+
+.focusItem {
+    border: 1px solid blueviolet !important;
+  }
