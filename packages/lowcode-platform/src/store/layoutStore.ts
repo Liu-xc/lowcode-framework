@@ -25,8 +25,12 @@ export const layoutSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
-    setLayout: (state) => {
-      console.log(state);
+    setLayoutInfo: (state, { payload }) => {
+      const { id, layoutInfo } = payload;
+      if (!id) {
+        return;
+      }
+      state.compInfo[id].layoutInfo = layoutInfo;
     },
     addComp: (state, { payload }) => {
       const { id } = payload;
@@ -84,7 +88,7 @@ export const layoutSlice = createSlice({
 
 
 export const {
-  setLayout,
+  setLayoutInfo,
   addComp,
   updateConfigProps,
   addChild,

@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useRef, useContext } from 'react';
+import React, { useCallback, useState, useRef, useContext, useEffect } from 'react';
 import { Responsive, ResponsiveProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp } from '../../store';
+import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp, setLayoutInfo } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
 import { ComponentsMapContext } from '../';
 import { CloseCircleOutlined } from '@ant-design/icons';
@@ -133,6 +133,13 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     window.dispatchEvent(new Event('resize'));
     setLayout(l);
   }, []);
+
+  useEffect(() => {
+    dispatch(setLayoutInfo({
+      id: parentId,
+      layoutInfo: layout
+    }));
+  }, [parentId, layout, dispatch]);
   
   return (
     <ResponsiveGridLayout

@@ -23,7 +23,7 @@ export const ComponentsMapContext = createContext(ComponentsMap);
 export const CompoMenuOptions = {
   sub: [
     'items',
-    'container'
+    'containers'
   ],
   items: [
     {
@@ -35,7 +35,7 @@ export const CompoMenuOptions = {
       meta: FormMeta
     },
   ],
-  container: [
+  containers: [
     {
       key: 'container',
       meta: ContainerMeta,
