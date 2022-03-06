@@ -54,7 +54,7 @@ export const layoutSlice = createSlice({
     },
     removeChild: (state, { payload }) => {
       const { parentId, childId } = payload;
-      if (!parentId || !childId) {
+      if (!parentId) {
         return;
       }
       const {
@@ -68,10 +68,15 @@ export const layoutSlice = createSlice({
     },
     removeComp: (state, { payload }) => {
       const { id } = payload;
-      if (!id) {
-        return;
+      const { ...newInfo } = state.compInfo;
+      const deleteFunc = (cid: string) => {
+        const child = newInfo[cid];
+        const childrenList = child?.childrenList || [];
+        childrenList.forEach(c => deleteFunc(c));
+        Reflect.deleteProperty(newInfo, cid);
       }
-      Reflect.deleteProperty(state.compInfo, id);
+      deleteFunc(id);
+      state.compInfo = newInfo || {};
     }
   }
 });

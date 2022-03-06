@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useRef, useContext } from 'react';
-import GridLayout, { Responsive, ResponsiveProps, ReactGridLayoutProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
+import { Responsive, ResponsiveProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
@@ -17,7 +17,7 @@ const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
 const ResponsiveGridLayout = WidthProvider(Responsive);
 const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const {
-    containerCompId: parentId
+    containerCompId: parentId,
   } = props;
   const ComponentsMap = useContext(ComponentsMapContext);
   const [layout, setLayout] = useState<Layout[]>([]);
@@ -121,13 +121,18 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     const newLayout = [...layout];
     newLayout.splice(index, 1);
     setLayout([...newLayout]);
-    dispatch(removeChild({
-      parentId,
-      childId: id
-    }));
     dispatch(removeComp({ id }));
+    // dispatch(removeChild({
+    //   parentId,
+    //   childId: id
+    // }));
     dispatch(setFocusItem({ id: undefined }))
   }, [dispatch, parentId, layout]);
+
+  const onResizeStop = useCallback((l) => {
+    window.dispatchEvent(new Event('resize'));
+    setLayout(l);
+  }, []);
   
   return (
     <ResponsiveGridLayout
@@ -146,6 +151,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       onDragStop={onDragStop}
       onDropDragOver={onDragOver}
       onDrop={onDrop}
+      onResizeStop={onResizeStop}
       droppingItem={droppingItemLayout.current}
     >
       {
