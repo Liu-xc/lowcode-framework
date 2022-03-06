@@ -52,6 +52,6 @@ const TheInput: React.FC<any> = props => {
   return <Input {...props} />;
 }
 
-const DraggableInput = withDragItem(withField(TheInput), withFieldMeta(InputMeta));
+const DraggableInput = withField(TheInput);
 
 export default DraggableInput;
