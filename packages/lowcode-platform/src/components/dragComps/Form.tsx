@@ -49,7 +49,7 @@ const TheForm: React.FC<FormProps> = (props) => {
   }, [form]);
 
   return (
-    <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form}>
+    <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
       {props.children}
       <button onClick={onSubmit}>submit</button>
     </Form>
