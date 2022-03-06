@@ -25,7 +25,7 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
       {...compProps}
     >
       {children}
-      <LayoutContainer {...layoutConfigs} style={computedStyle}/>
+      <LayoutContainer isBounded={true} {...layoutConfigs} style={computedStyle}/>
     </Component>
   );
 };

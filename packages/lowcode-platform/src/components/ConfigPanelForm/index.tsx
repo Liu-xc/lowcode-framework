@@ -42,8 +42,8 @@ const ConfigPanelForm: React.FC = () => {
     configProps = {}
   } = configs;
   const {
-    fields,
-    formProps,
+    fields = [],
+    formProps = {},
     initialValues = {}
   } = configForm;
 

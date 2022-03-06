@@ -53,7 +53,7 @@ function App() {
               <div draggable>{curFocusId}</div>
                 <Test
                   layoutConfigs={{
-                    
+                    allowOverlap: false
                 }}
                 style={{
                   backgroundColor: 'pink',
