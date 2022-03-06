@@ -18,7 +18,7 @@ import { debounce, cloneDeep } from 'lodash';
 
 type FieldType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Slider';
 
-type Field = {
+export type Field = {
   type: FieldType;
   props: any;
   fieldProps: FormItemProps;

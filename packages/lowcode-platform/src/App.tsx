@@ -3,7 +3,6 @@ import * as componentsMap from 'components';
 import { App as AFApp } from 'app-framework';
 import getPageSchema from './utils/getPageSchema';
 import routeConfigMap from './router';
-import LayoutContainer from './components/LayoutContainer';
 import Test from './components/TestComp';
 import TestDragItem from './components/TestDragItem';
 import ComponentMenu from './components/ComponentMenu';
@@ -52,25 +51,14 @@ function App() {
           <Content>
             <div>
               <div draggable>{curFocusId}</div>
-                {/* <MyFirstGrid /> */}
-                <div
-                  style={{
-                    width: '800px'
-                  }}
-                >
-                  <LayoutContainer
-                  isDraggable={true}
-                  style={{
-                    backgroundColor: 'yellow'
-                  }}
-                />
-                </div>
                 <Test
                   layoutConfigs={{
-                    style: {
-                      backgroundColor: 'pink'
-                    }
-                  }}
+                    
+                }}
+                style={{
+                  backgroundColor: 'pink',
+                  minHeight: '400px'
+                }}
                 >
                   hello world
                 </Test>

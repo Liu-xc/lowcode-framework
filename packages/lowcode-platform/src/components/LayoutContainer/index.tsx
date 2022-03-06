@@ -1,20 +1,19 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useContext } from 'react';
 import GridLayout, { ReactGridLayoutProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setFocusItem, addComp } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
-import { DraggableInput } from '../dragComps';
+import { ComponentsMapContext } from '../dragComps';
 
-const ComponentsMap: Record<string, React.ComponentType<any>> = {
-  Input: DraggableInput
-}
+const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
 
-const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
+const LayoutContainer: React.FC<ReactGridLayoutProps & { ComponentsMap: Record<string, React.ComponentType<any>> }> = props => {
+  const ComponentsMap = useContext(ComponentsMapContext);
   const [layout, setLayout] = useState<Layout[]>([]);
   const [components, setComponents] = useState<React.ComponentType<any>[]>([]);
   const dispatch = useDispatch();
   const newItem = useSelector((state: RootState) => state.drag.newItem);
-  const droppingItemLayout = useRef({ i: uuidV4(), w: 2, h: 2 });
+  const droppingItemLayout = useRef(getDefaultDropItem());
   
   // DragEvents ---------
   const onDragStart = useCallback<ItemCallback>(
@@ -22,29 +21,42 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
       l,
       oldItem,
       newItem,
+      p,
+      e
     ) => {
     // * 拖拽开始时应该获取到元素的信息
       console.log('handleDragStart');
+      e.stopPropagation();
       // console.log(oldItem, newItem);
     }, []);
   
   const onDrag = useCallback((
     l,
     oldItem,
-    newItem
+    newItem,
+    p,
+    e
   ) => {
     console.log('onDrag');
+    e.stopPropagation();
     // console.log(oldItem, newItem);
   }, []);
 
   const onDragStop = useCallback((
     l,
     oldItem,
-    newItem
+    newItem,
+    p,
+    e
   ) => {
     console.log('onDragStop');
+    e.stopPropagation();
     // console.log(l, layout, newItem);
   }, []);
+
+  const onDragOver = useCallback(() => {
+    return newItem.droppingItem || { w: 2, h: 2 };
+  }, [newItem]);
   
   // DropEvents --------
   const onDrop = useCallback((
@@ -61,15 +73,13 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
       droppingItem = {},
       props = {}
     } = newItem;
-    droppingItemLayout.current = {
-      ...droppingItemLayout.current,
-      ...droppingItem
-    };
+    
     setLayout(prev => {
       const res = [...prev, { ...item, i: id }];
       console.log(res, newItem);
       return res;
     });
+    droppingItemLayout.current = getDefaultDropItem();
     setComponents(prev => [...prev, ComponentsMap[ComponentType] || React.Fragment])
     dispatch(addComp(newItem));
     dispatch(setFocusItem({ id }));
@@ -101,8 +111,10 @@ const LayoutContainer: React.FC<ReactGridLayoutProps> = props => {
       onDragStart={onDragStart}
       onDrag={onDrag}
       onDragStop={onDragStop}
+      onDropDragOver={onDragOver}
       onDrop={onDrop}
       droppingItem={droppingItemLayout.current}
+      allowOverlap={true}
     >
       {
         layout.map((l, i) => (

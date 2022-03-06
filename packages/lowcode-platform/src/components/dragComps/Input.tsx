@@ -3,7 +3,7 @@ import { Input, InputProps } from 'antd';
 import withDragItem from '../../hoc/withDragItem';
 import { ComponentMeta } from '../../types';
 import { createOptions } from './commonConfigs';
-
+import { withField, withFieldMeta } from '../../hoc/withField';
 
 export const InputMeta: ComponentMeta = {
   ComponentType: 'Input',
@@ -52,6 +52,6 @@ const TheInput: React.FC<any> = props => {
   return <Input {...props} />;
 }
 
-const DraggableInput = withDragItem(TheInput, InputMeta);
+const DraggableInput = withDragItem(withField(TheInput), withFieldMeta(InputMeta));
 
 export default DraggableInput;

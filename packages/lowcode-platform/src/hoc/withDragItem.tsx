@@ -18,6 +18,7 @@ const withDragItem = (Component: React.ComponentType<any>, meta: ComponentMeta) 
     // ? 好像不应该是这里去设置吧，应该是在LayoutContainer那一层
     console.log('onDragEnd');
     console.log(e);
+    e.stopPropagation();
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import { Layout } from 'react-grid-layout';
-import { ConfigFormProps } from '../components/ConfigPanelForm';
+import { ConfigFormProps, Field } from '../components/ConfigPanelForm';
 
 export interface ComponentMeta {
   ComponentType: string;
@@ -12,5 +12,6 @@ export interface ComponentMeta {
 }
 
 export type {
-  ConfigFormProps
+  ConfigFormProps,
+  Field
 }
