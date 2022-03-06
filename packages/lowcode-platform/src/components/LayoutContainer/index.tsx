@@ -3,7 +3,7 @@ import { Responsive, ResponsiveProps, ItemCallback, Layout, WidthProvider } from
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
-import { ComponentsMapContext } from '../dragComps';
+import { ComponentsMapContext } from '../';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import cls from 'classnames';
 import './index.scss';
@@ -122,10 +122,10 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     newLayout.splice(index, 1);
     setLayout([...newLayout]);
     dispatch(removeComp({ id }));
-    // dispatch(removeChild({
-    //   parentId,
-    //   childId: id
-    // }));
+    dispatch(removeChild({
+      parentId,
+      childId: id
+    }));
     dispatch(setFocusItem({ id: undefined }))
   }, [dispatch, parentId, layout]);
 

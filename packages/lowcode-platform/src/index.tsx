@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import {
   ComponentsMapContext,
   ComponentsMap
-} from './components/dragComps';
+} from './components';
 import './index.css';
 import App from './App';
 

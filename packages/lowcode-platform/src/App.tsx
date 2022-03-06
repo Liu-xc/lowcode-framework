@@ -54,11 +54,11 @@ function App() {
                 <Test
                   layoutConfigs={{
                     allowOverlap: false
-                }}
-                style={{
-                  backgroundColor: 'pink',
-                  minHeight: '400px'
-                }}
+                  }}
+                  style={{
+                    backgroundColor: 'pink',
+                    minHeight: '400px'
+                  }}
                 >
                   hello world
                 </Test>

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Menu, MenuProps } from 'antd';
-import { CompoMenuOptions } from '../dragComps';
+import { CompoMenuOptions } from '../../components';
 import { ComponentMeta } from '../../types';
 import { setNewItem } from '../../store';
 import { useDispatch } from 'react-redux';

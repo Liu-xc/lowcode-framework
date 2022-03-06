@@ -50,8 +50,8 @@ const TheForm: React.FC<FormProps> = (props) => {
 
   return (
     <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form}>
-      <button onClick={onSubmit}>submit</button>
       {props.children}
+      <button onClick={onSubmit}>submit</button>
     </Form>
   );
 }

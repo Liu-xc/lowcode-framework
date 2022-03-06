@@ -10,6 +10,7 @@ export interface LayoutState {
       configProps?: any;
       childrenList?: string[];
       parentId?: string;
+      layoutInfo?: any[];
     };
   }
 }
