@@ -5,7 +5,7 @@ import { ComponentMeta } from '../../types';
 import { createOptions } from './commonConfigs';
 import { withField, withFieldMeta } from '../../hoc/withField';
 
-export const InputMeta: ComponentMeta = {
+const meta: ComponentMeta = {
   ComponentType: 'Input',
   configForm: {
     fields: [
@@ -44,6 +44,8 @@ export const InputMeta: ComponentMeta = {
   }
 };
 
+export const InputMeta: ComponentMeta = withFieldMeta(meta);
+
 const TheInput: React.FC<any> = props => {
   const { type, ...otherProps } = props;
   if (type === 'textarea') {
@@ -52,6 +54,4 @@ const TheInput: React.FC<any> = props => {
   return <Input {...props} />;
 }
 
-const DraggableInput = withField(TheInput);
-
-export default DraggableInput;
+export default withDragItem(withField(TheInput));

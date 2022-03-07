@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Form, FormProps } from 'antd';
 import { ComponentMeta } from '../../types';
 import withLayoutContainer from '../../hoc/withLayoutContainer';
+import withDragItem from '../../hoc/withDragItem';
 import cls from 'classnames'
 import './Form.scss';
 
@@ -51,9 +52,9 @@ const TheForm: React.FC<FormProps> = (props) => {
   return (
     <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
       {props.children}
-      <button onClick={onSubmit}>submit</button>
+      <button style={{ marginTop: '-10px' }} onClick={onSubmit}>submit</button>
     </Form>
   );
 }
 
-export default withLayoutContainer(TheForm);
+export default withDragItem(withLayoutContainer(TheForm));

@@ -47,7 +47,7 @@ const ConfigPanelForm: React.FC = () => {
     initialValues = {}
   } = configForm;
 
-  const formValues = useMemo(() => ({ ...configProps, ...initialValues }), [configProps, initialValues]);
+  const formValues = useMemo(() => ({ ...initialValues, ...configProps }), [configProps, initialValues]);
 
   useEffect(() => {
     // TODO 这里要重新设置formValues
@@ -56,12 +56,12 @@ const ConfigPanelForm: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusItemId, form]);
 
-  const onValueChange = debounce(useCallback((value: any) => {
+  const onValueChange = debounce(useCallback(() => {
     dispatch(updateConfigProps({
       id: focusItemId,
       value: form.getFieldsValue(true)
     }));
-  }, [dispatch, focusItemId, form]), 500);
+  }, [dispatch, focusItemId, form]), 1000);
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}) => {
     switch (type) {
@@ -106,7 +106,7 @@ const ConfigPanelForm: React.FC = () => {
               layout="vertical"
               onValuesChange={onValueChange}
               form={form}
-              initialValues={{...initialValues, ...configProps}}
+              initialValues={initialValues}
             >
               <h2>{ComponentType}</h2>
               {

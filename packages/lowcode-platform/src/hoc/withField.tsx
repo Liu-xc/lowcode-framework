@@ -30,7 +30,11 @@ const FieldConfigs: Field[] = [
 // eslint-disable-next-line react/display-name
 const withField = (Component: React.ComponentType<any>) => (props: any) => {
   const { fieldLabel, fieldKey, ...compProps } = props;
-
+  const compName = Component.displayName;
+  if (compName === 'Switch') {
+    compProps.checked = compProps.value;
+    Reflect.deleteProperty(compProps, 'value');
+  }
   return (
     <Item label={fieldLabel} name={fieldKey}>
       <Component {...compProps}/>
