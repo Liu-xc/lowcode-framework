@@ -6,6 +6,7 @@ import DraggableForm, { FormMeta } from './dragComps/Form';
 import DraggableSwitch, { SwitchMeta } from './dragComps/Switch';
 import DraggableRadioGroup, { RadioGroupMeta } from './dragComps/RadioGroup';
 import DraggableSelect, { SelectMeta } from './dragComps/Select';
+import DraggableCheckboxGroup, { CheckboxGroupMeta } from './dragComps/CheckboxGroup';
 
 export {
   DraggableInput,
@@ -18,6 +19,9 @@ export {
   RadioGroupMeta,
   DraggableSelect,
   SelectMeta,
+  DraggableCheckboxGroup,
+  CheckboxGroupMeta,
+
   DragContainer
 }
 
@@ -27,6 +31,7 @@ export const ComponentsMap: Record<string, React.ComponentType<any>> = {
   Switch: DraggableSwitch,
   RadioGroup: DraggableRadioGroup,
   Select: DraggableSelect,
+  CheckboxGroup: DraggableCheckboxGroup,
   Container: DragContainer
 }
 
@@ -57,6 +62,10 @@ export const CompoMenuOptions = {
     {
       key: 'select',
       meta: SelectMeta
+    },
+    {
+      key: 'checkbox-group',
+      meta: CheckboxGroupMeta
     }
   ],
   containers: [
