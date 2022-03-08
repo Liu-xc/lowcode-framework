@@ -4,6 +4,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, updateConfigProps } from '../../store';
 import { debounce, cloneDeep } from 'lodash';
+import OptionCreator from './OptionCreator';
 
 /**
  * field types
@@ -16,7 +17,7 @@ import { debounce, cloneDeep } from 'lodash';
  * - Slider
 */
 
-type FieldType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Slider';
+type FieldType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Slider' | 'Options';
 
 export type Field = {
   type: FieldType;
@@ -63,7 +64,14 @@ const ConfigPanelForm: React.FC = () => {
     }));
   }, [dispatch, focusItemId, form]), 1000);
 
-  const getFieldItem = useCallback((type: FieldType, props: any = {}) => {
+  const changeFieldValue = useCallback((field, value) => {
+    const formValue = cloneDeep(form.getFieldsValue(true));
+    formValue[field] = value;
+    form.setFieldsValue(formValue);
+    onValueChange();
+  }, [form, onValueChange]);
+
+  const getFieldItem = useCallback((type: FieldType, props: any = {}, fieldProps) => {
     switch (type) {
       case 'Input':
         return <Input key={uuidV4()} {...props} />
@@ -77,10 +85,12 @@ const ConfigPanelForm: React.FC = () => {
         return <Slider key={uuidV4()} {...props} />;
       case 'Switch':
         return <Switch key={uuidV4()} {...props} />
+      case 'Options':
+        return <OptionCreator key={uuidV4()} {...props} options={(form.getFieldValue(fieldProps.name) || []).concat(configProps[fieldProps.name] || []).slice()} setFieldValue={debounce((value: any) => changeFieldValue(fieldProps.name, value), 100)} />
       default:
         return <></>;
     }
-  }, []);
+  }, [changeFieldValue, form]);
 
   const renderField = useCallback((field: Field) => {
     const {
@@ -91,7 +101,7 @@ const ConfigPanelForm: React.FC = () => {
 
     return (
       <Form.Item key={uuidV4()} {...fieldProps}>
-        {getFieldItem(type, props)}
+        {getFieldItem(type, props, fieldProps)}
       </Form.Item>
     );
   }, [getFieldItem]);
