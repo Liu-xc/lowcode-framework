@@ -1,6 +1,13 @@
 .draggableForm {
+  position: relative;
   height: max-content;
   .react-grid-layout {
     min-height: 100% !important;
+  }
+
+  .submitButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }

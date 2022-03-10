@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Form, FormProps } from 'antd';
+import { Form, FormProps, Button } from 'antd';
 import { ComponentMeta } from '../../types';
 import withLayoutContainer from '../../hoc/withLayoutContainer';
 import withDragItem from '../../hoc/withDragItem';
@@ -46,13 +46,17 @@ const TheForm: React.FC<FormProps> = (props) => {
   }), []);
   const computedStyle = useMemo(() => ({ ...formStyle, ...style }), [style, formStyle]);
   const onSubmit = useCallback(() => {
-    console.log(form.getFieldsValue(true));
+    form.validateFields().then(() => {
+      console.log(form.getFieldsValue(true));
+    }).catch(() => {
+      console.error('校验不通过')
+    })
   }, [form]);
 
   return (
     <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
       {props.children}
-      <button style={{ marginTop: '-10px' }} onClick={onSubmit}>submit</button>
+      <Button type='primary' className='submitButton' onClick={onSubmit}>submit</Button>
     </Form>
   );
 }
