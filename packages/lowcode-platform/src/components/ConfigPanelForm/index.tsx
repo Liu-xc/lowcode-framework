@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch } from 'antd';
+import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch, Button } from 'antd';
 import { v4 as uuidV4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, updateConfigProps } from '../../store';
 import { debounce, cloneDeep } from 'lodash';
 import OptionCreator from './OptionCreator';
-import ValidationFields from './ValidationFields';
+import ValidationFields, { RuleType } from './ValidationFields';
 
 /**
  * field types
@@ -29,7 +29,7 @@ export type Field = {
 export interface ConfigFormProps {
   fields: Field[],
   formProps?: FormProps;
-  rules?: string[];
+  rules?: RuleType[];
 }
 
 const ConfigPanelForm: React.FC = () => {
@@ -60,7 +60,7 @@ const ConfigPanelForm: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusItemId, form]);
 
-  const onValueChange = debounce(useCallback(() => {
+  const confirmForm = debounce(useCallback(() => {
     dispatch(updateConfigProps({
       id: focusItemId,
       value: form.getFieldsValue(true)
@@ -71,8 +71,7 @@ const ConfigPanelForm: React.FC = () => {
     const formValue = cloneDeep(form.getFieldsValue(true));
     formValue[field] = value;
     form.setFieldsValue(formValue);
-    onValueChange();
-  }, [form, onValueChange]);
+  }, [form]);
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}, fieldProps) => {
     switch (type) {
@@ -117,7 +116,6 @@ const ConfigPanelForm: React.FC = () => {
             <Form
               {...formProps}
               layout="vertical"
-              onValuesChange={onValueChange}
               form={form}
               initialValues={initialValues}
             >
@@ -130,6 +128,7 @@ const ConfigPanelForm: React.FC = () => {
                   <ValidationFields value={(configProps.fieldRules || [])[0]} rules={rules} setFieldValue={(value: any) => changeFieldValue('fieldRules', value)} /> :
                   <></>
               }
+              <Button type='primary' onClick={confirmForm} > 确认 </Button>
             </Form>
           ) :
           (

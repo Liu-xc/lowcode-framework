@@ -18,7 +18,8 @@ const meta: ComponentMeta = {
       initialValues: {
         options: []
       }
-    }
+    },
+    rules: ['message', 'required']
   },
   droppingItem: {
     w: 5,

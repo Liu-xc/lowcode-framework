@@ -4,14 +4,12 @@ import { App as AFApp } from 'app-framework';
 import getPageSchema from './utils/getPageSchema';
 import routeConfigMap from './router';
 import Test from './components/TestComp';
-import TestDragItem from './components/TestDragItem';
 import ComponentMenu from './components/ComponentMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from './store';
 import ConfigPanelForm from './components/ConfigPanelForm';
 import {
   Layout,
-  Input
 } from 'antd';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -20,18 +18,15 @@ import 'react-resizable/css/styles.css';
 
 const {
   Header,
-  Footer,
   Sider,
   Content
 } = Layout;
 
 function App() {
-  const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);
-
   return (
     <div className="App">
-      <Layout>
-        <Header style={{ backgroundColor: 'pink' }}>
+      <Layout style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+        <Header style={{ backgroundColor: 'yellow' }}>
           <AFApp
             componentsMap={componentsMap}
             getPageSchema={getPageSchema}
@@ -48,30 +43,14 @@ function App() {
               title='组件菜单'
             />
           </Sider>
-          <Content>
-            <div>
-              <div draggable>{curFocusId}</div>
-                <Test
-                  layoutConfigs={{
-                    allowOverlap: false
-                  }}
-                  style={{
-                    backgroundColor: 'pink',
-                    minHeight: '400px'
-                  }}
-                >
-                  hello world
-                </Test>
-                <TestDragItem>Drag Me</TestDragItem>
-            </div>
+          <Content style={{ overflowY: 'auto', display: 'flex', minHeight: '100%' }}>
+            <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%' }}/>
           </Content>
           <Sider theme='light' width={400}>
             <ConfigPanelForm />
           </Sider>
         </Layout>
       </Layout>
-      
-      
     </div>
   );
 }

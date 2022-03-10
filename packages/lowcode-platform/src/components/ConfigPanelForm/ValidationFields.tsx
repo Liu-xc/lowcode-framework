@@ -14,7 +14,7 @@ import { v4 as uuidV4 } from 'uuid';
 // 可以在meta中配置,说明能够使用哪几种校验,然后Validation根据列表是否有进行渲染
 // 默认有message和required
 
-type RuleType = 'max' | 'required' | 'len' | 'message' | 'pattern' | 'min';
+export type RuleType = 'max' | 'required' | 'len' | 'message' | 'pattern' | 'min';
 
 const ValidationFields: React.FC<any> = props => {
   const { setFieldValue, rules, value } = props;
@@ -29,9 +29,9 @@ const ValidationFields: React.FC<any> = props => {
     setMap((prev: any) => ({ ...prev, [key]: value }));
   }, []);
 
-  const updateFormData = debounce(useCallback(() => {
+  const updateFormData = useCallback(() => {
     setFieldValue([map]);
-  }, [map, setFieldValue]), 500);
+  }, [map, setFieldValue]);
 
   const render = (rule: RuleType) => {
     switch (rule) {

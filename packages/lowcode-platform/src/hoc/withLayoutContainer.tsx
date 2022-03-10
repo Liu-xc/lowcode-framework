@@ -8,6 +8,7 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
     layoutConfigs,
     style = {},
     id,
+    containerStyle = {},
     ...compProps
   } = props;
 
@@ -23,6 +24,7 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
     <Component
       {...compProps}
       id={id}
+      style={containerStyle}
     >
       {children}
       <LayoutContainer containerCompId={id} isBounded={true} {...layoutConfigs} style={computedStyle}/>
