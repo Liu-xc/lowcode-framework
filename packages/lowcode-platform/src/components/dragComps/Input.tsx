@@ -36,7 +36,8 @@ const meta: ComponentMeta = {
         type: '',
         placeholder: ''
       }
-    }
+    },
+    rules: ['required', 'message']
   },
   droppingItem: {
     w: 5,

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, updateConfigProps } from '../../store';
 import { debounce, cloneDeep } from 'lodash';
 import OptionCreator from './OptionCreator';
+import ValidationFields from './ValidationFields';
 
 /**
  * field types
@@ -28,6 +29,7 @@ export type Field = {
 export interface ConfigFormProps {
   fields: Field[],
   formProps?: FormProps;
+  rules?: string[];
 }
 
 const ConfigPanelForm: React.FC = () => {
@@ -45,7 +47,8 @@ const ConfigPanelForm: React.FC = () => {
   const {
     fields = [],
     formProps = {},
-    initialValues = {}
+    initialValues = {},
+    rules = []
   } = configForm;
 
   const formValues = useMemo(() => ({ ...initialValues, ...configProps }), [configProps, initialValues]);
@@ -90,7 +93,7 @@ const ConfigPanelForm: React.FC = () => {
       default:
         return <></>;
     }
-  }, [changeFieldValue, form]);
+  }, [changeFieldValue, form, configProps]);
 
   const renderField = useCallback((field: Field) => {
     const {
@@ -121,6 +124,11 @@ const ConfigPanelForm: React.FC = () => {
               <h2>{ComponentType}</h2>
               {
                 fields.map((field: any) => renderField(field))
+              }
+              {
+                rules.length ?
+                  <ValidationFields value={(configProps.fieldRules || [])[0]} rules={rules} setFieldValue={(value: any) => changeFieldValue('fieldRules', value)} /> :
+                  <></>
               }
             </Form>
           ) :
