@@ -13,23 +13,14 @@ export const FormMeta: ComponentMeta = {
       {
         type: 'Input',
         props: {
-          type: 'number'
+          type: '',
+          placeholder: '请输入表单标题'
         },
         fieldProps: {
-          name: 'width',
-          label: 'form宽度'
+          name: 'title',
+          label: '表单标题'
         }
       },
-      {
-        type: 'Input',
-        props: {
-          type: 'number'
-        },
-        fieldProps: {
-          name: 'height',
-          label: 'form高度'
-        }
-      }
     ]
   },
   droppingItem: {
@@ -39,7 +30,7 @@ export const FormMeta: ComponentMeta = {
 }
 
 const TheForm: React.FC<FormProps> = (props) => {
-  const { style = {}, className } = props;
+  const { style = {}, className, title } = props;
   const [form] = Form.useForm();
   const formStyle: React.CSSProperties = useMemo(() => ({
     height: '100%'
@@ -55,6 +46,7 @@ const TheForm: React.FC<FormProps> = (props) => {
 
   return (
     <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
+      <h3>{title}</h3>
       {props.children}
       <Button type='primary' className='submitButton' onClick={onSubmit}>submit</Button>
     </Form>

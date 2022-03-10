@@ -1,22 +1,12 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch, Button } from 'antd';
 import { v4 as uuidV4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, updateConfigProps } from '../../store';
-import { debounce, cloneDeep } from 'lodash';
-import OptionCreator from './OptionCreator';
+import { debounce, throttle, cloneDeep } from 'lodash';
+import OptionCreator, { Option } from './OptionCreator';
 import ValidationFields, { RuleType } from './ValidationFields';
-
-/**
- * field types
- * - Radio
- * - Input
- * - Button
- * - Select
- * - InputNumber
- * - Switch
- * - Slider
-*/
+import './index.scss';
 
 type FieldType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Slider' | 'Options';
 
@@ -35,11 +25,7 @@ export interface ConfigFormProps {
 const ConfigPanelForm: React.FC = () => {
   const focusItemId = useSelector((state: RootState) => state.drag.focusItemId);
   const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]) || {};
-  const dispatch = useDispatch();
-  const [form] = Form.useForm();
-
   const {
-    id,
     ComponentType,
     configForm = {},
     configProps = {}
@@ -50,6 +36,10 @@ const ConfigPanelForm: React.FC = () => {
     initialValues = {},
     rules = []
   } = configForm;
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+  const [options, setOptions] = useState<Option[]>(configProps.options || []);
+  const [validateMap, setValidateMap] = useState((configProps.fieldRules || [])[0] || {});
 
   const formValues = useMemo(() => ({ ...initialValues, ...configProps }), [configProps, initialValues]);
 
@@ -60,18 +50,27 @@ const ConfigPanelForm: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusItemId, form]);
 
-  const confirmForm = debounce(useCallback(() => {
+  const confirmForm = throttle(useCallback(() => {
     dispatch(updateConfigProps({
       id: focusItemId,
       value: form.getFieldsValue(true)
     }));
-  }, [dispatch, focusItemId, form]), 1000);
+    console.log(form.getFieldsValue(true));
+  }, [dispatch, focusItemId, form]), 200);
 
   const changeFieldValue = useCallback((field, value) => {
     const formValue = cloneDeep(form.getFieldsValue(true));
     formValue[field] = value;
     form.setFieldsValue(formValue);
   }, [form]);
+
+  useEffect(() => {
+    changeFieldValue('options', options);
+  }, [options, changeFieldValue]);
+
+  useEffect(() => {
+    changeFieldValue('fieldRules', [validateMap]);
+  }, [changeFieldValue, validateMap]);
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}, fieldProps) => {
     switch (type) {
@@ -88,11 +87,18 @@ const ConfigPanelForm: React.FC = () => {
       case 'Switch':
         return <Switch key={uuidV4()} {...props} />
       case 'Options':
-        return <OptionCreator key={uuidV4()} {...props} options={(form.getFieldValue(fieldProps.name) || []).concat(configProps[fieldProps.name] || []).slice()} setFieldValue={debounce((value: any) => changeFieldValue(fieldProps.name, value), 100)} />
+        return (
+          <OptionCreator
+            key={uuidV4()}
+            {...props}
+            setOptions={setOptions}
+            options={options}
+          />
+        );
       default:
         return <></>;
     }
-  }, [changeFieldValue, form, configProps]);
+  }, [options]);
 
   const renderField = useCallback((field: Field) => {
     const {
@@ -111,24 +117,31 @@ const ConfigPanelForm: React.FC = () => {
   return (
     <>
       {
-        focusItemId ?
+        focusItemId && fields.length ?
           (
             <Form
               {...formProps}
+              className="configForm"
               layout="vertical"
               form={form}
               initialValues={initialValues}
             >
-              <h2>{ComponentType}</h2>
+              <h2 className="title">{ComponentType}</h2>
               {
                 fields.map((field: any) => renderField(field))
               }
               {
                 rules.length ?
-                  <ValidationFields value={(configProps.fieldRules || [])[0]} rules={rules} setFieldValue={(value: any) => changeFieldValue('fieldRules', value)} /> :
+                  <ValidationFields
+                    map={validateMap}
+                    setMap={setValidateMap}
+                    rules={rules}
+                  /> :
                   <></>
               }
-              <Button type='primary' onClick={confirmForm} > 确认 </Button>
+              <div className='footer'>
+                <Button className='' block type='primary' onClick={confirmForm} > 确认 </Button>
+              </div>
             </Form>
           ) :
           (

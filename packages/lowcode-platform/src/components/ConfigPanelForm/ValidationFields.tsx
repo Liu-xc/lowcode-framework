@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { Input, Switch, Form, } from 'antd';
+import React, { useState, useCallback, useEffect, useImperativeHandle } from 'react';
+import { Input, Switch, Form, Button, } from 'antd';
 import { debounce } from 'lodash';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -16,22 +16,14 @@ import { v4 as uuidV4 } from 'uuid';
 
 export type RuleType = 'max' | 'required' | 'len' | 'message' | 'pattern' | 'min';
 
-const ValidationFields: React.FC<any> = props => {
-  const { setFieldValue, rules, value } = props;
-  const [map, setMap] = useState<any>(value || {});
-
-  useEffect(() => {
-    setMap(value || {});
-    console.log('validate', value);
-  }, [value]);
+// eslint-disable-next-line react/display-name
+const ValidationFields: React.FC<any> = (props: any) => {
+  const { rules, map, setMap } = props;
 
   const setMapValue = useCallback((key, value) => {
     setMap((prev: any) => ({ ...prev, [key]: value }));
-  }, []);
+  }, [setMap]);
 
-  const updateFormData = useCallback(() => {
-    setFieldValue([map]);
-  }, [map, setFieldValue]);
 
   const render = (rule: RuleType) => {
     switch (rule) {
@@ -56,7 +48,7 @@ const ValidationFields: React.FC<any> = props => {
   return (
     <div>
       {rules.map(render)}
-      <button onClick={updateFormData}>确定</button>
+      {/* <Button type='primary' onClick={updateFormData}>确定</Button> */}
     </div>
   )
 }

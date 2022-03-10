@@ -36,6 +36,7 @@ const meta: ComponentMeta = {
         unCheckedChildren: ''
       }
     },
+    rules: []
   },
   droppingItem: {
     w: 4,

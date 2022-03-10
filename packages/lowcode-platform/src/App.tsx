@@ -43,7 +43,7 @@ function App() {
               title='组件菜单'
             />
           </Sider>
-          <Content style={{ overflowY: 'auto', display: 'flex', minHeight: '100%' }}>
+          <Content style={{ overflowY: 'auto', overflowX: 'hidden', display: 'flex', minHeight: '100%' }}>
             <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%' }}/>
           </Content>
           <Sider theme='light' width={400}>
