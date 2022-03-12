@@ -44,7 +44,7 @@ export const dragSlice = createSlice({
       }
     },
     setFocusItem: (state, { payload }) => {
-      console.log('setFocusItem', payload);
+      // console.log('setFocusItem', payload);
       state.focusItemId = payload.id;
     }
   }

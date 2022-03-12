@@ -37,7 +37,6 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       e
     ) => {
     // * 拖拽开始时应该获取到元素的信息
-      console.log('handleDragStart');
       e.stopPropagation();
       // console.log(oldItem, newItem);
     }, []);
@@ -49,7 +48,6 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     p,
     e
   ) => {
-    console.log('onDrag');
     e.stopPropagation();
     // console.log(oldItem, newItem);
   }, []);
@@ -61,7 +59,6 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     p,
     e
   ) => {
-    console.log('onDragStop');
     e.stopPropagation();
     setLayout(l);
     // console.log(l, layout, newItem);
@@ -76,7 +73,6 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     l,
     item
   ) => {
-    console.log('onDrop', item, l);
     // console.log(l, layout, item);
     // * 由于这里测试用的dragItem的i是固定的，为了演示效果，这里在向layout添加项的时候将i更换为时间戳
     // * 实际上应该直接将l赋值给layout
@@ -105,7 +101,6 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
 
     // TODO 点击拖拽子元素时应该聚焦到这个元素
     // * 将状态中心的对象设置为该子元素
-    console.log(`click item: ${id}`);
 
     // 在遍历渲染子元素时，如果id和状态中心的当前id相同，就渲染一个高亮边框
     dispatch(setFocusItem({ id }));

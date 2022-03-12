@@ -44,6 +44,10 @@ const ConfigPanelForm: React.FC = () => {
   const formValues = useMemo(() => ({ ...initialValues, ...configProps }), [configProps, initialValues]);
 
   useEffect(() => {
+    setValidateMap((configProps.fieldRules || [])[0] || {});
+  }, [configProps.fieldRules]);
+
+  useEffect(() => {
     // TODO 这里要重新设置formValues
     form.resetFields();
     form.setFieldsValue(cloneDeep(formValues));
@@ -55,7 +59,7 @@ const ConfigPanelForm: React.FC = () => {
       id: focusItemId,
       value: form.getFieldsValue(true)
     }));
-    console.log(form.getFieldsValue(true));
+    // console.log(form.getFieldsValue(true));
   }, [dispatch, focusItemId, form]), 200);
 
   const changeFieldValue = useCallback((field, value) => {

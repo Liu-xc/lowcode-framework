@@ -1,5 +1,5 @@
 function utils(str: string): string {
-  console.log(str);
+  // console.log(str);
   return `${str} - hello - world !`;
 }
 

@@ -13,7 +13,7 @@ const {
 const ComponentMenu: React.FC<MenuProps> = props => {
   const dispatch = useDispatch();
   const onDragStart = useCallback((type: string, meta: ComponentMeta) => {
-    console.log(type, meta);
+    // console.log(type, meta);
     dispatch(setNewItem(meta));
   }, [dispatch]);
 

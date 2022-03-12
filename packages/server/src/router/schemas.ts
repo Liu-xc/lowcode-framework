@@ -7,7 +7,7 @@ const router = new Router({
 
 router.get('/:schemaName', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Next) => {
   ctx.body = 'hello';
-  console.log(ctx.url);
+  // console.log(ctx.url);
   await next();
 });
 
