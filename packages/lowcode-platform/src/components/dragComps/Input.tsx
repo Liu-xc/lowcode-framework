@@ -48,11 +48,11 @@ const meta: ComponentMeta = {
 export const InputMeta: ComponentMeta = withFieldMeta(meta);
 
 const TheInput: React.FC<any> = props => {
-  const { type, ...otherProps } = props;
+  const { type, children, ...otherProps } = props;
   if (type === 'textarea') {
     return <Input.TextArea {...otherProps} />;
   }
-  return <Input {...props} />;
+  return <Input {...otherProps} type={type} />;
 }
 
 export default withDragItem(withField(TheInput));

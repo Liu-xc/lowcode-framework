@@ -23,19 +23,6 @@ export default function resolve(
 
   const originKeys = Object.keys(schema);
 
-  // const { $_if_$, _if_ } = schema;
-  // const show = $_if_$ ? execute(schemaContext, $_if_$, () => triggerUpdate()) : true;
-  // schema._if_ = show || _if_;
-  // if (!schema._if_) {
-  //   // ? 为什么要将Schema设置为空
-  //   setResolvedSchema(cloneDeep(emptySchema));
-  //   return;
-  // }
-
-  // // ? 为什么要删除
-  // Reflect.deleteProperty(schema, '$_if_$');
-  // Reflect.deleteProperty(schema, '_if_');
-
   originKeys.forEach(k => {
     const isExpression = isComputedKey(k);
     const isComponent = isComponentKey(k);
@@ -61,11 +48,9 @@ export default function resolve(
       resolvedSchema[resolvedKey] = val.map((v, i) => {
         // * 是schema
         if (!Array.isArray(v) && typeof v === 'object') {
-          resolve(v, schemaContext, (updated: Schema) => val[i] = updated, triggerUpdate);
-        } else {
-          // * 是普通值
-          val[i] = v;
+          resolve(v, schemaContext, (updated: Schema) => v = updated, triggerUpdate);
         }
+        return v;
       })
     } else if (typeof val === 'object') {
       resolve(
@@ -80,6 +65,5 @@ export default function resolve(
       resolvedSchema[resolvedKey] = schema[k];
     }
   });
-
-  setResolvedSchema(resolvedSchema);
+  setResolvedSchema(cloneDeep(resolvedSchema));
 }

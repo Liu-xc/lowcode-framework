@@ -10,7 +10,7 @@ import './index.scss';
 
 export interface LayoutContainerProps extends ResponsiveProps {
   containerCompId: string;
-  layoutInfo: any[]
+  layoutInfo: any[],
 }
 
 const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
@@ -19,7 +19,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const {
     containerCompId: parentId,
-    layoutInfo = []
+    layoutInfo = [],
   } = props;
   const ComponentsMap = useContext(ComponentsMapContext);
   const [layout, setLayout] = useState<Layout[]>(layoutInfo.filter(Boolean).length ? layoutInfo : []);
@@ -84,7 +84,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       droppingItem = {},
       props = {}
     } = newItem;
-    const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id, resizeHandles: ["s", "w", "e", "n", "se"] }];
+    const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id, resizeHandles: ["s", "w", "e", "n", "se"], ComponentType }];
     setLayout(newLayout);
     droppingItemLayout.current = getDefaultDropItem();
     setComponents(prev => [...prev, ComponentsMap[ComponentType] || React.Fragment])
@@ -94,9 +94,10 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   }, [newItem, dispatch, ComponentsMap, parentId]);
 
   const renderItem = useCallback((i) => {
-    const Comp = components[i];
+    const l = layout[i] as any;
+    const Comp = ComponentsMap[l.ComponentType];
     return <Comp id={layout[i].i} />;
-  }, [components, layout]);
+  }, [layout, ComponentsMap]);
 
   const onClickItem = useCallback((id: string, e: any) => {
     // TODO 在状态中心应该记录所有的组件id以及组件的meta信息

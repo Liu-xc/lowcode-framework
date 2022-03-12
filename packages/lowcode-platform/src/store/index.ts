@@ -18,7 +18,7 @@ const commonKeys: Record<string, string> = {
 };
 
 const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) => {
-  const compInfo = cloneDeep(compInfoMap[id]);
+  const compInfo = compInfoMap[id];
   const {
     ComponentType,
   } = compInfo;
@@ -28,27 +28,32 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) =>
     res[schemaKey] = compInfo[k];
   });
   if (isContainer) {
-    res.children = (compInfo.childrenList || []).map((childId: string) => {
+    const { childrenList } = compInfo;
+    childrenList && (res.children = (childrenList || []).map((childId: string) => {
       return generateComp(childId, compInfoMap, {});
-    });
+    }));
     res.props = res.props || {};
-    const layoutInfo = cloneDeep(compInfo.layoutInfo);
+    const { layoutInfo } = compInfo;
     res.props.layoutInfo = layoutInfo.filter(Boolean);
+  } else {
+    Reflect.deleteProperty(res, 'children');
   }
+  res.props = res.props || {};
+  res.props.id = id;
   return res;
 }
 
 export const exportSchema = () => {
-  const res: Record<string, any> = {};
   const storeState = cloneDeep(store.getState())
   const { layout } = storeState;
   const compInfo = layout.compInfo;
   const ids = Object.keys(compInfo);
   const rootId = ids.find(id => !compInfo[id].parentId);
   // console.log(rootId);
-  generateComp(rootId!, compInfo, res);
-  console.log(res);
-  return res;
+  const res = generateComp(rootId!, compInfo, {});
+  res.props.layoutInfo = compInfo[rootId as string].layoutInfo;
+  console.log(res, rootId);
+  return cloneDeep(res);
 }
 
 export type RootState = ReturnType<typeof store.getState>;
