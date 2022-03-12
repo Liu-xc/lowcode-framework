@@ -3,6 +3,7 @@ import { ComponentMeta } from '../types';
 
 export interface LayoutState {
   [k: string]: any;
+  readonly: boolean;
   compInfo: {
     [id: string]: {
       [k: string]: any;
@@ -17,6 +18,7 @@ export interface LayoutState {
 }
 
 const initialState: LayoutState = {
+  readonly: false,
   compInfo: {
     rootContainer: {
       ComponentType: 'Container',
@@ -44,6 +46,7 @@ export const layoutSlice = createSlice({
     replaceLayoutStore: (state, { payload }) => {
       const { layoutStore } = payload;
       state.compInfo = layoutStore.compInfo;
+      state.readonly = layoutStore.readonly;
     },
     setLayoutInfo: (state, { payload }) => {
       const { id = 'rootContainer', layoutInfo } = payload;
@@ -109,6 +112,10 @@ export const layoutSlice = createSlice({
       }
       deleteFunc(id);
       state.compInfo = newInfo || {};
+    },
+    setReadonly: (state, { payload }) => {
+      const { readonly } = payload;
+      state.readonly = readonly;
     }
   }
 });
@@ -122,6 +129,7 @@ export const {
   updateConfigProps,
   addChild,
   removeChild,
-  removeComp
+  removeComp,
+  setReadonly
 } = layoutSlice.actions;
 export default layoutSlice.reducer;

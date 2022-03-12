@@ -176,9 +176,9 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
           <div
             key={l.i}
             onClick={(e) => onClickItem(l.i, e)}
-            className={cls("dragDiv", curFocusId === l.i && "focusItem")}
+            className={cls("dragDiv", curFocusId === l.i && "focusItem", l.static && !l.isDraggable && 'readonly')}
           >
-            <CloseCircleOutlined onClick={(e) => deleteItem(l.i, e)} className='removeIcon' title='删除' />
+            {!(l.static && !l.isDraggable) && <CloseCircleOutlined onClick={(e) => deleteItem(l.i, e)} className='removeIcon' title='删除' />}
             {renderItem(i)}
           </div>
         ))

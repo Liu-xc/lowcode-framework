@@ -6,14 +6,14 @@ import {
   Layout,
   Button
 } from 'antd';
-import { exportSchema, exportLayoutStore } from './store';
+import store, { exportSchema, exportLayoutStore, RootState } from './store';
 
 import {ComponentsMap} from './components';
 import { App as AFApp, RenderEngine } from 'app-framework';
 // import getPageSchema from './utils/getPageSchema';
 import routeConfigMap from './router';
 import IndexSchema, { layoutStore } from './schemas/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { replaceLayoutStore } from './store';
 
 import './App.css';
@@ -31,12 +31,10 @@ const {
 } = Layout;
 
 function App() {
-  const [show, setShow] = useState(false);
-  const [schema, setSchema] = useState({});
+  const readonly = useSelector((state: RootState) => state.layout.readonly);
   const handleClick = useCallback(() => {
-    setSchema(exportSchema());
-    setShow(true);
     exportLayoutStore();
+    exportSchema(true);
   }, []);
 
   const dispatch = useDispatch();
@@ -56,12 +54,12 @@ function App() {
           </h1>
         </Header>
         <Layout>
-          <Sider theme='light'>
+          {!readonly && (<Sider theme='light'>
             <ComponentMenu
               mode="inline"
               title='组件菜单'
             />
-          </Sider>
+          </Sider>)}
           <Content style={{ overflowY: 'auto', overflowX: 'hidden', display: 'flex', minHeight: '100%' }}>
             {/* <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%',  overflowY: 'auto', overflowX: 'hidden' }}/> */}
             {/* <AFApp
@@ -80,9 +78,13 @@ function App() {
               return Nodes;
             })}
           </Content>
-          <Sider theme='light' width={400}>
-            <ConfigPanelForm />
-          </Sider>
+          {
+            !readonly && (
+              <Sider theme='light' width={400}>
+                <ConfigPanelForm />
+              </Sider>
+            )
+          }
         </Layout>
       </Layout>
     </div>

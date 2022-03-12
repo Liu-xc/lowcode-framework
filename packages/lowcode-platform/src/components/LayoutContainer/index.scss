@@ -10,11 +10,17 @@
     right: 4px;
     cursor: pointer;
   }
+
+  &.readonly {
+    border: none !important;
+  }
+
+  &.focusItem {
+    border: 1px solid blueviolet;
+  }
 }
 
-.focusItem {
-    border: 1px solid blueviolet !important;
-  }
+
 
 .ant-form-item {
   margin-bottom: 10px !important;

@@ -31,8 +31,8 @@ const schema = {
         "y": 0,
         "i": "6f077871-ae3d-4589-827e-2947b1ccdd02",
         "moved": false,
-        "static": false,
-        "isDraggable": true,
+        "static": true,
+        "isDraggable": false,
         "resizeHandles": [
           "s",
           "w",
@@ -55,8 +55,8 @@ const schema = {
               "y": 0,
               "i": "660127b8-05de-4d3f-a83e-706fc2f40e1b",
               "moved": false,
-              "static": false,
-              "isDraggable": true,
+              "static": true,
+              "isDraggable": false,
               "resizeHandles": [
                 "s",
                 "w",
@@ -73,14 +73,14 @@ const schema = {
               "props": {
                 "layoutInfo": [
                   {
-                    "w": 4,
+                    "w": 8,
                     "h": 4,
                     "x": 0,
                     "y": 0,
                     "i": "792768b9-db16-438e-9b85-88385002e295",
                     "moved": false,
-                    "static": false,
-                    "isDraggable": true,
+                    "static": true,
+                    "isDraggable": false,
                     "resizeHandles": [
                       "s",
                       "w",
@@ -121,6 +121,7 @@ const schema = {
 };
 
 export const layoutStore = {
+  "readonly": true,
   "compInfo": {
     "rootContainer": {
       "ComponentType": "Container",
@@ -143,8 +144,8 @@ export const layoutStore = {
           "y": 0,
           "i": "6f077871-ae3d-4589-827e-2947b1ccdd02",
           "moved": false,
-          "static": false,
-          "isDraggable": true,
+          "static": true,
+          "isDraggable": false,
           "resizeHandles": [
             "s",
             "w",
@@ -180,8 +181,8 @@ export const layoutStore = {
           "y": 0,
           "i": "660127b8-05de-4d3f-a83e-706fc2f40e1b",
           "moved": false,
-          "static": false,
-          "isDraggable": true,
+          "static": true,
+          "isDraggable": false,
           "resizeHandles": [
             "s",
             "w",
@@ -223,14 +224,14 @@ export const layoutStore = {
       "parentId": "6f077871-ae3d-4589-827e-2947b1ccdd02",
       "layoutInfo": [
         {
-          "w": 4,
+          "w": 8,
           "h": 4,
           "x": 0,
           "y": 0,
           "i": "792768b9-db16-438e-9b85-88385002e295",
           "moved": false,
-          "static": false,
-          "isDraggable": true,
+          "static": true,
+          "isDraggable": false,
           "resizeHandles": [
             "s",
             "w",

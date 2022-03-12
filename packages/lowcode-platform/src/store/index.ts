@@ -17,7 +17,7 @@ const commonKeys: Record<string, string> = {
   configProps: 'props'
 };
 
-const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) => {
+const generateComp = (id: string, compInfoMap: any, res: Record<string, any>, readonly: boolean) => {
   const compInfo = compInfoMap[id];
   const {
     ComponentType,
@@ -31,30 +31,33 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) =>
     const { childrenList } = compInfo;
     res.props = res.props || {};
     const { layoutInfo = [], layoutChildCompTypes = [] } = compInfo;
+    const layoutChildren = childrenList.map((layoutChildId: string) => generateComp(layoutChildId, compInfoMap, {}, readonly));
     res.props.layoutInfo = layoutInfo.filter(Boolean);
-    const layoutChildren = childrenList.map((layoutChildId: string) => generateComp(layoutChildId, compInfoMap, {}));
     res.props.layoutChildren = layoutChildren;
     res.props.layoutChildCompTypes = layoutChildCompTypes;
+    if (readonly) {
+      res.props.layoutInfo = res.props.layoutInfo.map((l: any) => ({ ...l, static: true, isDraggable: false }));
+    }
   }
   res.props = res.props || {};
   res.props.id = id;
   return res;
 }
 
-export const exportSchema = () => {
+export const exportSchema = (readonly = false) => {
   const storeState = cloneDeep(store.getState())
   const { layout } = storeState;
   const compInfo = layout.compInfo;
   const ids = Object.keys(compInfo);
   const rootId = ids.find(id => !compInfo[id].parentId);
-  const res = generateComp(rootId!, compInfo, {});
-  res.props.layoutInfo = compInfo[rootId as string].layoutInfo;
+  const res = generateComp(rootId!, compInfo, {}, readonly);
   console.log('exportSchema', res);
   return cloneDeep(res);
 }
 
-export const exportLayoutStore = () => {
+export const exportLayoutStore = (readonly = false) => {
   const storeState = cloneDeep(store.getState().layout);
+  storeState.readonly = readonly;
   console.log('layoutStore', storeState);
   return storeState;
 }
