@@ -146,7 +146,7 @@ const ConfigPanelForm: React.FC = () => {
           ) :
           (
             <Form form={form}>
-              <div>请选择元素进行编辑</div>
+              <h3 style={{ textAlign: 'center', paddingTop: '10px' }}>请选择元素进行编辑</h3>
             </Form>
           )
       }

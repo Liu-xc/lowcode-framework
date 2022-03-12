@@ -44,7 +44,7 @@ function App() {
             />
           </Sider>
           <Content style={{ overflowY: 'auto', overflowX: 'hidden', display: 'flex', minHeight: '100%' }}>
-            <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%' }}/>
+            <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%',  overflowY: 'auto', overflowX: 'hidden' }}/>
           </Content>
           <Sider theme='light' width={400}>
             <ConfigPanelForm />
