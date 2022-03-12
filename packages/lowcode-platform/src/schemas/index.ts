@@ -5,7 +5,7 @@ const schema = {
   children: [
     {
       ComponentType: 'Title',
-      Props: {
+      props: {
         text: 'Lowcode Platform'
       },
     }

@@ -5,7 +5,7 @@ const schema = {
   children: [
     {
       ComponentType: 'Title',
-      Props: {
+      props: {
         $text$: '(()=>{if (!sv.name){sv.age=12;sv.name="alice"}; return `${sv.name} is ${sv.age}`})()'
       },
     },
@@ -13,15 +13,15 @@ const schema = {
       ComponentType: 'BizCard',
       children: {
         ComponentType: 'Title',
-        Props: {
+        props: {
           $text$: 'sv.bizCard'
         }
       },
-      Query: {
+      query: {
         url: '/data/carddata',
         method: 'get',
       },
-      Props: {
+      props: {
         withQueryParams: {
           stateKey: 'bizCard',
         }

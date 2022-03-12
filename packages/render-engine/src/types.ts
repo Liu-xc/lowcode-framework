@@ -1,7 +1,7 @@
 export interface Schema {
   [k: string]: any;
   ComponentType?: string;
-  Props?: any;
+  props?: any;
   children?: Schema[] | Schema | string | number;
   _IF_?: string | boolean;
 }

@@ -2,11 +2,11 @@
  * 关键词
  * - ComponentType
  * - children
- * - Props
- * - Query
- * - Adaptor
- * - StateKey
- * - Permission
+ * - props
+ * - query
+ * - adaptor
+ * - stateKey
+ * - permission
  * - _If_
  *
  * 特殊Key
@@ -19,11 +19,11 @@
 export enum SchemaKeywords {
   ComponentType = 'ComponentType',
   children = 'children',
-  Props = 'Props',
-  Query = 'Query',
-  Adaptor = 'Adaptor',
-  StateKey = 'StateKey',
-  Permission = 'Permission',
+  props = 'props',
+  query = 'query',
+  adaptor = 'adaptor',
+  stateKey = 'stateKey',
+  permission = 'permission',
   _If_ = '_If_',
 }
 

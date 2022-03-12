@@ -14,7 +14,7 @@ const ContainerComps = ['Container', 'Form'];
 const commonKeys: Record<string, string> = {
   ComponentType: 'ComponentType',
   id: 'id',
-  configProps: 'Props'
+  configProps: 'props'
 };
 
 const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) => {
@@ -31,8 +31,8 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) =>
     res.children = (compInfo.childrenList || []).map((childId: string) => {
       return generateComp(childId, compInfoMap, {});
     });
-    res.Props = res.Props || {};
-    res.Props.layoutInfo = compInfo.layout;
+    res.props = res.props || {};
+    res.props.layoutInfo = compInfo.layout;
   }
   return res;
 }

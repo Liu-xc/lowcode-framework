@@ -9,7 +9,7 @@ export interface WithQueryProps {
   error: Error;
   retry: () => void;
   queryAdaptor: (res: any) => any;
-  Query: RequestConfig;
+  query: RequestConfig;
 }
 
 export interface withQueryParams {
@@ -22,7 +22,7 @@ export interface withQueryParams {
 */
 const withQuery = (Component: React.ComponentType<any>): React.FC<any> => props => {
   const {
-    Query,
+    query,
     children,
     queryAdaptor,
     withQueryParams,
@@ -30,7 +30,7 @@ const withQuery = (Component: React.ComponentType<any>): React.FC<any> => props 
     ...otherProps
   } = props;
 
-  const { loading, error, data, retry } = useObtainData(Query, { queryAdaptor });
+  const { loading, error, data, retry } = useObtainData(query, { queryAdaptor });
 
   useEffect(() => {
     const { state } = resolveContext as ResolveContext;
