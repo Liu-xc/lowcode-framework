@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef, useContext, useEffect } from 'react';
 import { Responsive, ResponsiveProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp, setLayoutInfo } from '../../store';
+import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp, setLayoutInfo, setLayoutChildCompTypes } from '../../store';
 import { v4 as uuidV4 } from 'uuid';
 import { ComponentsMapContext } from '../';
 import { CloseCircleOutlined } from '@ant-design/icons';
@@ -11,6 +11,8 @@ import './index.scss';
 export interface LayoutContainerProps extends ResponsiveProps {
   containerCompId: string;
   layoutInfo: any[],
+  layoutChildren: any[],
+  layoutChildCompTypes: string[];
 }
 
 const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
@@ -20,10 +22,12 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const {
     containerCompId: parentId,
     layoutInfo = [],
+    layoutChildren = [],
+    layoutChildCompTypes = []
   } = props;
   const ComponentsMap = useContext(ComponentsMapContext);
   const [layout, setLayout] = useState<Layout[]>(layoutInfo.filter(Boolean).length ? layoutInfo : []);
-  const [components, setComponents] = useState<React.ComponentType<any>[]>([]);
+  const [childCompTypes, setChildCompTypes] = useState<string[]>(layoutChildCompTypes);
   const dispatch = useDispatch();
   const newItem = useSelector((state: RootState) => state.drag.newItem);
   const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);
@@ -84,20 +88,21 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       droppingItem = {},
       props = {}
     } = newItem;
-    const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id, resizeHandles: ["s", "w", "e", "n", "se"], ComponentType }];
+    const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id, resizeHandles: ["s", "w", "e", "n", "se"] }];
     setLayout(newLayout);
     droppingItemLayout.current = getDefaultDropItem();
-    setComponents(prev => [...prev, ComponentsMap[ComponentType] || React.Fragment])
+    setChildCompTypes(prev => [...prev, ComponentType])
     dispatch(addComp(newItem));
     dispatch(setFocusItem({ id }));
     dispatch(addChild({ parentId, childId: id }));
-  }, [newItem, dispatch, ComponentsMap, parentId]);
+  }, [newItem, dispatch, parentId]);
 
   const renderItem = useCallback((i) => {
     const l = layout[i] as any;
-    const Comp = ComponentsMap[l.ComponentType];
-    return <Comp id={layout[i].i} />;
-  }, [layout, ComponentsMap]);
+    const { props: childProps } = layoutChildren.find((c) => c.id === l.i) || {};
+    const Comp = ComponentsMap[childCompTypes[i]];
+    return <Comp id={layout[i].i} {...(childProps || {})} />;
+  }, [layout, ComponentsMap, layoutChildren, childCompTypes]);
 
   const onClickItem = useCallback((id: string, e: any) => {
     // TODO 在状态中心应该记录所有的组件id以及组件的meta信息
@@ -117,7 +122,9 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       return;
     }
     const newLayout = [...layout];
+    const newCompTypes = [...childCompTypes];
     newLayout.splice(index, 1);
+    newCompTypes.splice(index, 1);
     setLayout([...newLayout]);
     dispatch(removeComp({ id }));
     dispatch(removeChild({
@@ -125,7 +132,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       childId: id
     }));
     dispatch(setFocusItem({ id: undefined }))
-  }, [dispatch, parentId, layout]);
+  }, [dispatch, parentId, layout, childCompTypes]);
 
   const onResizeStop = useCallback((l) => {
     window.dispatchEvent(new Event('resize'));
@@ -135,9 +142,13 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   useEffect(() => {
     dispatch(setLayoutInfo({
       id: parentId,
-      layoutInfo: layout
+      layoutInfo: layout,
     }));
-  }, [parentId, layout, dispatch]);
+    dispatch(setLayoutChildCompTypes({
+      id: parentId,
+      layoutChildCompTypes: childCompTypes
+    }));
+  }, [parentId, layout, dispatch, childCompTypes]);
   
   return (
     <ResponsiveGridLayout

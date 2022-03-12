@@ -11,6 +11,7 @@ export interface LayoutState {
       childrenList?: string[];
       parentId?: string;
       layoutInfo?: any[];
+      layoutChildCompTypes?: string[]
     };
   }
 }
@@ -31,6 +32,13 @@ export const layoutSlice = createSlice({
         return;
       }
       state.compInfo[id].layoutInfo = layoutInfo;
+    },
+    setLayoutChildCompTypes: (state, { payload }) => {
+      const { id, layoutChildCompTypes } = payload;
+      if (!id) {
+        return;
+      }
+      state.compInfo[id].layoutChildCompTypes = layoutChildCompTypes;
     },
     addComp: (state, { payload }) => {
       const { id } = payload;
@@ -89,6 +97,7 @@ export const layoutSlice = createSlice({
 
 export const {
   setLayoutInfo,
+  setLayoutChildCompTypes,
   addComp,
   updateConfigProps,
   addChild,

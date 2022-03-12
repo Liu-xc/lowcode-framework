@@ -10,6 +10,8 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
     id,
     containerStyle = {},
     layoutInfo,
+    layoutChildren,
+    layoutChildCompTypes,
     ...compProps
   } = props;
 
@@ -28,7 +30,15 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
       style={containerStyle}
     >
       {children}
-      <LayoutContainer containerCompId={id} isBounded={true} layoutInfo={layoutInfo} {...layoutConfigs} style={computedStyle}/>
+      <LayoutContainer
+        containerCompId={id}
+        isBounded={true}
+        layoutInfo={layoutInfo}
+        layoutChildren={layoutChildren}
+        layoutChildCompTypes={layoutChildCompTypes}
+        {...layoutConfigs}
+        style={computedStyle}
+      />
     </Component>
   );
 };

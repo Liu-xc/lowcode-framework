@@ -29,14 +29,12 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) =>
   });
   if (isContainer) {
     const { childrenList } = compInfo;
-    childrenList && (res.children = (childrenList || []).map((childId: string) => {
-      return generateComp(childId, compInfoMap, {});
-    }));
     res.props = res.props || {};
-    const { layoutInfo } = compInfo;
+    const { layoutInfo = [], layoutChildCompTypes = [] } = compInfo;
     res.props.layoutInfo = layoutInfo.filter(Boolean);
-  } else {
-    Reflect.deleteProperty(res, 'children');
+    const layoutChildren = childrenList.map((layoutChildId: string) => generateComp(layoutChildId, compInfoMap, {}));
+    res.props.layoutChildren = layoutChildren;
+    res.props.layoutChildCompTypes = layoutChildCompTypes;
   }
   res.props = res.props || {};
   res.props.id = id;
