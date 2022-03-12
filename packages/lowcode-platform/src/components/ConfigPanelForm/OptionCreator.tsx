@@ -16,33 +16,36 @@ export type Option = {
 // eslint-disable-next-line react/display-name
 const OptionCreator: React.FC<any> = (props: any) => {
   const { options, setOptions } = props;
-  const [innerOptions, setInnerOptions] = useState(options);
+  const [innerOptions, setInnerOptions] = useState(options || []);
   const onChange = useCallback((v: string, i: number, value = true) => {
     if (value) {
-      options[i].value = v;
+      innerOptions[i].value = v;
     } else {
-      options[i].label = v;
+      innerOptions[i].label = v;
     }
-    setInnerOptions([...options]);
-  }, [options]);
+    setInnerOptions([...innerOptions]);
+  }, [innerOptions]);
 
   const addOption = useCallback(() => {
-    setOptions((prev: any) => [...prev, { label: '', value: '' }]);
-  }, [setOptions]);
+    if (innerOptions.every((o: any) => o.label && o.value)) {
+      setInnerOptions([...innerOptions, { label: '', value: '' }]);
+    }
+  }, [innerOptions]);
 
   const handleBlur = useCallback(() => {
-    setOptions([...innerOptions]);
+    setOptions([...innerOptions].filter((o: any) => o.label && o.value));
   }, [setOptions, innerOptions]);
 
   const deleteOption = useCallback((i) => {
-    options.splice(i, 1);
-    setOptions(options.slice());
+    const newOptions = options.slice();
+    newOptions.splice(i, 1);
+    setOptions(newOptions.filter((o: any) => o.label && o.value));
   }, [options, setOptions]);
 
   return (
     <div>
       {
-        options.map((c: any, i: any) => {
+        innerOptions.map((c: any, i: any) => {
           const { label, value } = c;
           return (
             <div key={i} className="option">
@@ -52,7 +55,7 @@ const OptionCreator: React.FC<any> = (props: any) => {
               </div>
               <div className='optionInput'>
                 value
-                <Input defaultValue={value} onBlur={handleBlur} onChange={(v) => onChange(v.target.value, i)} />
+                <Input defaultValue={value} disabled={!innerOptions[i].label} onBlur={handleBlur} onChange={(v) => onChange(v.target.value, i)} />
               </div>
               <Button icon={<DeleteOutlined />} type='primary' danger onClick={() => deleteOption(i)} />
             </div>

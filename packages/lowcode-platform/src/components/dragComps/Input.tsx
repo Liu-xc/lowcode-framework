@@ -41,7 +41,7 @@ const meta: ComponentMeta = {
   },
   droppingItem: {
     w: 5,
-    h: 4
+    h: 3
   }
 };
 
