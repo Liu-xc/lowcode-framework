@@ -89,7 +89,7 @@ class RenderEngine {
         setComponent(() => componentCreator(resolvedSchema, componentsMap, hocList, context))
       }, [resolvedSchema]);
 
-      const resolveContext = useMemo(() => ({ ...context, resolvedSchema }), [context, resolvedSchema]);
+      const resolvecontext = useMemo(() => ({ ...context, resolvedSchema }), [context, resolvedSchema]);
 
       if (!Component) {
         return null;
@@ -107,9 +107,9 @@ class RenderEngine {
       }
 
       if (!childrenNodes.length) {
-        return <Component resolveContext={resolveContext} />;
+        return <Component resolvecontext={resolvecontext} />;
       }
-      return <Component children={childrenNodes} resolveContext={resolveContext} />;
+      return <Component children={childrenNodes} resolvecontext={resolvecontext} />;
     };
     return Node;
   }

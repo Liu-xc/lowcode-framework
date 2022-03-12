@@ -18,7 +18,7 @@ const commonKeys: Record<string, string> = {
 };
 
 const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) => {
-  const compInfo = compInfoMap[id];
+  const compInfo = cloneDeep(compInfoMap[id]);
   const {
     ComponentType,
   } = compInfo;
@@ -32,7 +32,8 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>) =>
       return generateComp(childId, compInfoMap, {});
     });
     res.props = res.props || {};
-    res.props.layoutInfo = compInfo.layout;
+    const layoutInfo = cloneDeep(compInfo.layoutInfo);
+    res.props.layoutInfo = layoutInfo.filter(Boolean);
   }
   return res;
 }
@@ -47,6 +48,7 @@ export const exportSchema = () => {
   // console.log(rootId);
   generateComp(rootId!, compInfo, res);
   console.log(res);
+  return res;
 }
 
 export type RootState = ReturnType<typeof store.getState>;

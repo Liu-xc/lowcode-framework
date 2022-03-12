@@ -14,14 +14,14 @@ export interface ResolveContext {
   schema?: Schema;
 }
 
-export default function useResolver(schema: Schema, resolveContext: ResolveContext) {
+export default function useResolver(schema: Schema, resolvecontext: ResolveContext) {
   const [, setUpdateTimes] = useState(0);
   const triggerUpdate = () => setUpdateTimes((t) => t + 1);
   const [resolvedSchema, setResolvedSchema] = useState<Schema>();
 
   useEffect(() => {
-    resolve(schema, resolveContext, setResolvedSchema, triggerUpdate);
-  }, [schema, resolveContext]);
+    resolve(schema, resolvecontext, setResolvedSchema, triggerUpdate);
+  }, [schema, resolvecontext]);
 
   return resolvedSchema;
 }

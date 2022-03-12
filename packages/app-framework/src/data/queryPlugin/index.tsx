@@ -2,10 +2,10 @@ import React from 'react';
 import { ResolvePlugin } from 'render-engine';
 
 const queryPlugin: ResolvePlugin = {
-  HOC: (Component, resolveContext) => {
+  HOC: (Component, resolvecontext) => {
     const WrappedComponent: React.ComponentType<any> = props => {
-      const querySchema = resolveContext.resolvedSchema.query;
-      return <Component query={querySchema} resolveContext={resolveContext} {...props} />;
+      const querySchema = resolvecontext.resolvedSchema.query;
+      return <Component query={querySchema} resolvecontext={resolvecontext} {...props} />;
     }
     return WrappedComponent;
   },

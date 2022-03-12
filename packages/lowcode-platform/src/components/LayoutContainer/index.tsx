@@ -10,6 +10,7 @@ import './index.scss';
 
 export interface LayoutContainerProps extends ResponsiveProps {
   containerCompId: string;
+  layoutInfo: any[]
 }
 
 const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
@@ -18,9 +19,10 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const {
     containerCompId: parentId,
+    layoutInfo = []
   } = props;
   const ComponentsMap = useContext(ComponentsMapContext);
-  const [layout, setLayout] = useState<Layout[]>([]);
+  const [layout, setLayout] = useState<Layout[]>(layoutInfo.filter(Boolean).length ? layoutInfo : []);
   const [components, setComponents] = useState<React.ComponentType<any>[]>([]);
   const dispatch = useDispatch();
   const newItem = useSelector((state: RootState) => state.drag.newItem);

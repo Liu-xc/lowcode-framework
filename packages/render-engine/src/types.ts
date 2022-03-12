@@ -3,7 +3,7 @@ export interface Schema {
   ComponentType?: string;
   props?: any;
   children?: Schema[] | Schema | string | number;
-  _IF_?: string | boolean;
+  _if_?: string | boolean;
 }
 
 export interface ComponentsMap {

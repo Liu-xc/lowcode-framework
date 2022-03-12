@@ -4,7 +4,7 @@ import { ResolveContext } from "@/resolver";
 import { Schema } from "@/types";
 import intersection from "lodash/intersection";
 
-export type PluginHOC = (component: React.ComponentType<any>, resolveContext: ResolveContext) => React.ComponentType<any>;
+export type PluginHOC = (component: React.ComponentType<any>, resolvecontext: ResolveContext) => React.ComponentType<any>;
 export interface ResolvePlugin {
   HOC: PluginHOC;
   SchemaKeys?: string[];

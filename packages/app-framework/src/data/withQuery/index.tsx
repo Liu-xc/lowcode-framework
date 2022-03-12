@@ -26,17 +26,17 @@ const withQuery = (Component: React.ComponentType<any>): React.FC<any> => props 
     children,
     queryAdaptor,
     withQueryParams,
-    resolveContext,
+    resolvecontext,
     ...otherProps
   } = props;
 
   const { loading, error, data, retry } = useObtainData(query, { queryAdaptor });
 
   useEffect(() => {
-    const { state } = resolveContext as ResolveContext;
+    const { state } = resolvecontext as ResolveContext;
     const { stateKey } = withQueryParams;
     state && stateKey && set(state.getValueProxy(), stateKey, data);
-  }, [data, resolveContext, withQueryParams]);
+  }, [data, resolvecontext, withQueryParams]);
 
   const node = (
     <Component
