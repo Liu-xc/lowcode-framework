@@ -144,9 +144,10 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   return (
     <ResponsiveGridLayout
       isDroppable={true}
-      rowHeight={10}
+      rowHeight={8}
       allowOverlap={false}
-      cols={{ lg: 24, md: 16, sm: 12, xs: 10, xxs: 8 }}
+      cols={{ lg: 24, md: 20, sm: 16, xs: 12, xxs: 8 }}
+      margin={[0, 5]}
       {...props}
       layouts={{
         lg: layout,

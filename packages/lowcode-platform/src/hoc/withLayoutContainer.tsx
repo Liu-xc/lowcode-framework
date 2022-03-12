@@ -14,7 +14,7 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
 
   const layoutStyle: React.CSSProperties = useMemo(() => (
     {
-      minHeight: '200px',
+      minHeight: '300px',
     }
   ), []);
 
