@@ -17,7 +17,22 @@ export interface LayoutState {
 }
 
 const initialState: LayoutState = {
-  compInfo: {}
+  compInfo: {
+    rootContainer: {
+      ComponentType: 'Container',
+      id: 'rootContainer',
+      meta: {} as any,
+      configProps: {
+        containerStyle: {
+          minHeight: '100%',
+          backgroundColor: 'pink',
+          width: '100%',
+          overflowY: 'auto',
+          overflowX: 'hidden'
+        }
+      }
+    }
+  }
 };
 
 // TODO 记录一张id和meta对应的表
@@ -26,15 +41,19 @@ export const layoutSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
+    replaceLayoutStore: (state, { payload }) => {
+      const { layoutStore } = payload;
+      state.compInfo = layoutStore.compInfo;
+    },
     setLayoutInfo: (state, { payload }) => {
-      const { id, layoutInfo } = payload;
-      if (!id) {
-        return;
+      const { id = 'rootContainer', layoutInfo } = payload;
+      if (!state.compInfo[id]) {
+        state.compInfo[id] = {} as any;
       }
       state.compInfo[id].layoutInfo = layoutInfo;
     },
     setLayoutChildCompTypes: (state, { payload }) => {
-      const { id, layoutChildCompTypes } = payload;
+      const { id = 'rootContainer', layoutChildCompTypes } = payload;
       if (!id) {
         return;
       }
@@ -52,7 +71,7 @@ export const layoutSlice = createSlice({
       state.compInfo[id].configProps = value;
     },
     addChild: (state, { payload }) => {
-      const { parentId, childId } = payload;
+      const { parentId = 'rootContainer', childId } = payload;
       if (!parentId || !childId) {
         return;
       }
@@ -96,6 +115,7 @@ export const layoutSlice = createSlice({
 
 
 export const {
+  replaceLayoutStore,
   setLayoutInfo,
   setLayoutChildCompTypes,
   addComp,

@@ -47,11 +47,16 @@ export const exportSchema = () => {
   const compInfo = layout.compInfo;
   const ids = Object.keys(compInfo);
   const rootId = ids.find(id => !compInfo[id].parentId);
-  // console.log(rootId);
   const res = generateComp(rootId!, compInfo, {});
   res.props.layoutInfo = compInfo[rootId as string].layoutInfo;
-  console.log(res, rootId);
+  console.log('exportSchema', res);
   return cloneDeep(res);
+}
+
+export const exportLayoutStore = () => {
+  const storeState = cloneDeep(store.getState().layout);
+  console.log('layoutStore', storeState);
+  return storeState;
 }
 
 export type RootState = ReturnType<typeof store.getState>;
