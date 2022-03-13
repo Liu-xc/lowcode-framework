@@ -7,8 +7,21 @@ import {
   ComponentsMap
 } from './components';
 import { initApp, APPContext } from 'app-framework';
-import './index.css';
 import App from './App';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom';
+import {
+  PageLayout,
+  Manage,
+} from './pages';
+
+import 'antd/dist/antd.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+import './index.css';
 
 const appConfig = {
   componentsMap: ComponentsMap,
@@ -21,7 +34,14 @@ ReactDOM.render(
   <APPContext.Provider value={initApp(appConfig)}>
     <Provider store={store}>
       <ComponentsMapContext.Provider value={ComponentsMap}>
-        <App />
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<PageLayout />}>
+              <Route index element={<App />} />
+              <Route path='/manage' element={<Manage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </ComponentsMapContext.Provider>
     </Provider>
   </APPContext.Provider>,
