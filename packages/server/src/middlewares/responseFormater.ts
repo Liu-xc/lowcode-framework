@@ -11,14 +11,14 @@ export default async function respFormat(ctx: Koa.BaseContext, next: Koa.Next) {
     ctx.body = {
       data,
       status,
-      statusText: 'OK'
+      statusText: (ctx as any).statusText || 'OK',
     } as Response;
   } else {
     const err = body as Error;
     ctx.body = {
       data: null,
       status,
-      statusText: err?.message || '服务端错误'
+      statusText: err?.message || '服务端错误',
     } as Response;
   }
 }
