@@ -6,15 +6,25 @@ import {
   ComponentsMapContext,
   ComponentsMap
 } from './components';
+import { initApp, APPContext } from 'app-framework';
 import './index.css';
 import App from './App';
 
+const appConfig = {
+  componentsMap: ComponentsMap,
+  networkConfig: {
+    baseURL: 'http://127.0.0.1:8080',
+  }
+};
+
 ReactDOM.render(
-  <Provider store={store}>
-    <ComponentsMapContext.Provider value={ComponentsMap}>
-      <App />
-    </ComponentsMapContext.Provider>
-  </Provider>,
+  <APPContext.Provider value={initApp(appConfig)}>
+    <Provider store={store}>
+      <ComponentsMapContext.Provider value={ComponentsMap}>
+        <App />
+      </ComponentsMapContext.Provider>
+    </Provider>
+  </APPContext.Provider>,
   document.getElementById('root')
 );
 

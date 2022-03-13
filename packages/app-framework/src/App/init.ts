@@ -30,6 +30,7 @@ export default function initApp(configs: Omit<AppConfigMap, 'renderEngine'>): AP
   return (
     value = {
       appConfig,
+      renderEngine,
     }
   );
 }

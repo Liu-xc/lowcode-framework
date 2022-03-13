@@ -8,10 +8,12 @@ import {
 } from 'antd';
 import store, { exportSchema, exportLayoutStore, RootState } from './store';
 
-import {ComponentsMap} from './components';
+import {
+  ComponentsMap,
+  RenderComponent,
+} from './components';
 import { App as AFApp, RenderEngine } from 'app-framework';
 // import getPageSchema from './utils/getPageSchema';
-import routeConfigMap from './router';
 import IndexSchema, { layoutStore } from './schemas/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { replaceLayoutStore } from './store';
@@ -20,7 +22,7 @@ import './App.css';
 import 'antd/dist/antd.css';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import LayoutContainer from './components/LayoutContainer';
+
 
 const renderEngine = new RenderEngine(ComponentsMap);
 
@@ -70,13 +72,14 @@ function App() {
                 baseURL: 'http://127.0.0.1:8080',
               }}
             /> */}
-            {[1].map(() => {
+            {/* {[1].map(() => {
               const Nodes = renderEngine.render(IndexSchema);
               dispatch(replaceLayoutStore({
                 layoutStore
               }));
               return Nodes;
-            })}
+            })} */}
+            <RenderComponent state={{layoutStore}} schema={IndexSchema} />
           </Content>
           {
             !readonly && (

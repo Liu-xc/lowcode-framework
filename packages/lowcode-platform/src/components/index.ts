@@ -7,6 +7,7 @@ import DraggableSwitch, { SwitchMeta } from './dragComps/Switch';
 import DraggableRadioGroup, { RadioGroupMeta } from './dragComps/RadioGroup';
 import DraggableSelect, { SelectMeta } from './dragComps/Select';
 import DraggableCheckboxGroup, { CheckboxGroupMeta } from './dragComps/CheckboxGroup';
+import RenderComponent from "./RenderComponent";
 
 export {
   DraggableInput,
@@ -22,7 +23,8 @@ export {
   DraggableCheckboxGroup,
   CheckboxGroupMeta,
 
-  DragContainer
+  DragContainer,
+  RenderComponent
 }
 
 export const ComponentsMap: Record<string, React.ComponentType<any>> = {
