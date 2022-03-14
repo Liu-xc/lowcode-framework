@@ -11,7 +11,9 @@ import App from './App';
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Navigate,
+  
 } from 'react-router-dom';
 import {
   PageLayout,
@@ -37,8 +39,10 @@ ReactDOM.render(
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<PageLayout />}>
-              <Route index element={<App />} />
+              <Route path='/platform/:mode' element={<App />} />
+              <Route path='/platform/:mode/:schemaName' element={<App />} />
               <Route path='/manage' element={<Manage />} />
+              <Route index element={<Navigate to={'/platform/create'} />} />
             </Route>
           </Routes>
         </BrowserRouter>

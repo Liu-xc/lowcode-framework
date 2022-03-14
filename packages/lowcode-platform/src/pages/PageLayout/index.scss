@@ -1,0 +1,13 @@
+.App {
+  .headerTitle {
+    display: flex;
+    justify-content: space-between;
+    .headerBtns {
+      display: flex;
+      align-items: center;
+      .btn {
+        margin-left: 10px;
+      }
+    }
+  }
+}
