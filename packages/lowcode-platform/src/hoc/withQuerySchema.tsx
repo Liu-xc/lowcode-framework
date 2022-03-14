@@ -16,14 +16,15 @@ const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) =>
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       await request({ url: `/schemas/get/${schemaName}` }).then(
         (r: any) => {
           setSchema(r.schema.content);
           setState(r.state.content);
+          console.log(r);
+          setLoading(false);
         }
-      ).finally(() => {
-        setLoading(false);
-      })
+      ).catch(() => setLoading(false));
     })();
   }, [request, schemaName]);
 

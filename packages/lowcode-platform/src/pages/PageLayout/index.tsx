@@ -17,7 +17,7 @@ const PageLayout = () => {
 
   const upload = useCallback(() => {
     exportLayoutStore();
-    exportSchema(true);
+    exportSchema();
   }, []);
 
   const manage = useCallback(() => {

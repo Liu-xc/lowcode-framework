@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useContext, useEffect } from 'react';
+import React, { useCallback, useState, useRef, useContext, useEffect, useMemo } from 'react';
 import { Responsive, ResponsiveProps, ItemCallback, Layout, WidthProvider } from 'react-grid-layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setFocusItem, addComp, addChild, removeChild, removeComp, setLayoutInfo, setLayoutChildCompTypes } from '../../store';
@@ -6,6 +6,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { ComponentsMapContext } from '../';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import cls from 'classnames';
+import { useParams } from 'react-router-dom';
 import './index.scss';
 
 export interface LayoutContainerProps extends ResponsiveProps {
@@ -19,6 +20,7 @@ const getDefaultDropItem = () => ({ i: uuidV4(), w: 2, h: 2 });
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 const LayoutContainer: React.FC<LayoutContainerProps> = props => {
+  const { mode } = useParams();
   const {
     containerCompId: parentId,
     layoutInfo = [],
@@ -32,6 +34,14 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const newItem = useSelector((state: RootState) => state.drag.newItem);
   const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);
   const droppingItemLayout = useRef(getDefaultDropItem());
+
+  const computedLayout = useMemo(() => {
+    if (mode !== 'view') {
+      return layout;
+    } else {
+      return layout.map(l => ({ ...l, static: true, isDraggable: false }));
+    }
+  }, [layout, mode]);
   
   // DragEvents ---------
   const onDragStart = useCallback<ItemCallback>(
@@ -159,9 +169,9 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       margin={[0, 5]}
       {...props}
       layouts={{
-        lg: layout,
-        md: layout,
-        sm: layout,
+        lg: computedLayout,
+        md: computedLayout,
+        sm: computedLayout,
       }}
       onDragStart={onDragStart}
       onDrag={onDrag}
@@ -172,7 +182,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       droppingItem={droppingItemLayout.current}
     >
       {
-        layout.map((l, i) => (
+        computedLayout.map((l, i) => (
           <div
             key={l.i}
             onClick={(e) => onClickItem(l.i, e)}

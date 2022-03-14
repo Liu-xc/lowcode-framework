@@ -13,7 +13,6 @@ const RenderComponent: React.FC<any> = props => {
       layoutStore: state
     }));
   }, [dispatch, state]);
-
   return renderEngine.render(schema);
 }
 
