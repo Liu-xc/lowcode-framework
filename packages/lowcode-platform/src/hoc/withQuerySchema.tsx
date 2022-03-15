@@ -21,7 +21,6 @@ const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) =>
         (r: any) => {
           setSchema(r.schema.content);
           setState(r.state.content);
-          console.log(r);
           setLoading(false);
         }
       ).catch(() => setLoading(false));

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, ReactDOM } from 'react';
+import React, { useCallback, useState, ReactDOM, useEffect, useMemo } from 'react';
 import {
   Layout,
   Button,
@@ -6,7 +6,7 @@ import {
   Input,
   Alert
 } from 'antd';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { exportLayoutStore, exportSchema } from '../../store';
 import { createApiMethod } from 'app-framework';
 import './index.scss';
@@ -25,9 +25,11 @@ const request = createApiMethod({
 const PageLayout = () => {
   const nav = useNavigate();
   const { mode, schemaName } = useParams();
+  const location = useLocation();
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
   const [alert, setAlert] = useState('');
+  const isManage = useMemo(() => location.pathname === '/manage', [location]);
 
   const onNameChange = useCallback((e) => {
     setName(e.target.value);
@@ -70,6 +72,10 @@ const PageLayout = () => {
 
   const manage = useCallback(() => {
     nav('/manage');
+  }, [nav]);
+
+  const create = useCallback(() => {
+    nav('/platform/create');
   }, [nav]);
 
   const update = useCallback(async () => {
@@ -122,7 +128,8 @@ const PageLayout = () => {
               </Modal>
               {mode === 'create' && <Button className='btn' type='primary' onClick={upload}>上传</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={update}>更新</Button>}
-              <Button className='btn' type='primary' onClick={manage}>管理</Button>
+              {!isManage && <Button className='btn' type='primary' onClick={manage}>管理</Button>}
+              {isManage && <Button className='btn' type='primary' onClick={create}>新建</Button>}
             </div>
           </h1>
         </Header>

@@ -16,7 +16,6 @@ const Manage = () => {
 
   useEffect(() => {
     request({}).then((r: any) => {
-      console.log(r);
       const { schema } = r;
       setData(schema.map((s: any) => ({title: s.name})));
     }).finally(() => {
@@ -57,23 +56,24 @@ const Manage = () => {
   }
 
   return (
-    <>
-      <List
-        grid={{ gutter: 16, column: 4 }}
-        dataSource={data}
-        renderItem={(item, i) => (
-          <List.Item>
-            <Card title={item.title}>
-              <div className='btnGroup'>
-                <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
-                <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
-                <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
-              </div>
-            </Card>
-          </List.Item>
-        )}
-      />
-    </>
+    <List
+      style={{
+        padding: '16px'
+      }}
+      grid={{ gutter: 16, column: 4 }}
+      dataSource={data}
+      renderItem={item => (
+        <List.Item>
+          <Card title={item.title}>
+            <div className='btnGroup'>
+              <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
+              <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
+              <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
+            </div>
+          </Card>
+        </List.Item>
+      )}
+    />
   );
 }
 
