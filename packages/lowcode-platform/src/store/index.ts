@@ -28,7 +28,7 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>, re
     res[schemaKey] = compInfo[k];
   });
   if (isContainer) {
-    const { childrenList } = compInfo;
+    const { childrenList = [] } = compInfo;
     res.props = res.props || {};
     const { layoutInfo = [], layoutChildCompTypes = [] } = compInfo;
     const layoutChildren = childrenList.map((layoutChildId: string) => generateComp(layoutChildId, compInfoMap, {}, readonly));
