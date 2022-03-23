@@ -78,6 +78,14 @@ const PageLayout = () => {
     nav('/platform/create');
   }, [nav]);
 
+  const goEdit = useCallback(() => {
+    nav(`/platform/edit/${schemaName}`);
+  }, [nav, schemaName]);
+
+  const goView = useCallback(() => {
+    nav(`/platform/view/${schemaName}`);
+  }, [nav, schemaName]);
+
   const update = useCallback(async () => {
     console.log('update');
     const state = exportLayoutStore();
@@ -128,6 +136,8 @@ const PageLayout = () => {
               </Modal>
               {mode === 'create' && <Button className='btn' type='primary' onClick={upload}>上传</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={update}>更新</Button>}
+              {mode === 'edit' && <Button className='btn' type='primary' onClick={goView}>预览</Button>}
+              {mode === 'view' && <Button className='btn' type='primary' onClick={goEdit}>编辑</Button>}
               {!isManage && <Button className='btn' type='primary' onClick={manage}>管理</Button>}
               {isManage && <Button className='btn' type='primary' onClick={create}>新建</Button>}
             </div>
