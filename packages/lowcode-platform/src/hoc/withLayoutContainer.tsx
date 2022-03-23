@@ -12,6 +12,7 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
     layoutInfo,
     layoutChildren,
     layoutChildCompTypes,
+    fieldRules,
     ...compProps
   } = props;
 

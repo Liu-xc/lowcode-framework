@@ -1,5 +1,6 @@
 import SchemaModel from "./models/schema";
 import StateModel from "./models/storeState";
+import FormModel from "./models/form";
 
 const checkExistence = async (name: string) => {
   const checkSchema = SchemaModel.findOne({ name });
@@ -20,5 +21,6 @@ const checkExistence = async (name: string) => {
 export {
   SchemaModel,
   StateModel,
-  checkExistence
+  checkExistence,
+  FormModel
 };

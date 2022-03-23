@@ -26,6 +26,18 @@ export const FormMeta: ComponentMeta = {
       {
         type: 'Input',
         props: {
+          type: '',
+          placeholder: '请输入表单KEY'
+        },
+        fieldProps: {
+          name: 'formKey',
+          label: '表单KEY',
+          required: true
+        }
+      },
+      {
+        type: 'Input',
+        props: {
           type: 'text',
           placeholder: '请输入表单提交地址'
         },
@@ -42,8 +54,12 @@ export const FormMeta: ComponentMeta = {
   }
 }
 
-const TheForm: React.FC<FormProps> = (props) => {
-  const { style = {}, className, title, action } = props;
+interface TheFormProps extends FormProps {
+  formKey?: string;
+}
+
+const TheForm: React.FC<TheFormProps> = (props) => {
+  const { style = {}, className, title, action, formKey } = props;
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -66,14 +82,18 @@ const TheForm: React.FC<FormProps> = (props) => {
     setError(undefined);
     setLoading(true);
     const formValue = form.getFieldsValue(true);
-    request({ data: formValue }).then(() => {
+    formKey && request({
+      data: {
+        formKey,
+        formValue
+    } }).then(() => {
       message.success('提交成功', 2);
     }).catch(() => {
       message.error('提交失败', 3);
     }).finally(() => {
       setLoading(false);
     });
-  }, [request, form]);
+  }, [request, form, formKey]);
 
   const onSubmit = useCallback(() => {
     form.validateFields().then(() => {
@@ -95,7 +115,7 @@ const TheForm: React.FC<FormProps> = (props) => {
 
 
   return (
-    <div>
+    <>
       <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
         <h3>{title}</h3>
         {props.children}
@@ -114,7 +134,7 @@ const TheForm: React.FC<FormProps> = (props) => {
           {JSON.stringify(form.getFieldsValue(true))}
         </Modal>
       ) }
-    </div>
+    </>
   );
 }
 
