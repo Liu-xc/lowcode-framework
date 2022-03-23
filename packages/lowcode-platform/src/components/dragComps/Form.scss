@@ -12,3 +12,15 @@
     right: 0;
   }
 }
+
+.loading {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+}

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Form, FormProps, Button, Modal } from 'antd';
+import { Form, FormProps, Button, Modal, message, Spin } from 'antd';
 import { ComponentMeta } from '../../types';
 import withLayoutContainer from '../../hoc/withLayoutContainer';
 import withDragItem from '../../hoc/withDragItem';
@@ -45,30 +45,49 @@ export const FormMeta: ComponentMeta = {
 const TheForm: React.FC<FormProps> = (props) => {
   const { style = {}, className, title, action } = props;
   const params = useParams();
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<undefined | Error>();
+  const [form] = Form.useForm();
   const { mode } = params;
   const isProd = useMemo(() => mode === 'view', [mode]);
-  const [showModal, setShowModal] = useState(false);
-  const [form] = Form.useForm();
+
   const formStyle: React.CSSProperties = useMemo(() => ({
     height: '100%'
   }), []);
   const computedStyle = useMemo(() => ({ ...formStyle, ...style }), [style, formStyle]);
+  
   const request = useMemo(() => createApiMethod({
-    url: action
+    url: action,
+    method: 'POST'
   }), [action]);
+
+  const submitFormData = useCallback(async () => {
+    setError(undefined);
+    setLoading(true);
+    const formValue = form.getFieldsValue(true);
+    request({ data: formValue }).then(() => {
+      message.success('提交成功', 2);
+    }).catch(() => {
+      message.error('提交失败', 3);
+    }).finally(() => {
+      setLoading(false);
+    });
+  }, [request, form]);
+
   const onSubmit = useCallback(() => {
     form.validateFields().then(() => {
       const formValue = form.getFieldsValue(true);
       console.log(formValue);
       if (isProd) {
-        request({ data: formValue });
+        submitFormData()
       } else {
         setShowModal(true);
       }
     }).catch(() => {
       console.error('校验不通过')
     })
-  }, [form, request, isProd]);
+  }, [form, isProd, submitFormData]);
 
   const closeModal = useCallback(() => {
     setShowModal(false);
@@ -76,11 +95,12 @@ const TheForm: React.FC<FormProps> = (props) => {
 
 
   return (
-    <>
+    <div>
       <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
         <h3>{title}</h3>
         {props.children}
         <Button type='primary' className='submitButton' onClick={onSubmit}>submit</Button>
+        {loading && <Spin className='loading' />}
       </Form>
       {!isProd && (
         <Modal
@@ -94,7 +114,7 @@ const TheForm: React.FC<FormProps> = (props) => {
           {JSON.stringify(form.getFieldsValue(true))}
         </Modal>
       ) }
-    </>
+    </div>
   );
 }
 
