@@ -1,9 +1,7 @@
 import Router, { RouterContext } from '@koa/router';
 import { checkExistence, SchemaModel, StateModel } from '@/db';
 import Koa from 'koa';
-
-const NOT_EXIST_CODE = 2128;
-const ALREADY_EXIST_CODE = 2131;
+import { NOT_EXIST_CODE, ALREADY_EXIST_CODE } from '.';
 
 const router = new Router({
   prefix: '/schemas'

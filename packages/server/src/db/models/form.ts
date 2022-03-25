@@ -13,6 +13,6 @@ const schema = new MongoSchema<FormType>({
   formValue: Types.Mixed
 });
 
-const FormModel = mongoose.model<FormType>('questionnaire', schema);
+const FormModel = mongoose.model<FormType>('form', schema);
 
 export default FormModel;
