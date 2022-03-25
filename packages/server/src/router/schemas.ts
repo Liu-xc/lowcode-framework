@@ -89,8 +89,10 @@ router.get('/delete/:schemaName', async (ctx: RouterContext<any, Koa.Context>, n
 router.post('/create', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Next) => {
   const { body } = ctx.request;
   const { schema, state } = body;
+  const { bindSchema } = schema;
   const exist = await checkExistence(schema.name);
-  if (!exist) {
+  const existDataSchema = await checkExistence(bindSchema);
+  if (!exist && !existDataSchema) {
     const createSchema = SchemaModel.create(schema);
     const createState = StateModel.create(state);
     await Promise.all([createSchema, createState]).then(
@@ -109,9 +111,9 @@ router.post('/create', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Ne
     )
   } else {
     ctx.status = 200;
-    ctx.statusText = 'schema已存在';
+    ctx.statusText = existDataSchema ? `${schema.bindSchema}已有数据消费页` : `${schema.name}已存在`;
     ctx.body = {
-      code: ALREADY_EXIST_CODE
+      code: ALREADY_EXIST_CODE,
     };
   }
 

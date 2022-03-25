@@ -6,7 +6,8 @@ import {
   Input,
   Alert,
   Form,
-  Select
+  Select,
+  message
 } from 'antd';
 import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { exportLayoutStore, exportSchema } from '../../store';
@@ -33,7 +34,6 @@ const PageLayout = () => {
   const [name, setName] = useState('');
   const [schemaType, setSchemaType] = useState('');
   const [visible, setVisible] = useState(false);
-  const [alert, setAlert] = useState('');
   const [schemaOptions, setOptions] = useState([]);
   const [bindSchema, setBindSchema] = useState('');
   const isManage = useMemo(() => location.pathname === '/manage', [location]);
@@ -76,7 +76,9 @@ const PageLayout = () => {
         if (code !== ALREADY_EXIST_CODE) {
           nav(`/platform/edit/${curSchemaName}`);
         } else {
-          setAlert(`${curSchemaName} 已存在`);
+          setName('');
+          setBindSchema('');
+          message.error(r.message);
         }
       });
     }
@@ -151,14 +153,6 @@ const PageLayout = () => {
           <h1 className='headerTitle'>
             LowCode Platform
             <div className='headerBtns'>
-              {alert && (
-                <Alert
-                  message={alert}
-                  closable
-                  onClose={() => setAlert('')}
-                  type="error"
-                />
-              )}
               <Modal
                 title="schema配置"
                 visible={visible}
@@ -167,6 +161,8 @@ const PageLayout = () => {
                   setVisible(false);
                 }}
                 onCancel={() => {
+                  setName('');
+                  setBindSchema('');
                   setVisible(false);
                 }}
                 wrapClassName={(name || bindSchema) ? '' : 'configModal'}

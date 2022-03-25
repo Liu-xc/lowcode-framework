@@ -3,11 +3,11 @@ import { Response } from '@/types';
 
 const OkStatus = [200];
 
-export default async function respFormat(ctx: Koa.BaseContext, next: Koa.Next) {
+export default async function respFormat(ctx: Koa.Context, next: Koa.Next) {
   await next();
-  const { body, status } = ctx;
+  const { body = {}, status } = ctx;
   if (OkStatus.some(s => s === status)) {
-    const data = body;
+    const data = (body as any).code ? { ...(body as any), message: ctx.statusText } : body;
     ctx.body = {
       data,
       status,
