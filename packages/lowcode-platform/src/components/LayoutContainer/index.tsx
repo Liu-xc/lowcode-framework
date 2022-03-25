@@ -44,40 +44,17 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   }, [layout, mode]);
   
   // DragEvents ---------
-  const onDragStart = useCallback<ItemCallback>(
-    (
-      l,
-      oldItem,
-      newItem,
-      p,
-      e
-    ) => {
-    // * 拖拽开始时应该获取到元素的信息
-      e.stopPropagation();
-      // console.log(oldItem, newItem);
-    }, []);
-  
-  const onDrag = useCallback((
-    l,
-    oldItem,
-    newItem,
-    p,
-    e
-  ) => {
+  const onDragStart = useCallback<ItemCallback>((l, oldItem, newItem, p, e) => {
     e.stopPropagation();
-    // console.log(oldItem, newItem);
+  }, []);
+  
+  const onDrag = useCallback((l, oldItem, newItem, p, e) => {
+    e.stopPropagation();
   }, []);
 
-  const onDragStop = useCallback((
-    l,
-    oldItem,
-    newItem,
-    p,
-    e
-  ) => {
+  const onDragStop = useCallback((l, oldItem, newItem, p, e) => {
     e.stopPropagation();
     setLayout(l);
-    // console.log(l, layout, newItem);
   }, []);
 
   const onDragOver = useCallback(() => {
@@ -85,18 +62,10 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   }, [newItem]);
   
   // DropEvents --------
-  const onDrop = useCallback((
-    l,
-    item
-  ) => {
-    // console.log(l, layout, item);
-    // * 由于这里测试用的dragItem的i是固定的，为了演示效果，这里在向layout添加项的时候将i更换为时间戳
-    // * 实际上应该直接将l赋值给layout
+  const onDrop = useCallback((l) => {
     const {
       id,
       ComponentType,
-      droppingItem = {},
-      props = {}
     } = newItem;
     const newLayout = [...l.slice(0, -1), { ...l[l.length - 1], i: newItem.id, resizeHandles: ["s", "w", "e", "n", "se"] }];
     setLayout(newLayout);
@@ -115,12 +84,6 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   }, [layout, ComponentsMap, layoutChildren, childCompTypes]);
 
   const onClickItem = useCallback((id: string, e: any) => {
-    // TODO 在状态中心应该记录所有的组件id以及组件的meta信息
-
-    // TODO 点击拖拽子元素时应该聚焦到这个元素
-    // * 将状态中心的对象设置为该子元素
-
-    // 在遍历渲染子元素时，如果id和状态中心的当前id相同，就渲染一个高亮边框
     dispatch(setFocusItem({ id }));
     e.stopPropagation();
   }, [dispatch]);
