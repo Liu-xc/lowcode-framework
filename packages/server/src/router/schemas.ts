@@ -10,9 +10,9 @@ const router = new Router({
 }) as Router;
 
 router.get('/', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Next) => {
-  await SchemaModel.find({}).then(
+  const { query = {} } = ctx;
+  await SchemaModel.find({ ...query }).then(
     (doc) => {
-      console.log(doc);
       ctx.body = {
         schema: doc.map(d => {
           const { content, ...info } = d.toObject();

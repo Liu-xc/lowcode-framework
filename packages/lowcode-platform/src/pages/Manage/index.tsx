@@ -14,7 +14,8 @@ const Manage = () => {
   const [data, setData] = useState<{title: string, type: string}[]>([]);
   const [loading, setLoading] = useState(false);
   const formList = useMemo(() => data.filter(item => item.type === 'form'), [data]);
-  const nonFormList = useMemo(() => data.filter(item => item.type !== 'form'), [data]);
+  const formDataList = useMemo(() => data.filter(item => item.type === 'form-data'), [data]);
+  const nonFormList = useMemo(() => data.filter(item => item.type !== 'form' && item.type !== 'form-data'), [data]);
 
   const getSchemaList = useCallback(async () => {
     setLoading(true);
@@ -94,6 +95,25 @@ const Manage = () => {
                   </div>
                 )}
               >
+                <div className='btnGroup'>
+                  <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
+                  <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
+                  <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
+                </div>
+              </Card>
+            </List.Item>
+          )
+        }
+      />
+      <Divider type='horizontal' />
+      <List
+        className='list'
+        grid={{ gutter: 16, column: 4 }}
+        dataSource={formDataList}
+        renderItem={
+          item => (
+            <List.Item key={item.title}>
+              <Card title={item.title}>
                 <div className='btnGroup'>
                   <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
                   <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>

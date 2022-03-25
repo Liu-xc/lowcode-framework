@@ -34,7 +34,10 @@ const PageLayout = () => {
   const [schemaType, setSchemaType] = useState('');
   const [visible, setVisible] = useState(false);
   const [alert, setAlert] = useState('');
+  const [schemaOptions, setOptions] = useState([]);
+  const [bindSchema, setBindSchema] = useState('');
   const isManage = useMemo(() => location.pathname === '/manage', [location]);
+  const curSchemaName = useMemo(() => name || `${bindSchema}-data`, [name, bindSchema]);
 
   const onNameChange = useCallback((e) => {
     setName(e.target.value);
@@ -49,7 +52,7 @@ const PageLayout = () => {
   }, []);
 
   const upload = useCallback(async () => {
-    if (!name) {
+    if (!name && !bindSchema) {
       showModal();
     } else {
       const state = exportLayoutStore();
@@ -58,26 +61,27 @@ const PageLayout = () => {
         url: `/schemas/create`,
         data: {
           schema: {
-            name,
+            name: curSchemaName,
             content: schema,
-            type: schemaType
+            type: schemaType,
+            bindSchema
           },
           state: {
-            name,
+            name: curSchemaName,
             content: state
           },
         }
       }).then((r: any) => {
         const { code } = r;
         if (code !== ALREADY_EXIST_CODE) {
-          nav(`/platform/edit/${name}`);
+          nav(`/platform/edit/${curSchemaName}`);
         } else {
-          setAlert(`${name} 已存在`);
+          setAlert(`${curSchemaName} 已存在`);
         }
       });
     }
     
-  }, [name, showModal, nav, schemaType]);
+  }, [curSchemaName, showModal, nav, schemaType, bindSchema, name]);
 
   const manage = useCallback(() => {
     nav('/manage');
@@ -115,6 +119,31 @@ const PageLayout = () => {
     });
   }, [schemaName, schemaType]);
 
+  const shouldSetName = useMemo(() => schemaType && schemaType !== 'form-data', [schemaType]);
+  const shouldGetOptions = useMemo(() => schemaType && !shouldSetName, [shouldSetName, schemaType]);
+  
+  const requestSchemaOptions = useMemo(() => createApiMethod({
+    url: '/schemas',
+    params: {
+      type: 'form'
+    }
+  }), []);
+
+  const getSchemaOptions = useCallback(() => {
+    requestSchemaOptions({}).then(r => {
+      const { schema = [] } = r;
+      setOptions(schema.map((s: any) => ({ label: s.name, value: s.name })));
+    }).catch(e => {
+      console.error(e);
+    })
+  }, [requestSchemaOptions]);
+
+  useEffect(() => {
+    if (shouldGetOptions) {
+      getSchemaOptions();
+    }
+  }, [shouldGetOptions, getSchemaOptions]);
+
   return (
     <div className="App">
       <Layout style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
@@ -140,18 +169,29 @@ const PageLayout = () => {
                 onCancel={() => {
                   setVisible(false);
                 }}
-                wrapClassName={name ? '' : 'configModal' }
+                wrapClassName={(name || bindSchema) ? '' : 'configModal'}
               >
-                <Item label="名称">
-                  <Input value={name} onChange={onNameChange} />
-                </Item>
                 <Item label="类型">
                   <Select
                     value={schemaType}
                     onChange={changeSchemaName}
-                    options={[{ label: '表单', value: 'form' }, { label: '博客', value: 'post' }]}
+                    options={[{ label: '表单', value: 'form' }, { label: '表单数据', value: 'form-data' }, { label: '博客', value: 'post' }]}
                   />
                 </Item>
+                {
+                  shouldSetName && (
+                    <Item label="名称">
+                      <Input value={name} onChange={onNameChange} />
+                    </Item>
+                  )
+                }
+                {
+                  shouldGetOptions && (
+                    <Item label="绑定">
+                      <Select options={schemaOptions} onChange={setBindSchema} value={bindSchema} />
+                    </Item>
+                  )
+                }
               </Modal>
               {mode === 'create' && <Button className='btn' type='primary' onClick={upload}>上传</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={update}>更新</Button>}
