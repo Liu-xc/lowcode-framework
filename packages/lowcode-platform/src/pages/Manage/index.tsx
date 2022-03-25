@@ -70,10 +70,6 @@ const Manage = () => {
     });
   }, [deleteSchemaRequest]);
 
-  const viewData = useCallback((schemaName: string) => {
-    nav(`/platform/viewData/${schemaName}`);
-  }, [nav]);
-
   if (loading) {
     return <Skeleton />
   }
@@ -91,7 +87,7 @@ const Manage = () => {
                 title={(
                   <div className='formItemTitle'>
                     {item.title}
-                    <Button type='ghost' onClick={() => viewData(item.title)}>查看数据</Button>
+                    <Button type='ghost' onClick={() => viewSchema(`${item.title}-data`)}>查看数据</Button>
                   </div>
                 )}
               >

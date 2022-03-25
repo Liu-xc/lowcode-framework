@@ -5,13 +5,13 @@ import { Skeleton } from 'antd';
 
 // eslint-disable-next-line react/display-name
 const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) => {
-  const { schemaName, mode } = useParams();
+  const { schemaName } = useParams();
   const [schema, setSchema] = useState();
   const [state, setState] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
 
-  const url = useMemo(() => `/schemas/get/${schemaName}${mode === 'viewData' ? '-data' : ''}`, []);
+  const url = useMemo(() => `/schemas/get/${schemaName}`, [schemaName]);
   
   const request = useMemo(() => createApiMethod({
     method: 'GET',
