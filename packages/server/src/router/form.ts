@@ -3,8 +3,8 @@ import Router, { RouterContext } from '@koa/router';
 import { FormModel } from '@/db';
 import { NOT_EXIST_CODE, ALREADY_EXIST_CODE } from '.';
 
-const checkFormExistence = async (name: string): Promise<boolean> => {
-  return await FormModel.find({ name }).then(doc => {
+const checkFormExistence = async (formKey: string): Promise<boolean> => {
+  return await FormModel.findOne({ formKey }).then(doc => {
     if (doc) {
       return true;
     }
@@ -16,13 +16,13 @@ const router = new Router({
   prefix: '/form'
 });
 
-router.get('/:name', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Next) => {
-  const { name } = ctx.params;
+router.get('/:formKey', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Next) => {
+  const { formKey } = ctx.params;
   const { query = {} } = ctx;
-  const existence = await checkFormExistence(name);
+  const existence = await checkFormExistence(formKey);
 
   if (existence) {
-    await FormModel.find({ name, ...query }).then(doc => {
+    await FormModel.find({ formKey, ...query }).then(doc => {
       ctx.body = doc.map(d => d.toObject().formValue);
       ctx.status = 200;
     }).catch(() => {
@@ -31,9 +31,9 @@ router.get('/:name', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Next
       ctx.code = 500;
     });
   } else {
-    ctx.code = NOT_EXIST_CODE;
-    ctx.status = NOT_EXIST_CODE;
-    ctx.statusText = `${name}不存在`;
+    ctx.body = [];
+    ctx.status = 200;
+    ctx.statusText = `${formKey}不存在`;
   }
   await next();
 });
