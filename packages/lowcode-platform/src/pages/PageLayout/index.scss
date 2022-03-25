@@ -11,3 +11,11 @@
     }
   }
 }
+
+.configModal {
+  .ant-modal-footer {
+    .ant-btn:last-of-type {
+      display: none !important;
+    }
+  }
+}

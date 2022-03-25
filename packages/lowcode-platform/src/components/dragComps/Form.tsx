@@ -59,7 +59,7 @@ interface TheFormProps extends FormProps {
 }
 
 const TheForm: React.FC<TheFormProps> = (props) => {
-  const { style = {}, className, title, action, formKey } = props;
+  const { style = {}, className, title, action, formKey, ...otherProps } = props;
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -116,7 +116,7 @@ const TheForm: React.FC<TheFormProps> = (props) => {
 
   return (
     <>
-      <Form {...props} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
+      <Form {...otherProps} style={computedStyle} className={cls(className, 'draggableForm')} form={form} layout="vertical">
         <h3>{title}</h3>
         {props.children}
         <Button type='primary' className='submitButton' onClick={onSubmit}>submit</Button>

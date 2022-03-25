@@ -4,7 +4,9 @@ import {
   Button,
   Modal,
   Input,
-  Alert
+  Alert,
+  Form,
+  Select
 } from 'antd';
 import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { exportLayoutStore, exportSchema } from '../../store';
@@ -18,6 +20,8 @@ const {
   Header,
 } = Layout;
 
+const { Item } = Form;
+
 const request = createApiMethod({
   method: 'POST'
 });
@@ -27,12 +31,17 @@ const PageLayout = () => {
   const { mode, schemaName } = useParams();
   const location = useLocation();
   const [name, setName] = useState('');
+  const [schemaType, setSchemaType] = useState('');
   const [visible, setVisible] = useState(false);
   const [alert, setAlert] = useState('');
   const isManage = useMemo(() => location.pathname === '/manage', [location]);
 
   const onNameChange = useCallback((e) => {
     setName(e.target.value);
+  }, []);
+
+  const changeSchemaName = useCallback((value: string) => {
+    setSchemaType(value);
   }, []);
 
   const showModal = useCallback(() => {
@@ -50,12 +59,13 @@ const PageLayout = () => {
         data: {
           schema: {
             name,
-            content: schema
+            content: schema,
+            type: schemaType
           },
           state: {
             name,
             content: state
-          }
+          },
         }
       }).then((r: any) => {
         const { code } = r;
@@ -63,12 +73,11 @@ const PageLayout = () => {
           nav(`/platform/edit/${name}`);
         } else {
           setAlert(`${name} 已存在`);
-          setName('');
         }
       });
     }
     
-  }, [name, showModal, nav]);
+  }, [name, showModal, nav, schemaType]);
 
   const manage = useCallback(() => {
     nav('/manage');
@@ -95,15 +104,16 @@ const PageLayout = () => {
       data: {
         schema: {
           name: schemaName,
-          content: schema
+          content: schema,
+          type: schemaType
         },
         state: {
           name: schemaName,
           content: state
-        }
+        },
       }
     });
-  }, [schemaName]);
+  }, [schemaName, schemaType]);
 
   return (
     <div className="App">
@@ -121,18 +131,27 @@ const PageLayout = () => {
                 />
               )}
               <Modal
-                title="命名"
+                title="schema配置"
                 visible={visible}
                 onOk={() => {
                   upload();
                   setVisible(false);
                 }}
                 onCancel={() => {
-                  setName('');
                   setVisible(false);
                 }}
+                wrapClassName={name ? '' : 'configModal' }
               >
-                <Input value={name} onChange={onNameChange} />
+                <Item label="名称">
+                  <Input value={name} onChange={onNameChange} />
+                </Item>
+                <Item label="类型">
+                  <Select
+                    value={schemaType}
+                    onChange={changeSchemaName}
+                    options={[{ label: '表单', value: 'form' }, { label: '博客', value: 'post' }]}
+                  />
+                </Item>
               </Modal>
               {mode === 'create' && <Button className='btn' type='primary' onClick={upload}>上传</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={update}>更新</Button>}

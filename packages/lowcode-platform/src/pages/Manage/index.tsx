@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { List, Card, Button, Skeleton, Modal, message } from 'antd';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { List, Card, Button, Skeleton, Modal, message, Divider } from 'antd';
 import { createApiMethod } from 'app-framework';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,14 +11,16 @@ const request = createApiMethod({
 
 const Manage = () => {
   const nav = useNavigate();
-  const [data, setData] = useState<{title: string}[]>([]);
+  const [data, setData] = useState<{title: string, type: string}[]>([]);
   const [loading, setLoading] = useState(false);
+  const formList = useMemo(() => data.filter(item => item.type === 'form'), [data]);
+  const nonFormList = useMemo(() => data.filter(item => item.type !== 'form'), [data]);
 
   const getSchemaList = useCallback(async () => {
     setLoading(true);
     request({}).then((r: any) => {
       const { schema } = r;
-      setData(schema.map((s: any) => ({title: s.name})));
+      setData(schema.map((s: any) => ({title: s.name, type: s.type})));
     }).catch(() => {
       message.error('获取列表异常', 2);
     }).finally(() => {
@@ -67,29 +69,61 @@ const Manage = () => {
     });
   }, [deleteSchemaRequest]);
 
+  const viewData = useCallback((schemaName: string) => {
+    nav(`/platform/viewData/${schemaName}`);
+  }, [nav]);
+
   if (loading) {
     return <Skeleton />
   }
 
   return (
-    <List
-      style={{
-        padding: '16px'
-      }}
-      grid={{ gutter: 16, column: 4 }}
-      dataSource={data}
-      renderItem={item => (
-        <List.Item>
-          <Card title={item.title}>
-            <div className='btnGroup'>
-              <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
-              <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
-              <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
-            </div>
-          </Card>
-        </List.Item>
-      )}
-    />
+    <div className='schemas'>
+      <List
+        className='list'
+        grid={{ gutter: 16, column: 4 }}
+        dataSource={formList}
+        renderItem={
+          item => (
+            <List.Item key={item.title}>
+              <Card
+                title={(
+                  <div className='formItemTitle'>
+                    {item.title}
+                    <Button type='ghost' onClick={() => viewData(item.title)}>查看数据</Button>
+                  </div>
+                )}
+              >
+                <div className='btnGroup'>
+                  <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
+                  <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
+                  <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
+                </div>
+              </Card>
+            </List.Item>
+          )
+        }
+      />
+      <Divider type='horizontal' />
+      <List
+        className='list'
+        grid={{ gutter: 16, column: 4 }}
+        dataSource={nonFormList}
+        renderItem={
+          item => (
+            <List.Item key={item.title}>
+              <Card title={item.title}>
+                <div className='btnGroup'>
+                  <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
+                  <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
+                  <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
+                </div>
+              </Card>
+            </List.Item>
+          )
+        }
+      />
+    </div>
   );
 }
 
