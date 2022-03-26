@@ -21,7 +21,7 @@ export default function createComponent(resolvedSchema: Schema, componentsMap: C
       if (!CompType) {
         throw new Error(`组件${ComponentType}不存在`);
       }
-      return <CompType {...(resolvedSchema.props || {})} {...props} />;
+      return <CompType {...(resolvedSchema.props || {})} {...props} key={props.id} />;
     };
   }
 

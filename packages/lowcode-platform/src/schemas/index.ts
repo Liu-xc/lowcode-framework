@@ -18,7 +18,7 @@ const schema = {
   "props": {
     "containerStyle": {
       "minHeight": "100%",
-      "backgroundColor": "pink",
+      // "backgroundColor": "pink",
       "width": "100%",
       "overflowY": "auto",
       "overflowX": "hidden"
@@ -130,7 +130,7 @@ export const layoutStore = {
       "configProps": {
         "containerStyle": {
           "minHeight": "100%",
-          "backgroundColor": "pink",
+          // "backgroundColor": "pink",
           "width": "100%",
           "overflowY": "auto",
           "overflowX": "hidden"

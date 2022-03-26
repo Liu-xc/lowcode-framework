@@ -27,12 +27,13 @@ const initialState: LayoutState = {
       configProps: {
         containerStyle: {
           minHeight: '100%',
-          backgroundColor: 'pink',
+          // backgroundColor: 'pink',
           width: '100%',
           overflowY: 'auto',
           overflowX: 'hidden'
         }
-      }
+      },
+      layoutInfo: []
     }
   },
 };

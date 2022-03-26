@@ -7,19 +7,21 @@ import { get } from 'lodash';
 import cls from 'classnames';
 import { Layout } from 'react-grid-layout';
 import { withDragItem } from '.';
+import { useParams } from 'react-router-dom';
 
 import './index.scss';
 
 
 const withContainerChild = (Comp: React.ComponentType<any>, isContainer = false): React.ComponentType<any> => withDragItem(props => {
   const { parentId, id, containerStyle = {}, style = {}, ...otherProps } = props;
+  const { mode } = useParams();
   const dispatch = useDispatch();
   const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);
   const compLayout = useSelector((state: RootState) => {
     const layout = get(state, `layout.componentInfo[${parentId}].layoutInfo`, []);
     return layout.find((l: Layout) => l.i === id) || {};
   });
-  const isReadOnly = useMemo(() => compLayout.static && !compLayout.isDraggable, [compLayout]);
+  const isReadOnly = useMemo(() => mode === 'view' || compLayout.static && !compLayout.isDraggable, [compLayout]);
 
   const computedStyle: React.CSSProperties = useMemo(() => {
     return isContainer ? { ...style, ...containerStyle, height: '100%' } : style;
@@ -45,7 +47,7 @@ const withContainerChild = (Comp: React.ComponentType<any>, isContainer = false)
       style={computedStyle}
       key={id}
       onClick={(e) => onClickItem(id, e)}
-      className={cls("dragDiv", curFocusId === id && "focusItem", isReadOnly && 'readonly')}
+      className={cls("react-grid-item dragDiv react-draggable cssTransforms react-resizable", curFocusId === id && "focusItem", isReadOnly && 'readonly')}
     >
       {!isReadOnly && <CloseCircleOutlined onClick={(e) => deleteItem(id, e)} className='removeIcon' title='删除' />}
       {

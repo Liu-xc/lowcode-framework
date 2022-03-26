@@ -5,7 +5,7 @@ import { RootState, setFocusItem, addComp, addChild, setLayoutInfo, updateSchema
 import { v4 as uuidV4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import './index.scss';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get, isEqual } from 'lodash';
 
 export interface LayoutContainerProps extends ResponsiveProps {
   containerCompId: string;
@@ -35,30 +35,29 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   const {
     containerCompId: parentId,
   } = props;
+
   const layout = useSelector((state: RootState) => {
     const compInfo = state.layout.compInfo[parentId] || {};
     const { layoutInfo = [] } = compInfo;
-    return cloneDeep(layoutInfo) as unknown as Layout[];
-  });
+    const res = layoutInfo.filter(Boolean).map(l => {
+      if (mode === 'view') {
+        return {...l, static: true, isDraggable: false};
+      }
+      return l;
+    });
+    if (mode !== 'view') {
+      return res || [];
+    } else {
+      return res.map(l => ({ ...l, static: true, isDraggable: false })) || [];
+    }
+  }) as unknown as Layout[];
   const dispatch = useDispatch();
   const newItem = useSelector((state: RootState) => state.drag.newItem);
   const droppingItemLayout = useRef(getDefaultDropItem());
 
-  useEffect(() => {
-    console.log('layout change', layout)
-  }, [layout]);
-
   const setLayout = useCallback((l) => {
     dispatch(setLayoutInfo({ id: parentId, layoutInfo: l }));
   }, [dispatch, parentId]);
-
-  const computedLayout = useMemo(() => {
-    if (mode !== 'view') {
-      return layout;
-    } else {
-      return layout.map(l => ({ ...l, static: true, isDraggable: false }));
-    }
-  }, [layout, mode]);
   
   // DragEvents ---------
   const onDragStart = useCallback<ItemCallback>((l, oldItem, newItem, p, e) => {
@@ -75,7 +74,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
   }, [setLayout]);
 
   const onDragOver = useCallback(() => {
-    return newItem.droppingItem || { w: 2, h: 2 };
+    return newItem.droppingItem || { w: 6, h: 3 };
   }, [newItem]);
   
   // DropEvents --------
@@ -102,13 +101,13 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       isDroppable={true}
       rowHeight={8}
       allowOverlap={false}
-      cols={{ lg: 24, md: 20, sm: 16, xs: 12, xxs: 8 }}
+      cols={{ lg: 24, md: 24, sm: 24, xs: 24, xxs: 24 }}
       margin={[0, 5]}
       {...props}
       layouts={{
-        lg: computedLayout,
-        md: computedLayout,
-        sm: computedLayout,
+        lg: layout,
+        md: layout,
+        sm: layout,
       }}
       onDragStart={onDragStart}
       onDrag={onDrag}
@@ -118,8 +117,11 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
       onResizeStop={onResizeStop}
       droppingItem={droppingItemLayout.current}
     >
-      {props.children}
-      <div>???</div>
+      {
+        (Array.isArray(props.children) ? props.children : [props.children || undefined]).filter(Boolean).map((child, i) => {
+          return <div key={layout && layout[i]?.i || 'rootContainer'}>{child}</div>
+        })
+      }
     </ResponsiveGridLayout>
   );
 }

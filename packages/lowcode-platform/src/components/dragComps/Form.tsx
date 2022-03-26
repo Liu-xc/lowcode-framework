@@ -48,17 +48,18 @@ export const FormMeta: ComponentMeta = {
     ]
   },
   droppingItem: {
-    w: 12,
+    w: 20,
     h: 16
   }
 }
 
 interface TheFormProps extends FormProps {
   formKey?: string;
+  fieldRules?: any;
 }
 
 const TheForm: React.FC<TheFormProps> = (props) => {
-  const { style = {}, className, title, action, formKey, ...otherProps } = props;
+  const { style = {}, className, title, action, formKey, fieldRules, ...otherProps } = props;
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);

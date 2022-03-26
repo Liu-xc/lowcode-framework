@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createApiMethod } from 'app-framework';
 import { Skeleton } from 'antd';
 import store, { exportSchema, replaceLayoutStore, RootState, updateSchema } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { debounce } from 'lodash';
+import { debounce, isEqual } from 'lodash';
 
 // eslint-disable-next-line react/display-name
 const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) => {
@@ -13,21 +13,26 @@ const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) =>
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [schema, setSchema] = useState(exportSchema());
+  const prevSchema = useRef<any>();
 
   const url = useMemo(() => `/schemas/get/${schemaName}`, [schemaName]);
-  const storeListener = debounce(useCallback(() => {
-    console.log('call listener')
-    setSchema(exportSchema());
-  }, []), 100);
+  const updateSchema = useCallback(debounce(() => {
+    const newSchema = exportSchema();
+    if (isEqual(newSchema, prevSchema.current)) {
+      return;
+    }
+    prevSchema.current = newSchema;
+    setSchema(newSchema);
+  }, 200), []);
 
   useEffect(() => {
-    console.log(schema);
-  }, [schema]);
+    updateSchema();
+  }, [updateSchema]);
 
   useEffect(() => {
-    const unsubscribe = store.subscribe(storeListener);
+    const unsubscribe = store.subscribe(updateSchema);
     return unsubscribe;
-  }, [storeListener]);
+  }, [updateSchema]);
   
   const request = useMemo(() => createApiMethod({
     method: 'GET',
@@ -43,17 +48,17 @@ const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) =>
       setLoading(true);
       await request({ url }).then(
         (r: any) => {
-          setSchema(r.schema.content);
           dispatch(replaceLayoutStore({
             layoutStore: r.state.content
           }));
+          updateSchema();
           setLoading(false);
         }
       ).catch((e) => {
         setError(e);
       }).finally(() => setLoading(false));
     })();
-  }, [request, schemaName, url, dispatch]);
+  }, [request, schemaName, url, dispatch, updateSchema]);
 
   if (loading) {
     return <Skeleton />;

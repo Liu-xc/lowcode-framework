@@ -18,7 +18,7 @@ export const ContainerMeta: ComponentMeta = {
     fields: [],
   },
   droppingItem: {
-    w: 14,
+    w: 20,
     h: 20
   }
 };

@@ -23,7 +23,7 @@ const meta: ComponentMeta = {
     }
   },
   droppingItem: {
-    w: 4,
+    w: 6,
     h: 3
   }
 }

@@ -39,7 +39,7 @@ const meta: ComponentMeta = {
     rules: []
   },
   droppingItem: {
-    w: 2,
+    w: 4,
     h: 3
   }
 }

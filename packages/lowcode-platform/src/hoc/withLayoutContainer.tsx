@@ -34,7 +34,6 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => React.forwa
         style={computedStyle}
       >
         {children}
-        <div>2222</div>
       </LayoutContainer>
     </Component>
   );

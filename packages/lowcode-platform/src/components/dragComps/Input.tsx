@@ -40,7 +40,7 @@ const meta: ComponentMeta = {
     rules: ['message', 'required', 'pattern', 'len', 'max', 'min']
   },
   droppingItem: {
-    w: 4,
+    w: 6,
     h: 4
   }
 };
