@@ -34,9 +34,10 @@ export const dragSlice = createSlice({
   name: 'drag',
   initialState,
   reducers: {
+    resetDrag: () => {
+      return initialState;
+    },
     setNewItem: (state, { payload = {} }) => {
-      // TODO 这里应该去给组件设置一个id
-      // * 需要看是新建还是啥
       const id = uuidV4();
       state.newItem = {
         id,
@@ -44,12 +45,11 @@ export const dragSlice = createSlice({
       }
     },
     setFocusItem: (state, { payload }) => {
-      // console.log('setFocusItem', payload);
       state.focusItemId = payload.id;
     }
   }
 });
 
 
-export const { setNewItem, setFocusItem } = dragSlice.actions;
+export const { setNewItem, setFocusItem, resetDrag } = dragSlice.actions;
 export default dragSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { createApiMethod } from 'app-framework';
 import { Skeleton } from 'antd';
-import store, { exportSchema, replaceLayoutStore, RootState, updateSchema } from '../store';
+import store, { exportSchema, replaceLayoutStore, resetDrag, resetLayout, RootState, updateSchema } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce, isEqual } from 'lodash';
 
@@ -42,6 +42,8 @@ const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) =>
     if (!schemaName) {
       setLoading(false);
       setError(undefined);
+      dispatch(resetLayout());
+      dispatch(resetDrag());
       return;
     }
     (async () => {

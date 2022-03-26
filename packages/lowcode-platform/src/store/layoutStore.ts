@@ -42,6 +42,9 @@ export const layoutSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
+    resetLayout: () => {
+      return initialState;
+    },
     replaceLayoutStore: (state, { payload }) => {
       const { layoutStore } = payload;
       state.compInfo = layoutStore.compInfo;
@@ -128,5 +131,6 @@ export const {
   removeChild,
   removeComp,
   setReadonly,
+  resetLayout
 } = layoutSlice.actions;
 export default layoutSlice.reducer;

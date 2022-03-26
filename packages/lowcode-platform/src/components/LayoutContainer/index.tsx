@@ -119,7 +119,7 @@ const LayoutContainer: React.FC<LayoutContainerProps> = props => {
     >
       {
         (Array.isArray(props.children) ? props.children : [props.children || undefined]).filter(Boolean).map((child, i) => {
-          return <div key={layout && layout[i]?.i || 'rootContainer'}>{child}</div>
+          return <div key={layout && layout[i]?.i || uuidV4()}>{child}</div>
         })
       }
     </ResponsiveGridLayout>
