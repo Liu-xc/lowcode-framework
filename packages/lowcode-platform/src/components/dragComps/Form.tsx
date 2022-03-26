@@ -1,8 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Form, FormProps, Button, Modal, message, Spin } from 'antd';
 import { ComponentMeta } from '../../types';
-import withLayoutContainer from '../../hoc/withLayoutContainer';
-import withDragItem from '../../hoc/withDragItem';
+import {withContainerChild, withLayoutContainer} from '../../hoc';
 import { createApiMethod } from 'app-framework';
 import { useParams } from 'react-router-dom';
 import cls from 'classnames'
@@ -138,4 +137,4 @@ const TheForm: React.FC<TheFormProps> = (props) => {
   );
 }
 
-export default withDragItem(withLayoutContainer(TheForm));
+export default withContainerChild(withLayoutContainer(TheForm), true);

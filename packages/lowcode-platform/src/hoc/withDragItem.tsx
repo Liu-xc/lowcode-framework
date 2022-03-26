@@ -8,8 +8,8 @@ const withDragItem = (Component: React.ComponentType<any>) => (props: any = {}) 
   const configProps = useSelector((state: RootState) => state.layout.compInfo[id]?.configProps || {});
 
   return (
-    <Component {...props} {...configProps}/>
+    <Component {...props} {...configProps} />
   );
-}
+};
 
 export default withDragItem;

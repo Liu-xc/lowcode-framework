@@ -14,7 +14,7 @@ export interface LayoutState {
       layoutInfo?: any[];
       layoutChildCompTypes?: string[]
     };
-  }
+  },
 }
 
 const initialState: LayoutState = {
@@ -34,11 +34,9 @@ const initialState: LayoutState = {
         }
       }
     }
-  }
+  },
 };
 
-// TODO 记录一张id和meta对应的表
-// TODO 需要能够回填FORM
 export const layoutSlice = createSlice({
   name: 'layout',
   initialState,
@@ -54,13 +52,6 @@ export const layoutSlice = createSlice({
         state.compInfo[id] = {} as any;
       }
       state.compInfo[id].layoutInfo = layoutInfo;
-    },
-    setLayoutChildCompTypes: (state, { payload }) => {
-      const { id = 'rootContainer', layoutChildCompTypes } = payload;
-      if (!id) {
-        return;
-      }
-      state.compInfo[id].layoutChildCompTypes = layoutChildCompTypes;
     },
     addComp: (state, { payload }) => {
       const { id } = payload;
@@ -93,12 +84,18 @@ export const layoutSlice = createSlice({
         return;
       }
       const {
-        childrenList = []
+        childrenList = [],
+        layoutInfo = []
       } = state.compInfo[parentId];
       if (childrenList.includes(childId)) {
         const index = childrenList.indexOf(childId);
         childrenList.splice(index, 1);
         state.compInfo[parentId].childrenList = childrenList;
+      }
+      const childLayoutIndex = layoutInfo.findIndex(l => l.i === childId);
+      if (childLayoutIndex > -1) {
+        layoutInfo.splice(childLayoutIndex, 1);
+        state.compInfo[parentId].layoutInfo = layoutInfo;
       }
     },
     removeComp: (state, { payload }) => {
@@ -116,7 +113,7 @@ export const layoutSlice = createSlice({
     setReadonly: (state, { payload }) => {
       const { readonly } = payload;
       state.readonly = readonly;
-    }
+    },
   }
 });
 
@@ -124,12 +121,11 @@ export const layoutSlice = createSlice({
 export const {
   replaceLayoutStore,
   setLayoutInfo,
-  setLayoutChildCompTypes,
   addComp,
   updateConfigProps,
   addChild,
   removeChild,
   removeComp,
-  setReadonly
+  setReadonly,
 } = layoutSlice.actions;
 export default layoutSlice.reducer;

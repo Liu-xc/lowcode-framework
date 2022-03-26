@@ -34,8 +34,8 @@ function App() {
         />
       </Sider>)}
       <Content style={{ overflowY: 'auto', overflowX: 'hidden', display: 'flex', minHeight: '100%' }}>
-        {mode === 'create' && <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%',  overflowY: 'auto', overflowX: 'hidden' }}/>}
-        {mode !== 'create' && <RenderComponent state={{layoutStore}} schema={IndexSchema} />}
+        {/* {mode === 'create' && <Test containerStyle={{ minHeight: '100%', backgroundColor: 'pink', width: '100%',  overflowY: 'auto', overflowX: 'hidden' }}/>} */}
+        <RenderComponent />
       </Content>
       {
         !(mode === 'view') && (

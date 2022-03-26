@@ -1,6 +1,6 @@
 import DragContainer, { ContainerMeta } from "./Container";
 
-import { createContext } from "react";
+import React, { createContext } from "react";
 import DraggableInput, { InputMeta } from "./dragComps/Input";
 import DraggableForm, { FormMeta } from './dragComps/Form';
 import DraggableSwitch, { SwitchMeta } from './dragComps/Switch';
@@ -27,7 +27,7 @@ export {
   RenderComponent
 }
 
-export const ComponentsMap: Record<string, React.ComponentType<any>> = {
+export const ComponentsMap: Record<string, React.ComponentType<any> | React.ForwardedRef<any>> = {
   Input: DraggableInput,
   Form: DraggableForm,
   Switch: DraggableSwitch,

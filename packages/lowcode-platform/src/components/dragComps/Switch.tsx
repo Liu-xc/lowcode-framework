@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, SwitchProps } from 'antd';
 import { ComponentMeta } from '../../types';
-import { withField, withFieldMeta, withDragItem } from '../../hoc';
+import { withField, withFieldMeta, withContainerChild } from '../../hoc';
 
 const meta: ComponentMeta = {
   ComponentType: 'Switch',
@@ -47,4 +47,4 @@ const meta: ComponentMeta = {
 export const SwitchMeta: ComponentMeta = withFieldMeta(meta);
 
 
-export default withDragItem(withField(Switch));
+export default withContainerChild(withField(Switch));

@@ -1,0 +1,21 @@
+.dragDiv {
+  position: relative;
+  border: 1px green dashed;
+  padding: 5px 24px 5px 10px;
+  overflow: hidden;
+
+  .removeIcon {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    cursor: pointer;
+  }
+
+  &.readonly {
+    border: none !important;
+  }
+
+  &.focusItem {
+    border: 1px solid blueviolet;
+  }
+}

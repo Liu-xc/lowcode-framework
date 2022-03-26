@@ -2,17 +2,13 @@ import React, { useMemo } from 'react';
 import LayoutContainer from '../components/LayoutContainer';
 
 // eslint-disable-next-line react/display-name
-const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any) => {
+const withLayoutContainer = (Component: React.ComponentType<any>) => React.forwardRef((props: any, ref) => {
   const {
     children,
     layoutConfigs,
     style = {},
     id,
     containerStyle = {},
-    layoutInfo,
-    layoutChildren,
-    layoutChildCompTypes,
-    fieldRules,
     ...compProps
   } = props;
 
@@ -29,19 +25,19 @@ const withLayoutContainer = (Component: React.ComponentType<any>) => (props: any
       {...compProps}
       id={id}
       style={containerStyle}
+      ref={ref}
     >
-      {children}
       <LayoutContainer
         containerCompId={id}
         isBounded={true}
-        layoutInfo={layoutInfo}
-        layoutChildren={layoutChildren}
-        layoutChildCompTypes={layoutChildCompTypes}
         {...layoutConfigs}
         style={computedStyle}
-      />
+      >
+        {children}
+        <div>2222</div>
+      </LayoutContainer>
     </Component>
   );
-};
+});
 
 export default withLayoutContainer;

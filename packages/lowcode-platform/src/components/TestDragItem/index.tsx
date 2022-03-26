@@ -1,6 +1,6 @@
 import React from 'react';
-import withDragItem from '../../hoc/withDragItem';
+import { withContainerChild } from '../../hoc';
 
 const Test = (props: any) => (<div>{props.children}</div>);
 
-export default withDragItem(Test);
+export default withContainerChild(Test);

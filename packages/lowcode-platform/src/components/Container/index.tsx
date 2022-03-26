@@ -1,4 +1,5 @@
 import React from 'react';
+import { withContainerChild } from '../../hoc';
 import withLayoutContainer from '../../hoc/withLayoutContainer';
 import { ComponentMeta } from '../../types';
 
@@ -22,4 +23,4 @@ export const ContainerMeta: ComponentMeta = {
   }
 };
 
-export default withLayoutContainer(Container);
+export default withContainerChild(withLayoutContainer(Container), true);

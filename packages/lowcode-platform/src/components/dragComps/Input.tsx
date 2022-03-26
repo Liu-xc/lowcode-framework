@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input, InputProps } from 'antd';
-import withDragItem from '../../hoc/withDragItem';
+import { withContainerChild } from '../../hoc';
 import { ComponentMeta } from '../../types';
 import { createOptions } from './commonConfigs';
 import { withField, withFieldMeta } from '../../hoc/withField';
@@ -55,4 +55,4 @@ const TheInput: React.FC<any> = props => {
   return <Input {...otherProps} type={type} />;
 }
 
-export default withDragItem(withField(TheInput));
+export default withContainerChild(withField(TheInput));

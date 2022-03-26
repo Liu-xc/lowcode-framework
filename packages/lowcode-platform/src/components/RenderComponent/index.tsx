@@ -1,18 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { replaceLayoutStore } from '../../store';
+import React, { useContext } from 'react';
 import { APPContext } from 'app-framework';
 import { withQuerySchema } from '../../hoc';
 
 const RenderComponent: React.FC<any> = props => {
-  const dispatch = useDispatch();
-  const { schema, state } = props;
+  const { schema } = props;
   const { renderEngine } = useContext(APPContext);
-  useEffect(() => {
-    dispatch(replaceLayoutStore({
-      layoutStore: state
-    }));
-  }, [dispatch, state]);
+
   return renderEngine.render(schema);
 }
 

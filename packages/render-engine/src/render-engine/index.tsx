@@ -58,13 +58,13 @@ class RenderEngine {
     return Component;
   }
 
-  createNode = (schema: Schema, state: State): React.FunctionComponent => {
+  createNode = (schema: Schema, state: State): React.ComponentType<any> => {
     const {
       componentsMap,
       globalState,
       createNode
     } = this;
-    const Node = () => {
+    const Node = React.forwardRef((props, ref) => {
       const context = useMemo(() => ({ globalState, state, createNode }), []);
       const [Component, setComponent] = useState<React.ComponentType<any>>();
       const pureSchema = useMemo(() => {
@@ -110,7 +110,7 @@ class RenderEngine {
         return <Component resolvecontext={resolvecontext} />;
       }
       return <Component children={childrenNodes} resolvecontext={resolvecontext} />;
-    };
+    });
     return Node;
   }
 }

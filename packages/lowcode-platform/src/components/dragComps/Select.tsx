@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from 'antd';
 import { ComponentMeta } from '../../types';
-import { withField, withDragItem, withFieldMeta } from '../../hoc';
+import { withField, withContainerChild, withFieldMeta } from '../../hoc';
 
 const meta: ComponentMeta = {
   ComponentType: 'Select',
@@ -29,4 +29,4 @@ const meta: ComponentMeta = {
 
 export const SelectMeta = withFieldMeta(meta);
 
-export default withDragItem(withField(Select));
+export default withContainerChild(withField(Select));

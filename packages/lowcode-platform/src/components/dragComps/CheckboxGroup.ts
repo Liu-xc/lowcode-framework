@@ -1,5 +1,5 @@
 import { Checkbox } from "antd";
-import { withField, withFieldMeta, withDragItem } from "../../hoc";
+import { withField, withFieldMeta, withContainerChild } from "../../hoc";
 import { ComponentMeta } from "../../types";
 
 const meta: ComponentMeta = {
@@ -27,4 +27,4 @@ const meta: ComponentMeta = {
 
 export const CheckboxGroupMeta = withFieldMeta(meta);
 
-export default withDragItem(withField(Checkbox.Group));
+export default withContainerChild(withField(Checkbox.Group));

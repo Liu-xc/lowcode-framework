@@ -1,5 +1,5 @@
 import React from 'react';
-import { withField, withDragItem, withFieldMeta } from '../../hoc';
+import { withField, withContainerChild, withFieldMeta } from '../../hoc';
 import { ComponentMeta } from '../../types';
 import { Radio } from 'antd';
 
@@ -30,4 +30,4 @@ const meta: ComponentMeta = {
 
 export const RadioGroupMeta: ComponentMeta = withFieldMeta(meta);
 
-export default withDragItem(withField(Radio.Group));
+export default withContainerChild(withField(Radio.Group));
