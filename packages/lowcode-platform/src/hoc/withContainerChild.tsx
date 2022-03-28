@@ -47,9 +47,9 @@ const withContainerChild = (Comp: React.ComponentType<any>, isContainer = false)
       style={computedStyle}
       key={id}
       onClick={(e) => onClickItem(id, e)}
-      className={cls("react-grid-item dragDiv react-draggable cssTransforms react-resizable", curFocusId === id && "focusItem", isReadOnly && 'readonly')}
+      className={cls("react-grid-item dragDiv react-draggable cssTransforms react-resizable", curFocusId === id && "focusItem", (isReadOnly || !parentId) && 'readonly')}
     >
-      {!isReadOnly && <CloseCircleOutlined onClick={(e) => deleteItem(id, e)} className='removeIcon' title='删除' />}
+      {!(isReadOnly || !parentId) && <CloseCircleOutlined onClick={(e) => deleteItem(id, e)} className='removeIcon' title='删除' />}
       {
         <Comp id={id} {...otherProps} />
       }
