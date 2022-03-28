@@ -59,9 +59,10 @@ router.get('/delete/:schemaName', async (ctx: RouterContext<any, Koa.Context>, n
   const { schemaName } = ctx.params;
   const exist = await checkExistence(schemaName);
   if (exist) {
+    const existDataSchema = SchemaModel.findOneAndDelete({ bindSchema: schemaName });
     const delSchema = SchemaModel.findOneAndDelete({ name: schemaName });
     const delState = StateModel.findOneAndDelete({ name: schemaName });
-    await Promise.all([delSchema, delState]).then(
+    await Promise.all([delSchema, delState, existDataSchema]).then(
       ([schemaDoc, stateDoc]) => {
         if (schemaDoc && stateDoc) {
           ctx.body = '删除成功';
@@ -89,12 +90,12 @@ router.post('/create', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Ne
   const { schema, state } = body;
   const { bindSchema } = schema;
   const exist = await checkExistence(schema.name);
-  const existDataSchema = await checkExistence(`${bindSchema}-data`);
-  if (!exist && !existDataSchema) {
+  if (!exist) {
     const createSchema = SchemaModel.create(schema);
     const createState = StateModel.create(state);
-    await Promise.all([createSchema, createState]).then(
-      ([schemaDoc, stateDoc]) => {
+    const updateForm = bindSchema && SchemaModel.findOneAndUpdate({ name: bindSchema }, { dataSchema: schema.name });
+    await Promise.all([createSchema, createState, updateForm]).then(
+      ([schemaDoc, stateDoc,]) => {
         if (schemaDoc && stateDoc) {
           ctx.body = {
             schema: schemaDoc.toJSON(),
@@ -109,7 +110,7 @@ router.post('/create', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Ne
     )
   } else {
     ctx.status = 200;
-    ctx.statusText = existDataSchema ? `${schema.bindSchema}已有数据消费页` : `${schema.name}已存在`;
+    ctx.statusText = `${schema.name}已存在`;
     ctx.body = {
       code: ALREADY_EXIST_CODE,
     };

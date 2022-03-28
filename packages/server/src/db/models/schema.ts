@@ -9,6 +9,7 @@ interface SchemaType {
   storeId: string;
   type: string;
   bindSchema?: string;
+  dataSchema?: string;
 }
 
 type Doc = HydratedDocument<SchemaType>;
@@ -19,6 +20,7 @@ const schema = new MongoSchema<SchemaType>({
   storeId: Types.String,
   type: Types.String,
   bindSchema: Types.String,
+  dataSchema: Types.String,
 });
 
 const SchemaModel = mongoose.model<SchemaType>('schema', schema);

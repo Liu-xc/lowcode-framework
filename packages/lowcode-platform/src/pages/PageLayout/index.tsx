@@ -123,8 +123,7 @@ const PageLayout = () => {
     });
   }, [schemaName, schemaType]);
 
-  const shouldSetName = useMemo(() => schemaType && schemaType !== 'form-data', [schemaType]);
-  const shouldGetOptions = useMemo(() => schemaType && !shouldSetName, [shouldSetName, schemaType]);
+  const shouldGetOptions = useMemo(() => schemaType === 'form-data', [schemaType]);
   
   const requestSchemaOptions = useMemo(() => createApiMethod({
     url: '/schemas',
@@ -176,13 +175,9 @@ const PageLayout = () => {
                     options={SchemaTypeOptions}
                   />
                 </Item>
-                {
-                  shouldSetName && (
-                    <Item label="名称">
-                      <Input value={name} onChange={onNameChange} />
-                    </Item>
-                  )
-                }
+                <Item label="名称">
+                  <Input value={name} onChange={onNameChange} />
+                </Item>
                 {
                   shouldGetOptions && (
                     <Item label="绑定">

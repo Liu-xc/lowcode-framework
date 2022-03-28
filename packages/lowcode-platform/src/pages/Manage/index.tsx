@@ -11,7 +11,7 @@ const request = createApiMethod({
 
 const Manage = () => {
   const nav = useNavigate();
-  const [data, setData] = useState<{title: string, type: string}[]>([]);
+  const [data, setData] = useState<{title: string, type: string, dataSchema: string}[]>([]);
   const [loading, setLoading] = useState(false);
   const formList = useMemo(() => data.filter(item => item.type === 'form'), [data]);
   const formDataList = useMemo(() => data.filter(item => item.type === 'form-data'), [data]);
@@ -21,7 +21,7 @@ const Manage = () => {
     setLoading(true);
     request({}).then((r: any) => {
       const { schema } = r;
-      setData(schema.map((s: any) => ({title: s.name, type: s.type})));
+      setData(schema.map((s: any) => ({title: s.name, type: s.type, dataSchema: s.dataSchema})));
     }).catch(() => {
       message.error('获取列表异常', 2);
     }).finally(() => {
@@ -55,12 +55,13 @@ const Manage = () => {
   }, [nav]);
 
 
-  const deleteSchema = useCallback(async (schemaName) => {
+  const deleteSchema = useCallback(async (item) => {
+    const { title, dataSchema } = item;
     Modal.confirm({
       title: '删除schema',
-      content: `确认删除schema：${schemaName}？`,
+      content: `确认删除schema：${title}？${dataSchema && `对应的dataSchema：${dataSchema}也将被删除`}`,
       async onOk() {
-        deleteSchemaRequest(schemaName);
+        deleteSchemaRequest(title);
       },
       onCancel() {
         // 
@@ -87,14 +88,14 @@ const Manage = () => {
                 title={(
                   <div className='formItemTitle'>
                     {item.title}
-                    <Button type='ghost' onClick={() => viewSchema(`${item.title}-data`)}>查看数据</Button>
+                    {item.dataSchema && <Button type='ghost' onClick={() => viewSchema(item.dataSchema)}>查看数据</Button>}
                   </div>
                 )}
               >
                 <div className='btnGroup'>
                   <Button type='primary' onClick={() => viewSchema(item.title)}>查看</Button>
                   <Button type='primary' onClick={() => editSchema(item.title)}>编辑</Button>
-                  <Button danger onClick={() => deleteSchema(item.title)}>删除</Button>
+                  <Button danger onClick={() => deleteSchema(item)}>删除</Button>
                 </div>
               </Card>
             </List.Item>
