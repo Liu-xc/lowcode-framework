@@ -23,6 +23,8 @@ const {
 
 const { Item } = Form;
 
+const SchemaTypeOptions = [{ label: '表单', value: 'form' }, { label: '表单数据', value: 'form-data' }, { label: '普通', value: 'normal' }];
+
 const request = createApiMethod({
   method: 'POST'
 });
@@ -171,7 +173,7 @@ const PageLayout = () => {
                   <Select
                     value={schemaType}
                     onChange={changeSchemaName}
-                    options={[{ label: '表单', value: 'form' }, { label: '表单数据', value: 'form-data' }, { label: '博客', value: 'post' }]}
+                    options={SchemaTypeOptions}
                   />
                 </Item>
                 {

@@ -89,7 +89,7 @@ router.post('/create', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Ne
   const { schema, state } = body;
   const { bindSchema } = schema;
   const exist = await checkExistence(schema.name);
-  const existDataSchema = await checkExistence(bindSchema);
+  const existDataSchema = await checkExistence(`${bindSchema}-data`);
   if (!exist && !existDataSchema) {
     const createSchema = SchemaModel.create(schema);
     const createState = StateModel.create(state);
