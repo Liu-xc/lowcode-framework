@@ -16,7 +16,7 @@ const ContainerComps = ['Container', 'Form'];
 const commonKeys: Record<string, string> = {
   ComponentType: 'ComponentType',
   id: 'id',
-  configProps: 'props'
+  configProps: 'props',
 };
 
 const generateComp = (id: string, compInfoMap: any, res: Record<string, any>, readonly: boolean) => {
@@ -40,6 +40,7 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>, re
   }
   res.props = res.props || {};
   res.props.id = id;
+  res.props.parentId = id === 'rootContainer' ? '' : compInfo.parentId || 'rootContainer'
   return res;
 }
 

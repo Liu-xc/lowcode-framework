@@ -21,7 +21,7 @@ const withContainerChild = (Comp: React.ComponentType<any>, isContainer = false)
     const layout = get(state, `layout.componentInfo[${parentId}].layoutInfo`, []);
     return layout.find((l: Layout) => l.i === id) || {};
   });
-  const isReadOnly = useMemo(() => mode === 'view' || compLayout.static && !compLayout.isDraggable, [compLayout]);
+  const isReadOnly = useMemo(() => mode === 'view' || compLayout.static && !compLayout.isDraggable, [compLayout, mode]);
 
   const computedStyle: React.CSSProperties = useMemo(() => {
     return isContainer ? { ...style, ...containerStyle, height: '100%' } : style;
