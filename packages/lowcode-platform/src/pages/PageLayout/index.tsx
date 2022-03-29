@@ -76,12 +76,15 @@ const PageLayout = () => {
       }).then((r: any) => {
         const { code } = r;
         if (code !== ALREADY_EXIST_CODE) {
+          message.success(`创建${curSchemaName}成功`);
           nav(`/platform/edit/${curSchemaName}`);
         } else {
           setName('');
           setBindSchema('');
           message.error(r.message);
         }
+      }).catch((e) => {
+        message.error(`${e.message}\n上传异常`, 1);
       });
     }
     
@@ -120,6 +123,10 @@ const PageLayout = () => {
           content: state
         },
       }
+    }).then(() => {
+      message.success(`更新${schemaName}成功`, 1);
+    }).catch(() => {
+      message.error(`更新${schemaName}成功`, 2);
     });
   }, [schemaName, schemaType]);
 
@@ -138,6 +145,7 @@ const PageLayout = () => {
       setOptions(schema.map((s: any) => ({ label: s.name, value: s.name })));
     }).catch(e => {
       console.error(e);
+      message.error(`${e.message}\n获取可绑定schema列表异常`, 1);
     })
   }, [requestSchemaOptions]);
 

@@ -33,6 +33,7 @@ const Manage = () => {
     setLoading(true);
     request({ url: `/schemas/delete/${schemaName}` }).then((r: any) => {
       console.log(r);
+      message.success(`删除${schemaName}成功`, 1);
     }).catch((e: any) => {
       console.log(e);
       message.error('删除schema异常', 2);

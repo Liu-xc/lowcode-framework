@@ -86,7 +86,7 @@ const TheForm: React.FC<TheFormProps> = (props) => {
       data: {
         formKey,
         formValue
-    } }).then(() => {
+    }}).then(() => {
       message.success('提交成功', 2);
     }).catch(() => {
       message.error('提交失败', 3);
@@ -105,7 +105,8 @@ const TheForm: React.FC<TheFormProps> = (props) => {
         setShowModal(true);
       }
     }).catch(() => {
-      console.error('校验不通过')
+      console.error('校验不通过');
+      message.error('表单校验不通过，请检查填写', 2);
     })
   }, [form, isProd, submitFormData]);
 

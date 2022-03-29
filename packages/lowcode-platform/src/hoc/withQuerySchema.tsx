@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createApiMethod } from 'app-framework';
-import { Skeleton } from 'antd';
+import { message, Skeleton } from 'antd';
 import store, { exportSchema, replaceLayoutStore, resetDrag, resetLayout, RootState, updateSchema } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce, isEqual } from 'lodash';
@@ -58,6 +58,7 @@ const withQuerySchema = (Component: React.ComponentType<any>) => (props: any) =>
         }
       ).catch((e) => {
         setError(e);
+        message.error(`${e.message}\n加载异常，请检查schema`, 3);
       }).finally(() => setLoading(false));
     })();
   }, [request, schemaName, url, dispatch, updateSchema]);
