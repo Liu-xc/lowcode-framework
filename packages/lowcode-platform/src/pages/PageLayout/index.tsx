@@ -157,7 +157,7 @@ const PageLayout = () => {
   }, [shouldGetOptions, getSchemaOptions]);
 
   const reset = useCallback(() => {
-    window.history.go(0);
+    window.dispatchEvent(new Event('resetSchema'));
   }, []);
 
   return (
