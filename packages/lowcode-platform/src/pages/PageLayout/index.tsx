@@ -155,6 +155,10 @@ const PageLayout = () => {
     }
   }, [shouldGetOptions, getSchemaOptions]);
 
+  const reset = useCallback(() => {
+    window.history.go(0);
+  }, []);
+
   return (
     <div className="App">
       <Layout style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
@@ -195,6 +199,7 @@ const PageLayout = () => {
                 }
               </Modal>
               {mode === 'create' && <Button className='btn' type='primary' onClick={upload}>上传</Button>}
+              {mode === 'edit' && <Button className='btn' type='dashed' danger onClick={reset}>重置</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={update}>更新</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={goView}>预览</Button>}
               {mode === 'view' && <Button className='btn' type='primary' onClick={goEdit}>编辑</Button>}
