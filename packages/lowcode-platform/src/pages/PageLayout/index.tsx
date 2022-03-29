@@ -7,7 +7,8 @@ import {
   Alert,
   Form,
   Select,
-  message
+  message,
+  Popconfirm
 } from 'antd';
 import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { exportLayoutStore, exportSchema } from '../../store';
@@ -199,7 +200,15 @@ const PageLayout = () => {
                 }
               </Modal>
               {mode === 'create' && <Button className='btn' type='primary' onClick={upload}>上传</Button>}
-              {mode === 'edit' && <Button className='btn' type='dashed' danger onClick={reset}>重置</Button>}
+              {mode === 'edit' && <Popconfirm
+                  title="确定要重置已编辑的内容吗?"
+                  onConfirm={reset}
+                  okText="yes"
+                  cancelText="cancel"
+                >
+                  <Button className='btn' type='default' danger>重置</Button>
+                </Popconfirm>
+              }
               {mode === 'edit' && <Button className='btn' type='primary' onClick={update}>更新</Button>}
               {mode === 'edit' && <Button className='btn' type='primary' onClick={goView}>预览</Button>}
               {mode === 'view' && <Button className='btn' type='primary' onClick={goEdit}>编辑</Button>}
