@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import layoutReducers from './layoutStore';
 import dragReducers from './dragStore';
 import schemaReducers from './schemaStore';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, set } from 'lodash';
 
 const store = configureStore({
   reducer: {
@@ -41,6 +41,17 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>, re
   res.props = res.props || {};
   res.props.id = id;
   res.props.parentId = id === 'rootContainer' ? '' : compInfo.parentId || 'rootContainer'
+
+  if (res.props.schemaConfigs) {
+    const schemaConfigs = cloneDeep(res.props.schemaConfigs) as { path: string, expression: string }[];
+    Reflect.deleteProperty(res.props, 'schemaConfigs');
+
+    for (const config of schemaConfigs) {
+      const { path, expression } = config;
+      set(res, path, expression);
+    }
+  }
+
   return res;
 }
 

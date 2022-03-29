@@ -1,11 +1,13 @@
+/* eslint-disable react/display-name */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch, Button } from 'antd';
+import { Form, Input, FormProps, FormItemProps, Radio, Select, Slider, Switch, Button, Divider } from 'antd';
 import { v4 as uuidV4 } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { RootState, updateConfigProps } from '../../store';
 import { debounce, throttle, cloneDeep } from 'lodash';
 import OptionCreator, { Option } from './OptionCreator';
 import ValidationFields, { RuleType } from './ValidationFields';
+import SchemaConfig from './SchemaConfig';
 import './index.scss';
 
 type FieldType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Slider' | 'Options';
@@ -22,8 +24,8 @@ export interface ConfigFormProps {
   rules?: RuleType[];
 }
 
-const ConfigPanelForm: React.FC = () => {
-  const focusItemId = useSelector((state: RootState) => state.drag.focusItemId);
+const ConfigPanelForm: React.FC<any> = (props) => {
+  const { focusItemId } = props;
   const configs = useSelector((state: RootState) => state.layout.compInfo[focusItemId]) || {};
   const {
     ComponentType,
@@ -36,10 +38,12 @@ const ConfigPanelForm: React.FC = () => {
     initialValues = {},
     rules = []
   } = configForm;
+
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [options, setOptions] = useState<Option[]>(configProps.options || []);
   const [validateMap, setValidateMap] = useState((configProps.fieldRules || [])[0] || {});
+  const [schemaConfigs, setSchemaConfigs] = useState(configProps.schemaConfigs || []);
 
   const formValues = useMemo(() => ({ ...initialValues, ...configProps }), [configProps, initialValues]);
 
@@ -75,6 +79,10 @@ const ConfigPanelForm: React.FC = () => {
   useEffect(() => {
     changeFieldValue('fieldRules', [validateMap]);
   }, [changeFieldValue, validateMap]);
+
+  useEffect(() => {
+    changeFieldValue('schemaConfigs', schemaConfigs);
+  }, [changeFieldValue, schemaConfigs]);
 
   const getFieldItem = useCallback((type: FieldType, props: any = {}, fieldProps) => {
     switch (type) {
@@ -143,6 +151,8 @@ const ConfigPanelForm: React.FC = () => {
                   /> :
                   <></>
               }
+              <Divider>Schema配置</Divider>
+              <SchemaConfig setConfigs={setSchemaConfigs} configs={schemaConfigs}  />
               <div className='footer'>
                 <Button className='' block type='primary' onClick={confirmForm} > 确认 </Button>
               </div>
@@ -158,5 +168,12 @@ const ConfigPanelForm: React.FC = () => {
   );
 }
 
+const withFocusId = (Comp: React.ComponentType<any>): React.FC<any> => props => {
+  const focusItemId = useSelector((state: RootState) => state.drag.focusItemId);
 
-export default ConfigPanelForm;
+  return (
+    <ConfigPanelForm key={focusItemId} focusItemId={focusItemId} />
+  );
+}
+
+export default withFocusId(ConfigPanelForm);

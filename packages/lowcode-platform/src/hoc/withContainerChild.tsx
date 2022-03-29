@@ -13,7 +13,7 @@ import './index.scss';
 
 
 const withContainerChild = (Comp: React.ComponentType<any>, isContainer = false): React.ComponentType<any> => withDragItem(props => {
-  const { parentId, id, containerStyle = {}, style = {}, ...otherProps } = props;
+  const { parentId, id, containerStyle = {}, style = {}, schemaConfigs, ...otherProps } = props;
   const { mode } = useParams();
   const dispatch = useDispatch();
   const curFocusId = useSelector((state: RootState) => state.drag.focusItemId);

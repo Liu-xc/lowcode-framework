@@ -25,18 +25,6 @@ export const FormMeta: ComponentMeta = {
       {
         type: 'Input',
         props: {
-          type: '',
-          placeholder: '请输入表单KEY'
-        },
-        fieldProps: {
-          name: 'formKey',
-          label: '表单KEY',
-          required: true
-        }
-      },
-      {
-        type: 'Input',
-        props: {
           type: 'text',
           placeholder: '请输入表单提交地址'
         },
@@ -54,12 +42,13 @@ export const FormMeta: ComponentMeta = {
 }
 
 interface TheFormProps extends FormProps {
+  [k: string]: any;
   formKey?: string;
   fieldRules?: any;
 }
 
 const TheForm: React.FC<TheFormProps> = (props) => {
-  const { style = {}, className, title, action, formKey, fieldRules, ...otherProps } = props;
+  const { style = {}, className, title, action, formKey, fieldRules, schemaConfigs, ...otherProps } = props;
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
