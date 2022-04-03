@@ -15,7 +15,7 @@ export default function resolve(
   setResolvedSchema: (schema: Schema) => void,
   triggerUpdate: () => void
 ): void {
-  const resolvedSchema = schema;
+  const resolvedSchema: Record<string, any> = {};
   const {
     state,
     createNode
@@ -33,6 +33,7 @@ export default function resolve(
     if (isExpression) {
       resolvedSchema[resolvedKey] = execute(schemaContext, val, (newResult: any) => {
         resolvedSchema[resolvedKey] = newResult;
+        setResolvedSchema(resolvedSchema);
         triggerUpdate();
       });
     } else if (isComponent) {
@@ -58,6 +59,7 @@ export default function resolve(
         schemaContext,
         (resolved: Schema) => {
           resolvedSchema[resolvedKey] = resolved;
+          setResolvedSchema(resolvedSchema);
         },
         triggerUpdate
       );
@@ -65,5 +67,6 @@ export default function resolve(
       resolvedSchema[resolvedKey] = schema[k];
     }
   });
+  // console.log('resolvedSchema', resolvedSchema);
   setResolvedSchema(cloneDeep(resolvedSchema));
 }

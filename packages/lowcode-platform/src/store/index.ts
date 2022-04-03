@@ -44,7 +44,7 @@ const generateComp = (id: string, compInfoMap: any, res: Record<string, any>, re
 
   if (res.props.schemaConfigs) {
     const schemaConfigs = cloneDeep(res.props.schemaConfigs) as { path: string, expression: string }[];
-    Reflect.deleteProperty(res.props, 'schemaConfigs');
+    // Reflect.deleteProperty(res.props, 'schemaConfigs');
 
     for (const config of schemaConfigs) {
       const { path, expression } = config;

@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input } from 'antd';
 import { DeleteOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { v4 as uuidV4 } from 'uuid';
 import './index.scss';
-import { debounce } from 'lodash';
+import { cloneDeep, debounce } from 'lodash';
 
 // ? 怎么跟field结合啊
 // 让form传一个setFieldValue方法进来吧
@@ -18,12 +18,13 @@ const SchemaConfig: React.FC<any> = (props: any) => {
   const { configs, setConfigs } = props;
   const [innerOptions, setInnerOptions] = useState(configs || []);
   const onChange = useCallback((v: string, i: number, expression = true) => {
+    const o = cloneDeep(innerOptions);
     if (expression) {
-      innerOptions[i].expression = v;
+      o[i].expression = v;
     } else {
-      innerOptions[i].path = v;
+      o[i].path = v;
     }
-    setInnerOptions([...innerOptions]);
+    setInnerOptions([...o]);
   }, [innerOptions]);
 
   const addOption = useCallback(() => {
@@ -37,10 +38,14 @@ const SchemaConfig: React.FC<any> = (props: any) => {
   }, [setConfigs, innerOptions]);
 
   const deleteOption = useCallback((i) => {
-    const newOptions = configs.slice();
+    const newOptions = innerOptions.slice();
     newOptions.splice(i, 1);
-    setConfigs(newOptions.filter((o: any) => o.path && o.expression));
-  }, [configs, setConfigs]);
+    setConfigs([...newOptions.filter((o: any) => o.path && o.expression)]);
+  }, [innerOptions, setConfigs]);
+
+  useEffect(() => {
+    setInnerOptions([...configs]);
+  }, [configs]);
 
   return (
     <div className="schemaConfig">

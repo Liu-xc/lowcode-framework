@@ -31,6 +31,8 @@ export type StateValue = Record<string, any>;
 
 const stateSymbol = Symbol('state');
 
+const staticPage = {};
+
 export default class State {
   private listenerMap: ListenerMap;
   private context: StateContext;
@@ -55,7 +57,7 @@ export default class State {
     if (!this.context.pageList) {
       throw new Error('only global state can create page');
     }
-    const page = {} as StatePage;
+    const page = staticPage as StatePage;
     this.context.pageList.push(page);
     return page;
   }

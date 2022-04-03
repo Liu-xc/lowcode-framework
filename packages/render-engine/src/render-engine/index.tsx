@@ -73,7 +73,7 @@ class RenderEngine {
         return schemaCopy;
       }, []);
       const children = useMemo(() => schema.children, []);
-      const resolvedSchema = useResolver(pureSchema, context);
+      const [dep, resolvedSchema] = useResolver(pureSchema, context);
       const childrenNodes = (Array.isArray(children) ? children : [children]).map(child => {
         if (typeof child !== 'object') {
           return () => <>{child}</>;
@@ -87,7 +87,7 @@ class RenderEngine {
         }
         const hocList = this.pluginManager.getHocList(resolvedSchema);
         setComponent(() => componentCreator(resolvedSchema, componentsMap, hocList, context))
-      }, [resolvedSchema]);
+      }, [resolvedSchema, dep]);
 
       const resolvecontext = useMemo(() => ({ ...context, resolvedSchema }), [context, resolvedSchema]);
 

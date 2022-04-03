@@ -14,8 +14,8 @@ export interface ResolveContext {
   schema?: Schema;
 }
 
-export default function useResolver(schema: Schema, resolvecontext: ResolveContext) {
-  const [, setUpdateTimes] = useState(0);
+export default function useResolver(schema: Schema, resolvecontext: ResolveContext): [number, any] {
+  const [dep, setUpdateTimes] = useState(0);
   const triggerUpdate = () => setUpdateTimes((t) => t + 1);
   const [resolvedSchema, setResolvedSchema] = useState<Schema>();
 
@@ -23,5 +23,5 @@ export default function useResolver(schema: Schema, resolvecontext: ResolveConte
     resolve(schema, resolvecontext, setResolvedSchema, triggerUpdate);
   }, [schema, resolvecontext]);
 
-  return resolvedSchema;
+  return [dep, resolvedSchema];
 }
