@@ -14,3 +14,4 @@ props.$value$  sv.values
 
 props.$fieldsMap$  sv.fieldsMap
 
+props.$value$  sv.values && sv.values.length || 0

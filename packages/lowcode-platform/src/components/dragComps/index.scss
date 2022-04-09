@@ -11,3 +11,25 @@
     text-align: center;
   }
 }
+
+.listContainer {
+  height: 100%;
+  padding: 16px;
+  background-color: white;
+  .title {
+    height: 30px;
+  }
+  .list {
+    overflow-y: auto;
+    scrollbar-width: 0;
+    max-height: calc(100% - 30px);
+  
+    .ant-list-item {
+      border-bottom: 1px solid gray;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    visibility: hidden;
+  }
+}

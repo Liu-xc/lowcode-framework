@@ -64,9 +64,10 @@ const TheList: React.FC<any> = props => {
   }
 
   return (
-    <div>
-      {title && <h3>{title}</h3>}
+    <div className='listContainer'>
+      {title && <h2 className='title'>{title}</h2>}
       <List
+        className='list'
         loading={loading}
         dataSource={value}
         renderItem={(v) => (
@@ -74,7 +75,7 @@ const TheList: React.FC<any> = props => {
               {
                 Object.keys(v as any).map(k => (
                   <div key={k}>
-                    {fieldsMap[k]}:{(v as any)[k]}
+                    {fieldsMap[k]}：{(v as any)[k]}
                   </div>
                 ))
               }

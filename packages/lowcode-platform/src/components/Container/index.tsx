@@ -2,11 +2,12 @@ import React from 'react';
 import { withContainerChild } from '../../hoc';
 import withLayoutContainer from '../../hoc/withLayoutContainer';
 import { ComponentMeta } from '../../types';
+import './index.scss';
 
 const Container: React.FC<any> = props => {
   const { children, style, id, ...otherProps } = props;
   return (
-    <div style={style} id={id}>
+    <div style={style} id={id} className='container'>
       {children}
     </div>
   );
