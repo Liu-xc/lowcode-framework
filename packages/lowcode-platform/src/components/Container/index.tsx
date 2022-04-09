@@ -4,9 +4,9 @@ import withLayoutContainer from '../../hoc/withLayoutContainer';
 import { ComponentMeta } from '../../types';
 
 const Container: React.FC<any> = props => {
-  const { children, ...otherProps } = props;
+  const { children, style, id, ...otherProps } = props;
   return (
-    <div {...otherProps}>
+    <div style={style} id={id}>
       {children}
     </div>
   );

@@ -19,6 +19,7 @@ import {
   PageLayout,
   Manage,
 } from './pages';
+import queryFormDataPlugin from './plugins/queryFormDataPlugin';
 
 import 'antd/dist/antd.css';
 import 'react-grid-layout/css/styles.css';
@@ -29,7 +30,8 @@ const appConfig = {
   componentsMap: ComponentsMap,
   networkConfig: {
     baseURL: 'http://127.0.0.1:8080',
-  }
+  },
+  plugins: [queryFormDataPlugin]
 };
 
 ReactDOM.render(

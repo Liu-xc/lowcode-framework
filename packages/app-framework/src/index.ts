@@ -12,5 +12,5 @@ export {
   RenderEngine,
   APPContext,
   initApp,
-  createApiMethod
+  createApiMethod,
 };

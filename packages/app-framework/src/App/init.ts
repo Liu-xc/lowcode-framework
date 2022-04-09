@@ -1,4 +1,4 @@
-import RenderEngine from "render-engine";
+import RenderEngine, { ResolvePlugin } from "render-engine";
 import { initAppConfig } from "@/appConfig";
 import { APPContextType } from "@/context";
 import { initNetwork } from 'network';
@@ -15,11 +15,12 @@ export default function initApp(configs: Omit<AppConfigMap, 'renderEngine'>): AP
     return value;
   }
 
-  const { componentsMap, networkConfig } = configs;
+  const { componentsMap, networkConfig, plugins = [] } = configs;
 
   initNetwork(networkConfig);
   const renderEngine = new RenderEngine(componentsMap);
-  renderEngine.registerPlugin(queryPlugin);
+  // renderEngine.registerPlugin(queryPlugin);
+  plugins.forEach((p: ResolvePlugin) => renderEngine.registerPlugin(p));
 
   const configMap = { ...configs } as AppConfigMap;
   configMap.renderEngine = renderEngine;

@@ -53,16 +53,16 @@ const SchemaConfig: React.FC<any> = (props: any) => {
         innerOptions.map((c: any, i: any) => {
           const { path, expression } = c;
           return (
-            <div key={i} className="option">
+            <div key={i} className="option" style={{ alignItems: 'flex-start' }}>
               <div className='optionInput'>
                 path
                 <Input defaultValue={path} onChange={(v) => onChange(v.target.value, i, false)} />
               </div>
               <div className='optionInput'>
                 expression
-                <Input defaultValue={expression} disabled={!innerOptions[i].path} onBlur={handleBlur} onChange={(v) => onChange(v.target.value, i)} />
+                <Input.TextArea defaultValue={expression} disabled={!innerOptions[i].path} onBlur={handleBlur} onChange={(v) => onChange(v.target.value, i)} />
               </div>
-              <Button icon={<DeleteOutlined />} type='primary' danger onClick={() => deleteOption(i)} />
+              <Button icon={<DeleteOutlined />} style={{ marginTop: '23px' }} type='primary' danger onClick={() => deleteOption(i)} />
             </div>
           );
         })

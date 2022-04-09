@@ -129,7 +129,7 @@ const ConfigPanelForm: React.FC<any> = (props) => {
   return (
     <>
       {
-        focusItemId && fields.length ?
+        focusItemId ?
           (
             <Form
               {...formProps}
