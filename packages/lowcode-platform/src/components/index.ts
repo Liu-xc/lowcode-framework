@@ -8,6 +8,7 @@ import DraggableRadioGroup, { RadioGroupMeta } from './dragComps/RadioGroup';
 import DraggableSelect, { SelectMeta } from './dragComps/Select';
 import DraggableCheckboxGroup, { CheckboxGroupMeta } from './dragComps/CheckboxGroup';
 import DraggableList, { ListMeta } from './dragComps/List';
+import DraggableTitle, { TitleMeta } from './dragComps/Title';
 import RenderComponent from "./RenderComponent";
 
 export {
@@ -25,6 +26,8 @@ export {
   CheckboxGroupMeta,
   DraggableList,
   ListMeta,
+  DraggableTitle,
+  TitleMeta,
 
   DragContainer,
   RenderComponent
@@ -38,7 +41,8 @@ export const ComponentsMap: Record<string, React.ComponentType<any> | React.Forw
   Select: DraggableSelect,
   CheckboxGroup: DraggableCheckboxGroup,
   Container: DragContainer,
-  List: DraggableList
+  List: DraggableList,
+  Title: DraggableTitle
 }
 
 export const ComponentsMapContext = createContext(ComponentsMap);
@@ -85,6 +89,10 @@ export const CompoMenuOptions = {
     {
       key: 'list',
       meta: ListMeta
+    },
+    {
+      key: 'title',
+      meta: TitleMeta
     }
   ]
 } as any;
