@@ -43,7 +43,7 @@ const TheList: React.FC<any> = props => {
     loading,
     error,
     value = [],
-    fieldsMap,
+    fieldsMap = {},
     title,
     retry
   } = props;

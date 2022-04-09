@@ -41,14 +41,13 @@ const queryFormDataPlugin = {
           data,
           params
         }).then((res) => {
-          console.log(res);
           beforeFormat && typeof beforeFormat === 'function' && beforeFormat(res);
           const formattedData = adaptor && typeof adaptor === 'function' && adaptor(res);
           set(resolvecontext.sv, stateKey, formattedData);
           setFormData(formattedData);
         }).catch((e) => {
           console.error(e);
-          message.error(e.message, 2)
+          message.error(`${e.message}（${e.code}）`, 2)
           setError(e);
         }).finally(() => {
           setLoading(false);

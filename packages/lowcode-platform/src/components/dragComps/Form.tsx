@@ -77,7 +77,8 @@ const TheForm: React.FC<TheFormProps> = (props) => {
         formValue
     }}).then(() => {
       message.success('提交成功', 2);
-    }).catch(() => {
+    }).catch((e) => {
+      console.error(e);
       message.error('提交失败', 3);
     }).finally(() => {
       setLoading(false);

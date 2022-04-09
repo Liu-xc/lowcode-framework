@@ -1,0 +1,16 @@
+
+$queryFormData$
+{
+  url: '/form/test',
+    adaptor: (res) => {
+      console.log(res);
+      sv.values = res.values;
+      sv.fieldsMap = res.fieldsMap;
+      console.log(sv.values);
+    }
+}
+
+props.$value$  sv.values
+
+props.$fieldsMap$  sv.fieldsMap
+
