@@ -1,0 +1,194 @@
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2022-05-02 21:12:35
+count workspace : f:\毕设\lowcode-framework
+total files : 166
+total code lines : 5991
+total comment lines : 334
+total blank lines : 694
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |               |             21|              1|              5|   0.35|
+   |          .json|            694|              0|             17|     12|
+   |            .ts|           2529|            119|            260|     42|
+   |            .md|             56|             11|             40|   0.93|
+   |           .tsx|           2222|             76|            312|     37|
+   |           .txt|             19|             78|             13|   0.32|
+   |          .scss|            153|              1|             20|    2.6|
+   |          .html|             21|             23|              0|   0.35|
+   |           .css|             50|             10|              7|   0.83|
+   |            .js|            223|             15|             20|    3.7|
+   |           .svg|              1|              0|              0|  0.017|
+   |           .map|              2|              0|              0|  0.033|
+   -------------------------------------------------------------------------
+.gitignore, code is 3, comment is 0, blank is 0.
+lerna.json, code is 7, comment is 0, blank is 1.
+package.json, code is 7, comment is 0, blank is 0.
+packages\app-framework\.eslintrc.json, code is 26, comment is 0, blank is 2.
+packages\app-framework\package.json, code is 42, comment is 0, blank is 0.
+packages\app-framework\README.md, code is 6, comment is 1, blank is 4.
+packages\app-framework\src\App\index.tsx, code is 17, comment is 0, blank is 2.
+packages\app-framework\src\App\init.ts, code is 26, comment is 4, blank is 7.
+packages\app-framework\src\appConfig\index.tsx, code is 56, comment is 0, blank is 9.
+packages\app-framework\src\context\index.tsx, code is 11, comment is 3, blank is 2.
+packages\app-framework\src\context\utils.ts, code is 142, comment is 0, blank is 11.
+packages\app-framework\src\data\queryPlugin\index.tsx, code is 13, comment is 0, blank is 2.
+packages\app-framework\src\data\useObtainData\index.ts, code is 44, comment is 0, blank is 4.
+packages\app-framework\src\data\useObtainData\utils.ts, code is 142, comment is 0, blank is 11.
+packages\app-framework\src\data\withQuery\index.tsx, code is 43, comment is 4, blank is 8.
+packages\app-framework\src\data\withQuery\utils.ts, code is 142, comment is 0, blank is 11.
+packages\app-framework\src\index.ts, code is 15, comment is 0, blank is 1.
+packages\app-framework\src\plugins\index.ts, code is 0, comment is 8, blank is 0.
+packages\app-framework\src\router\createRoutes.tsx, code is 60, comment is 12, blank is 12.
+packages\app-framework\src\router\index.tsx, code is 15, comment is 0, blank is 3.
+packages\app-framework\src\types.ts, code is 1, comment is 0, blank is 0.
+packages\app-framework\src\utils\useForceUpdate.ts, code is 6, comment is 0, blank is 1.
+packages\app-framework\tsconfig.json, code is 32, comment is 0, blank is 0.
+packages\components\.eslintrc.json, code is 27, comment is 0, blank is 2.
+packages\components\package.json, code is 36, comment is 0, blank is 0.
+packages\components\README.md, code is 6, comment is 1, blank is 4.
+packages\components\src\BizComponents\BizCard\index.tsx, code is 21, comment is 0, blank is 2.
+packages\components\src\BizComponents\index.ts, code is 2, comment is 0, blank is 0.
+packages\components\src\BizComponents\Title\index.tsx, code is 11, comment is 0, blank is 3.
+packages\components\src\Button\index.tsx, code is 14, comment is 1, blank is 3.
+packages\components\src\index.ts, code is 2, comment is 0, blank is 0.
+packages\components\src\types.ts, code is 5, comment is 0, blank is 0.
+packages\components\tsconfig.json, code is 29, comment is 0, blank is 0.
+packages\lowcode-platform\.eslintrc.json, code is 28, comment is 0, blank is 2.
+packages\lowcode-platform\.gitignore, code is 18, comment is 1, blank is 5.
+packages\lowcode-platform\build\asset-manifest.json, code is 12, comment is 0, blank is 1.
+packages\lowcode-platform\build\favicon.ico, it is a binary file.
+packages\lowcode-platform\build\index.html, code is 1, comment is 0, blank is 0.
+packages\lowcode-platform\build\logo192.png, it is a binary file.
+packages\lowcode-platform\build\logo512.png, it is a binary file.
+packages\lowcode-platform\build\manifest.json, code is 25, comment is 0, blank is 0.
+packages\lowcode-platform\build\robots.txt, code is 3, comment is 1, blank is 0.
+packages\lowcode-platform\build\static\css\main.cf5e45d2.css, code is 3, comment is 10, blank is 0.
+packages\lowcode-platform\build\static\css\main.cf5e45d2.css.map, code is 1, comment is 0, blank is 0.
+packages\lowcode-platform\build\static\js\main.d3a7ec01.js, code is 1, comment is 3, blank is 0.
+packages\lowcode-platform\build\static\js\main.d3a7ec01.js.LICENSE.txt, code is 0, comment is 76, blank is 9.
+packages\lowcode-platform\build\static\js\main.d3a7ec01.js.map, code is 1, comment is 0, blank is 0.
+packages\lowcode-platform\package.json, code is 68, comment is 0, blank is 3.
+packages\lowcode-platform\public\favicon.ico, it is a binary file.
+packages\lowcode-platform\public\index.html, code is 20, comment is 23, blank is 0.
+packages\lowcode-platform\public\logo192.png, it is a binary file.
+packages\lowcode-platform\public\logo512.png, it is a binary file.
+packages\lowcode-platform\public\manifest.json, code is 25, comment is 0, blank is 0.
+packages\lowcode-platform\public\robots.txt, code is 3, comment is 1, blank is 0.
+packages\lowcode-platform\README.md, code is 26, comment is 6, blank is 20.
+packages\lowcode-platform\src\App.css, code is 35, comment is 0, blank is 6.
+packages\lowcode-platform\src\App.tsx, code is 43, comment is 1, blank is 7.
+packages\lowcode-platform\src\components\ComponentMenu\index.tsx, code is 46, comment is 1, blank is 7.
+packages\lowcode-platform\src\components\ConfigPanelForm\index.scss, code is 34, comment is 0, blank is 6.
+packages\lowcode-platform\src\components\ConfigPanelForm\index.tsx, code is 155, comment is 4, blank is 20.
+packages\lowcode-platform\src\components\ConfigPanelForm\OptionCreator.tsx, code is 62, comment is 3, blank is 8.
+packages\lowcode-platform\src\components\ConfigPanelForm\SchemaConfig.tsx, code is 66, comment is 3, blank is 9.
+packages\lowcode-platform\src\components\ConfigPanelForm\ValidationFields.tsx, code is 36, comment is 9, blank is 11.
+packages\lowcode-platform\src\components\Container\index.scss, code is 3, comment is 0, blank is 0.
+packages\lowcode-platform\src\components\Container\index.tsx, code is 24, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\dragComps\CheckboxGroup.ts, code is 27, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\dragComps\commonConfigs.ts, code is 4, comment is 0, blank is 2.
+packages\lowcode-platform\src\components\dragComps\Form.scss, code is 23, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\dragComps\Form.tsx, code is 121, comment is 0, blank is 11.
+packages\lowcode-platform\src\components\dragComps\index.scss, code is 32, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\dragComps\index.ts, code is 0, comment is 0, blank is 0.
+packages\lowcode-platform\src\components\dragComps\IndictorCard.tsx, code is 34, comment is 0, blank is 4.
+packages\lowcode-platform\src\components\dragComps\Input.tsx, code is 54, comment is 0, blank is 4.
+packages\lowcode-platform\src\components\dragComps\List.tsx, code is 79, comment is 0, blank is 10.
+packages\lowcode-platform\src\components\dragComps\RadioGroup.tsx, code is 30, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\dragComps\Select.tsx, code is 29, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\dragComps\Switch.tsx, code is 46, comment is 0, blank is 4.
+packages\lowcode-platform\src\components\dragComps\Title.tsx, code is 55, comment is 0, blank is 7.
+packages\lowcode-platform\src\components\index.ts, code is 100, comment is 0, blank is 6.
+packages\lowcode-platform\src\components\LayoutContainer\index.scss, code is 3, comment is 0, blank is 0.
+packages\lowcode-platform\src\components\LayoutContainer\index.tsx, code is 97, comment is 15, blank is 17.
+packages\lowcode-platform\src\components\RenderComponent\index.tsx, code is 9, comment is 0, blank is 3.
+packages\lowcode-platform\src\components\TestComp\index.tsx, code is 4, comment is 0, blank is 2.
+packages\lowcode-platform\src\components\TestDragItem\index.tsx, code is 4, comment is 0, blank is 2.
+packages\lowcode-platform\src\hoc\index.scss, code is 19, comment is 0, blank is 3.
+packages\lowcode-platform\src\hoc\index.ts, code is 8, comment is 0, blank is 0.
+packages\lowcode-platform\src\hoc\withContainerChild.tsx, code is 55, comment is 1, blank is 9.
+packages\lowcode-platform\src\hoc\withDragItem.tsx, code is 11, comment is 1, blank is 3.
+packages\lowcode-platform\src\hoc\withField.tsx, code is 48, comment is 1, blank is 6.
+packages\lowcode-platform\src\hoc\withLayoutContainer.tsx, code is 36, comment is 1, blank is 5.
+packages\lowcode-platform\src\hoc\withQuerySchema.tsx, code is 83, comment is 1, blank is 15.
+packages\lowcode-platform\src\index.css, code is 12, comment is 0, blank is 1.
+packages\lowcode-platform\src\index.d.ts, code is 3, comment is 0, blank is 0.
+packages\lowcode-platform\src\index.tsx, code is 51, comment is 3, blank is 5.
+packages\lowcode-platform\src\logo.svg, code is 1, comment is 0, blank is 0.
+packages\lowcode-platform\src\pages\DragPage\index.scss, code is 6, comment is 1, blank is 2.
+packages\lowcode-platform\src\pages\DragPage\index.tsx, code is 33, comment is 1, blank is 2.
+packages\lowcode-platform\src\pages\index.ts, code is 8, comment is 0, blank is 1.
+packages\lowcode-platform\src\pages\Manage\index.scss, code is 13, comment is 0, blank is 2.
+packages\lowcode-platform\src\pages\Manage\index.tsx, code is 134, comment is 1, blank is 13.
+packages\lowcode-platform\src\pages\PageLayout\index.scss, code is 20, comment is 0, blank is 1.
+packages\lowcode-platform\src\pages\PageLayout\index.tsx, code is 203, comment is 0, blank is 23.
+packages\lowcode-platform\src\plugins\queryFormDataPlugin.tsx, code is 57, comment is 0, blank is 7.
+packages\lowcode-platform\src\react-app-env.d.ts, code is 0, comment is 1, blank is 0.
+packages\lowcode-platform\src\router\index.ts, code is 11, comment is 0, blank is 1.
+packages\lowcode-platform\src\schemas\home.ts, code is 31, comment is 0, blank is 2.
+packages\lowcode-platform\src\schemas\index.ts, code is 306, comment is 13, blank is 20.
+packages\lowcode-platform\src\store\dragStore.ts, code is 50, comment is 1, blank is 4.
+packages\lowcode-platform\src\store\index.ts, code is 69, comment is 1, blank is 9.
+packages\lowcode-platform\src\store\layoutStore.ts, code is 130, comment is 1, blank is 5.
+packages\lowcode-platform\src\store\schemaStore.ts, code is 21, comment is 2, blank is 5.
+packages\lowcode-platform\src\types\index.ts, code is 15, comment is 0, blank is 2.
+packages\lowcode-platform\src\utils\from-string.js, code is 222, comment is 12, blank is 20.
+packages\lowcode-platform\src\utils\getPageSchema.ts, code is 9, comment is 4, blank is 2.
+packages\lowcode-platform\test.txt, code is 13, comment is 0, blank is 4.
+packages\lowcode-platform\tsconfig.json, code is 25, comment is 0, blank is 2.
+packages\network\package.json, code is 31, comment is 0, blank is 0.
+packages\network\README.md, code is 6, comment is 1, blank is 4.
+packages\network\src\createApiMethod\index.ts, code is 16, comment is 1, blank is 1.
+packages\network\src\createApiMethod\utils.ts, code is 142, comment is 0, blank is 11.
+packages\network\src\index.ts, code is 20, comment is 2, blank is 5.
+packages\network\src\instance\index.ts, code is 22, comment is 12, blank is 6.
+packages\network\src\instance\init.ts, code is 22, comment is 0, blank is 5.
+packages\network\src\types.ts, code is 3, comment is 8, blank is 2.
+packages\network\tsconfig.json, code is 28, comment is 0, blank is 0.
+packages\render-engine\.eslintrc.json, code is 31, comment is 0, blank is 2.
+packages\render-engine\package.json, code is 39, comment is 0, blank is 0.
+packages\render-engine\README.md, code is 6, comment is 1, blank is 4.
+packages\render-engine\src\compiler\boxCode.ts, code is 9, comment is 1, blank is 2.
+packages\render-engine\src\compiler\compileUtilsContext.ts, code is 0, comment is 7, blank is 1.
+packages\render-engine\src\compiler\createContext.ts, code is 0, comment is 1, blank is 0.
+packages\render-engine\src\compiler\exec.ts, code is 36, comment is 1, blank is 6.
+packages\render-engine\src\compiler\expressions.ts, code is 24, comment is 17, blank is 4.
+packages\render-engine\src\compiler\index.ts, code is 2, comment is 0, blank is 0.
+packages\render-engine\src\compiler\schemas2.ts, code is 142, comment is 0, blank is 11.
+packages\render-engine\src\componentCreator\index.tsx, code is 25, comment is 1, blank is 6.
+packages\render-engine\src\componentCreator\utils.ts, code is 142, comment is 0, blank is 11.
+packages\render-engine\src\index.ts, code is 9, comment is 0, blank is 1.
+packages\render-engine\src\pluginManager\index.tsx, code is 36, comment is 1, blank is 10.
+packages\render-engine\src\pluginManager\test.tsx, code is 11, comment is 0, blank is 2.
+packages\render-engine\src\render-engine\index.tsx, code is 97, comment is 4, blank is 17.
+packages\render-engine\src\resolver\index.tsx, code is 23, comment is 0, blank is 4.
+packages\render-engine\src\resolver\resolve.tsx, code is 64, comment is 4, blank is 4.
+packages\render-engine\src\resolver\resolveContext.ts, code is 5, comment is 0, blank is 1.
+packages\render-engine\src\state\index.ts, code is 106, comment is 24, blank is 28.
+packages\render-engine\src\types.ts, code is 18, comment is 0, blank is 2.
+packages\render-engine\tsconfig.json, code is 29, comment is 0, blank is 0.
+packages\server\package.json, code is 38, comment is 0, blank is 0.
+packages\server\src\db\index.ts, code is 24, comment is 0, blank is 2.
+packages\server\src\db\models\form.ts, code is 13, comment is 0, blank is 5.
+packages\server\src\db\models\schema.ts, code is 22, comment is 0, blank is 6.
+packages\server\src\db\models\storeState.ts, code is 13, comment is 0, blank is 5.
+packages\server\src\global.d.ts, code is 0, comment is 0, blank is 0.
+packages\server\src\index.ts, code is 18, comment is 9, blank is 4.
+packages\server\src\middlewares\responseFormater.ts, code is 22, comment is 0, blank is 2.
+packages\server\src\router\form.ts, code is 81, comment is 0, blank is 6.
+packages\server\src\router\index.ts, code is 6, comment is 0, blank is 2.
+packages\server\src\router\schemas.ts, code is 142, comment is 0, blank is 11.
+packages\server\src\types.ts, code is 5, comment is 0, blank is 0.
+packages\server\tsconfig.json, code is 27, comment is 0, blank is 0.
+packages\utils\.eslintrc.json, code is 27, comment is 0, blank is 2.
+packages\utils\package.json, code is 30, comment is 0, blank is 0.
+packages\utils\README.md, code is 6, comment is 1, blank is 4.
+packages\utils\src\index.ts, code is 4, comment is 1, blank is 1.
+packages\utils\src\utils.ts, code is 142, comment is 0, blank is 11.
+packages\utils\tsconfig.json, code is 25, comment is 0, blank is 0.
+===============================================================================
