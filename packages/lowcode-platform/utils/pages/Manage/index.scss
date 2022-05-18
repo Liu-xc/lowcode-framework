@@ -1,0 +1,15 @@
+.btnGroup {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.schemas {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.formItemTitle {
+  display: flex;
+  justify-content: space-between;
+}
