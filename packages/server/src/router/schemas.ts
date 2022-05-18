@@ -130,14 +130,34 @@ router.post('/update', async (ctx: RouterContext<any, Koa.Context>, next: Koa.Ne
     await Promise.all([updateSchema, updateState]).then(
       ([schemaDoc, stateDoc]) => {
         if (schemaDoc && stateDoc) {
+          ctx.status = 200;
           ctx.body = {
             schema: schemaDoc.toJSON(),
             state: stateDoc.toJSON()
           };
         }
       }
-    ).catch((err) => {
+    ).catch(async (err) => {
       console.log(err);
+      if (err.code === 52) {
+        const getSchema = SchemaModel.findOne({ name });
+        const getState = StateModel.findOne({ name });
+        await Promise.all([getSchema, getState]).then(
+          ([schemaDoc, stateDoc]) => {
+            if (schemaDoc && stateDoc) {
+              ctx.body = {
+                schema: schemaDoc.toJSON(),
+                state: stateDoc.toJSON()
+              };
+            } else {
+              ctx.body = {
+                code: NOT_EXIST_CODE
+              };
+              ctx.statusText = "schema不存在";
+            }
+          }
+        )
+      }
     });
   } else {
     ctx.status = 200;

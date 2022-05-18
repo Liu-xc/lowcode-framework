@@ -127,7 +127,7 @@ const PageLayout = () => {
     }).then(() => {
       message.success(`更新${schemaName}成功`, 1);
     }).catch(() => {
-      message.error(`更新${schemaName}成功`, 2);
+      message.error(`更新${schemaName}异常`, 2);
     });
   }, [schemaName, schemaType]);
 

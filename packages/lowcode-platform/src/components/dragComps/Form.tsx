@@ -48,13 +48,13 @@ interface TheFormProps extends FormProps {
 }
 
 const TheForm: React.FC<TheFormProps> = (props) => {
-  const { style = {}, className, title, action, formKey, fieldRules, schemaConfigs, ...otherProps } = props;
+  const { style = {}, className, title, action, fieldRules, schemaConfigs, ...otherProps } = props;
   const params = useParams();
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<undefined | Error>();
   const [form] = Form.useForm();
-  const { mode } = params;
+  const { mode, schemaName: formKey } = params;
   const isProd = useMemo(() => mode === 'view', [mode]);
 
   const formStyle: React.CSSProperties = useMemo(() => ({
@@ -71,6 +71,11 @@ const TheForm: React.FC<TheFormProps> = (props) => {
     setError(undefined);
     setLoading(true);
     const formValue = form.getFieldsValue(true);
+    console.log(formKey);
+    if (!formKey) {
+      message.warn('无formKey', 1);
+      setLoading(false);
+    }
     formKey && request({
       data: {
         formKey,

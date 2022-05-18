@@ -71,10 +71,10 @@ const TheList: React.FC<any> = props => {
         loading={loading}
         dataSource={value}
         renderItem={(v) => (
-            <List.Item>
+            <List.Item className='my_list'>
               {
                 Object.keys(v as any).map(k => (
-                  <div key={k}>
+                  <div key={k} style={{ marginLeft: '20px' }}>
                     {fieldsMap[k]}：{(v as any)[k]}
                   </div>
                 ))
